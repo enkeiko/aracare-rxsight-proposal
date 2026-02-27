@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RxSight LAL Storyboard V3 | Aracare Marketing</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet"/>
+<style>
+    :root {
+      --teal: #8FD6D6;
+      --teal-dark: #5BBDBD;
+      --teal-glow: rgba(143, 214, 214, 0.3);
+      --purple: #813A74;
+      --purple-light: #A85D99;
+      --purple-glow: rgba(129, 58, 116, 0.3);
+      --bg-primary: #161619;
+      --bg-secondary: #1C1C20;
+      --bg-tertiary: #222226;
+      --bg-card: #26262B;
+      --border-primary: #333338;
+      --border-secondary: #3F3F46;
+      --text-primary: #FAFAFA;
+      --text-secondary: #A1A1AA;
+      --text-muted: #71717A;
+      --success: #22C55E;
+      --warning: #F59E0B;
+      --info: #3B82F6;
+      --error: #EF4444;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    /* Page ID bar */
+    .page-id-bar {
+      height: 4px;
+      background: #F97316;
+      width: 100%;
+    }
+    .category-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 2px 10px;
+      border-radius: 3px;
+      background: rgba(249,115,22,0.2);
+      color: #FB923C;
+      margin-right: 12px;
+    }
+
+    /* Header - Dark Professional */
+    .header {
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-primary);
+      padding: 0;
+    }
+
+    .header-top {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      display: none;
+    }
+
+    .brand-logo svg {
+      width: 28px;
+      height: 28px;
+      fill: white;
+    }
+
+    .brand-text h1 {
+      font-family: 'Pretendard Variable', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .brand-text p {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .doc-meta {
+      text-align: right;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .doc-meta strong {
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .doc-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-primary);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+
+    .doc-badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background: var(--success);
+      border-radius: 50%;
+    }
+
+    /* Tab Navigation */
+    .tab-nav {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border-primary);
+      background: var(--bg-secondary);
+    }
+
+    .tab-btn {
+      padding: 16px 28px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      font-family: inherit;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-primary);
+      background: var(--bg-tertiary);
+    }
+
+    .tab-btn.active {
+      color: var(--text-primary);
+      border-bottom-color: var(--teal);
+    }
+
+    .tab-btn[data-tab="story"].active {
+      border-bottom-color: var(--teal);
+      background: rgba(143, 214, 214, 0.08);
+      color: var(--teal);
+    }
+
+    .tab-btn[data-tab="explain"].active {
+      border-bottom-color: var(--purple-light);
+      background: rgba(168, 93, 153, 0.08);
+      color: var(--purple-light);
+    }
+
+    .tab-btn span {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      margin-left: 8px;
+      font-weight: 700;
+    }
+
+    .tab-btn[data-tab="story"] span {
+      background: rgba(143, 214, 214, 0.2);
+      color: var(--teal-dark);
+    }
+
+    .tab-btn[data-tab="story"].active span {
+      background: var(--teal);
+      color: #161619;
+    }
+
+    .tab-btn[data-tab="explain"] span {
+      background: rgba(129, 58, 116, 0.15);
+      color: var(--purple);
+    }
+
+    .tab-btn[data-tab="explain"].active span {
+      background: var(--purple-light);
+      color: #fff;
+    }
+
+    /* Main Content Area */
+    .tab-content {
+      display: none;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Version Indicator Banner */
+    .version-banner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 28px;
+      margin-bottom: 24px;
+      border-radius: 12px;
+      border: 1px solid;
+    }
+
+    .version-banner .version-letter {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      line-height: 1;
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      flex-shrink: 0;
+    }
+
+    .version-banner .version-info h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+      text-transform: none;
+      letter-spacing: -0.01em;
+    }
+
+    .version-banner .version-info p {
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+
+    .version-banner.story {
+      background: linear-gradient(135deg, rgba(143,214,214,0.12) 0%, rgba(91,189,189,0.05) 100%);
+      border-color: rgba(143,214,214,0.3);
+    }
+
+    .version-banner.story .version-letter {
+      background: var(--teal);
+      color: #161619;
+    }
+
+    .version-banner.story .version-info h3 {
+      color: var(--teal);
+    }
+
+    .version-banner.story .version-info p {
+      color: var(--teal-dark);
+    }
+
+    .version-banner.explain {
+      background: linear-gradient(135deg, rgba(168,93,153,0.12) 0%, rgba(129,58,116,0.05) 100%);
+      border-color: rgba(168,93,153,0.3);
+    }
+
+    .version-banner.explain .version-letter {
+      background: var(--purple-light);
+      color: #fff;
+    }
+
+    .version-banner.explain .version-info h3 {
+      color: var(--purple-light);
+    }
+
+    .version-banner.explain .version-info p {
+      color: var(--purple);
+    }
+
+    /* Strategy Section - Card Based */
+    .strategy-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: 16px;
+      margin-bottom: 40px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .story .strategy-section {
+      border-color: rgba(143,214,214,0.2);
+    }
+
+    .explain .strategy-section {
+      border-color: rgba(168,93,153,0.2);
+    }
+
+    .strategy-header {
+      background: var(--bg-tertiary);
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border-primary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .story .strategy-header {
+      background: linear-gradient(135deg, rgba(143,214,214,0.08) 0%, var(--bg-tertiary) 100%);
+      border-bottom-color: rgba(143,214,214,0.15);
+    }
+
+    .explain .strategy-header {
+      background: linear-gradient(135deg, rgba(168,93,153,0.08) 0%, var(--bg-tertiary) 100%);
+      border-bottom-color: rgba(168,93,153,0.15);
+    }
+
+    .strategy-header h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .strategy-header svg {
+      width: 20px;
+      height: 20px;
+      color: var(--text-muted);
+    }
+
+    .story .strategy-header svg {
+      color: var(--teal);
+    }
+
+    .explain .strategy-header svg {
+      color: var(--purple-light);
+    }
+
+    .strategy-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 900px) {
+      .strategy-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .strategy-block {
+      padding: 28px;
+      border-right: 1px solid var(--border-primary);
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    .strategy-block:nth-child(2n) {
+      border-right: none;
+    }
+
+    .strategy-block:last-child,
+    .strategy-block:nth-last-child(2):nth-child(odd) {
+      border-bottom: none;
+    }
+
+    .strategy-block.full-width {
+      grid-column: 1 / -1;
+      border-right: none;
+    }
+
+    .strategy-block h3 {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .strategy-block h3 svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .story .strategy-block h3 {
+      color: var(--teal);
+    }
+
+    .explain .strategy-block h3 {
+      color: var(--purple-light);
+    }
+
+    .strategy-content {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .strategy-content strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .strategy-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .strategy-list li {
+      padding: 10px 0;
+      padding-left: 20px;
+      position: relative;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    .strategy-list li:last-child {
+      border-bottom: none;
+    }
+
+    .strategy-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 16px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .story .strategy-list li::before {
+      background: var(--teal);
+      box-shadow: 0 0 8px var(--teal-glow);
+    }
+
+    .explain .strategy-list li::before {
+      background: var(--purple-light);
+      box-shadow: 0 0 8px var(--purple-glow);
+    }
+
+    /* STP Section */
+    .stp-section {
+      margin-top: 16px;
+    }
+
+    .stp-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+
+    .story .stp-label {
+      color: var(--teal);
+    }
+
+    .explain .stp-label {
+      color: var(--purple-light);
+    }
+
+    /* Message Highlight */
+    .message-highlight {
+      background: linear-gradient(135deg, rgba(143,214,214,0.1) 0%, rgba(129,58,116,0.1) 100%);
+      border-radius: 12px;
+      padding: 20px 24px;
+      text-align: center;
+      margin-top: 12px;
+      border: 1px solid var(--border-secondary);
+    }
+
+    .story .message-highlight {
+      background: linear-gradient(135deg, rgba(143,214,214,0.12) 0%, rgba(143,214,214,0.04) 100%);
+      border-color: rgba(143,214,214,0.25);
+    }
+
+    .explain .message-highlight {
+      background: linear-gradient(135deg, rgba(168,93,153,0.12) 0%, rgba(168,93,153,0.04) 100%);
+      border-color: rgba(168,93,153,0.25);
+    }
+
+    .message-main {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .message-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Emotion Journey */
+    .emotion-journey {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .emotion-badge {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .emotion-badge.negative {
+      background: rgba(239, 68, 68, 0.15);
+      color: #F87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .emotion-badge.neutral {
+      background: rgba(245, 158, 11, 0.15);
+      color: #FBBF24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .emotion-badge.positive {
+      background: rgba(34, 197, 94, 0.15);
+      color: #4ADE80;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+
+    .emotion-arrow {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* USP Cards */
+    .usp-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 600px) {
+      .usp-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .usp-card {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-primary);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .story .usp-card {
+      border-color: rgba(143,214,214,0.2);
+    }
+
+    .explain .usp-card {
+      border-color: rgba(168,93,153,0.2);
+    }
+
+    .usp-icon {
+      font-size: 1.5rem;
+      margin-bottom: 6px;
+      color: var(--teal);
+    }
+
+    .usp-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .usp-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Concept Summary Bar */
+    .concept-summary {
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: 12px;
+      padding: 20px 28px;
+      margin-bottom: 32px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 24px;
+    }
+
+    .concept-item {
+      text-align: center;
+    }
+
+    .concept-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+    }
+
+    .concept-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* Timeline */
+    .timeline {
+      display: flex;
+      align-items: stretch;
+      gap: 4px;
+      margin-bottom: 40px;
+      padding: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: 12px;
+    }
+
+    .timeline-item {
+      flex: 1;
+      text-align: center;
+    }
+
+    .timeline-bar {
+      height: 6px;
+      background: var(--bg-tertiary);
+      border-radius: 3px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    .timeline-fill {
+      height: 100%;
+      border-radius: 3px;
+    }
+
+    .story .timeline-fill {
+      background: linear-gradient(90deg, var(--teal) 0%, var(--teal-dark) 100%);
+      box-shadow: 0 0 10px var(--teal-glow);
+    }
+
+    .explain .timeline-fill {
+      background: linear-gradient(90deg, var(--purple-light) 0%, var(--purple) 100%);
+      box-shadow: 0 0 10px var(--purple-glow);
+    }
+
+    .timeline-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .timeline-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Scene Card - Professional */
+    .scene-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: 16px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+
+    .scene-card:hover {
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+      border-color: var(--border-secondary);
+    }
+
+    .story .scene-card {
+      border-left: 3px solid rgba(143,214,214,0.4);
+    }
+
+    .story .scene-card:hover {
+      border-left-color: var(--teal);
+    }
+
+    .explain .scene-card {
+      border-left: 3px solid rgba(168,93,153,0.4);
+    }
+
+    .explain .scene-card:hover {
+      border-left-color: var(--purple-light);
+    }
+
+    .scene-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      background: var(--bg-tertiary);
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    .scene-number {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .scene-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .story .scene-badge {
+      background: var(--teal);
+      color: var(--bg-primary);
+      box-shadow: 0 0 15px var(--teal-glow);
+    }
+
+    .explain .scene-badge {
+      background: var(--purple-light);
+      color: var(--text-primary);
+      box-shadow: 0 0 15px var(--purple-glow);
+    }
+
+    .scene-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .scene-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      background: var(--bg-secondary);
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border-primary);
+    }
+
+    .scene-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Visual Preview - Full Width, Large Center */
+    .scene-visual {
+      padding: 32px;
+      border-bottom: 1px solid var(--border-primary);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      background: var(--bg-tertiary);
+    }
+
+    .visual-placeholder {
+      aspect-ratio: 16/9;
+      max-width: 800px;
+      margin: 0 auto;
+      width: 100%;
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      border: 2px dashed var(--border-secondary);
+      min-height: 300px;
+    }
+
+    .visual-placeholder svg {
+      width: 60px;
+      height: 60px;
+      color: var(--text-muted);
+    }
+
+    .visual-placeholder span {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .visual-placeholder.has-asset {
+      border-style: solid;
+      border-color: var(--success);
+      background: rgba(34, 197, 94, 0.1);
+    }
+
+    .visual-placeholder.has-asset svg {
+      color: var(--success);
+    }
+
+    .visual-placeholder.has-asset span {
+      color: var(--success);
+    }
+
+    /* Prompt Section */
+    .prompt-section {
+      background: var(--bg-primary);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-top: 8px;
+      border: 1px solid var(--border-primary);
+    }
+
+    .prompt-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .prompt-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .copy-btn {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-primary);
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .copy-btn:hover {
+      background: var(--border-secondary);
+      color: var(--text-primary);
+    }
+
+    .copy-btn.copied {
+      background: var(--success);
+      border-color: var(--success);
+      color: var(--bg-primary);
+    }
+
+    .prompt-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* Scene Content - Full Width Vertical Stack */
+    .scene-content {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .content-section {
+      background: var(--bg-tertiary);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid var(--border-primary);
+    }
+
+    .content-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .content-label svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .content-text {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    /* Subtitle Tags */
+    .subtitle-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .subtitle-tag {
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .story .subtitle-tag {
+      background: rgba(143, 214, 214, 0.15);
+      color: var(--teal);
+      border: 1px solid rgba(143, 214, 214, 0.4);
+    }
+
+    .explain .subtitle-tag {
+      background: rgba(168, 93, 153, 0.15);
+      color: var(--purple-light);
+      border: 1px solid rgba(168, 93, 153, 0.4);
+    }
+
+    /* Audio Grid */
+    .audio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .audio-item {
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      padding: 12px;
+      border: 1px solid var(--border-primary);
+    }
+
+    .audio-type {
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .audio-content {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .audio-content.na {
+      font-style: italic;
+      color: var(--teal);
+    }
+
+    /* Asset Info */
+    .asset-info {
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-primary);
+    }
+
+    .asset-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 5px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+
+    .asset-badge.existing {
+      background: rgba(34, 197, 94, 0.15);
+      color: #4ADE80;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+
+    .asset-badge.ai-gen {
+      background: rgba(245, 158, 11, 0.15);
+      color: #FBBF24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .asset-badge.create {
+      background: rgba(59, 130, 246, 0.15);
+      color: #60A5FA;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    /* Channel Tags */
+    .channel-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .channel-tag {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-primary);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .channel-tag.primary {
+      border-color: var(--teal);
+      background: rgba(143, 214, 214, 0.15);
+      color: var(--teal);
+    }
+
+    /* Footer with Legal */
+    .footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-primary);
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 900px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+
+    .footer-section h4 {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+
+    .footer-section p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    .legal-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .legal-list li {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      padding: 6px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .legal-list li::before {
+      content: "*";
+      color: var(--teal);
+      font-weight: bold;
+    }
+
+    .data-source {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-primary);
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .data-source-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .data-source-text {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .footer-bottom {
+      padding-top: 24px;
+      border-top: 1px solid var(--border-primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .copyright {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .confidential-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #F87171;
+    }
+
+    .confidential-badge svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Scene Navigation Sidebar */
+    .content-with-nav {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 32px;
+      position: relative;
+    }
+
+    .scene-nav {
+      position: sticky;
+      top: 24px;
+      height: fit-content;
+      max-height: calc(100vh - 48px);
+      overflow-y: auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: 12px;
+      padding: 20px 0;
+    }
+
+    .scene-nav-header {
+      padding: 0 20px 16px;
+      border-bottom: 1px solid var(--border-primary);
+      margin-bottom: 12px;
+    }
+
+    .scene-nav-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .story .scene-nav-title {
+      color: var(--teal);
+    }
+
+    .explain .scene-nav-title {
+      color: var(--purple-light);
+    }
+
+    .scene-nav-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .scene-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-left: 3px solid transparent;
+    }
+
+    .scene-nav-item:hover {
+      background: var(--bg-tertiary);
+    }
+
+    .scene-nav-item.active {
+      background: var(--bg-tertiary);
+      border-left-color: var(--teal);
+    }
+
+    .story .scene-nav-item.active {
+      border-left-color: var(--teal);
+    }
+
+    .explain .scene-nav-item.active {
+      border-left-color: var(--purple);
+    }
+
+    .scene-nav-num {
+      width: 28px;
+      height: 28px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-secondary);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .scene-nav-item.active .scene-nav-num {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: var(--bg-primary);
+    }
+
+    .explain .scene-nav-item.active .scene-nav-num {
+      background: var(--purple);
+      border-color: var(--purple);
+      color: white;
+    }
+
+    .scene-nav-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .scene-nav-func {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .scene-nav-time {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .scenes-container {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Scene Intent Section - Inside scene-body */
+    .scene-intent {
+      background: linear-gradient(135deg, rgba(143, 214, 214, 0.1) 0%, rgba(129, 58, 116, 0.1) 100%);
+      border: 1px solid var(--border-primary);
+      border-radius: 0;
+      padding: 24px 32px;
+      margin: 0;
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    .explain .scene-intent {
+      background: linear-gradient(135deg, rgba(129, 58, 116, 0.1) 0%, rgba(143, 214, 214, 0.1) 100%);
+    }
+
+    .scene-intent-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--teal);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .explain .scene-intent-label {
+      color: var(--purple-light);
+    }
+
+    .scene-intent-label svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .scene-intent-text {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .scene-intent-text strong {
+      color: var(--text-primary);
+    }
+
+    /* Updated Scene Header with Function Label */
+    .scene-func-label {
+      display: inline-block;
+      background: rgba(143, 214, 214, 0.15);
+      color: var(--teal);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-left: 12px;
+    }
+
+    .explain .scene-func-label {
+      background: rgba(129, 58, 116, 0.15);
+      color: var(--purple-light);
+    }
+
+    @media (max-width: 1100px) {
+      .content-with-nav {
+        grid-template-columns: 1fr;
+      }
+
+      .scene-nav {
+        position: relative;
+        top: 0;
+        max-height: none;
+        margin-bottom: 24px;
+      }
+    }
+
+    /* Print Styles */
+    @media print {
+      .tab-nav,
+      .copy-btn {
+        display: none;
+      }
+
+      .tab-content {
+        display: block !important;
+        page-break-after: always;
+      }
+
+      .scene-card {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- Header -->
+<div class="page-id-bar"></div>
+<header class="header">
+<div class="header-top">
+<div class="brand">
+<div class="brand-text">
+<h1><span class="category-badge">VIDEO</span>LAL 환자용 영상 스토리보드 (감성/이성 2안)</h1>
+<p>B2C Video Campaign &middot; Aracare x RxSight</p>
+</div>
+</div>
+<div class="doc-meta">
+<div><strong>Document ID:</strong> ARC-VID-2026-001</div>
+<div><strong>Version:</strong> 2.0 | <strong>Date:</strong> 2026-02-26</div>
+<div class="doc-badge">INTERNAL USE ONLY</div>
+</div>
+</div>
+</header>
+<!-- Tab Navigation -->
+<nav class="tab-nav">
+<button class="tab-btn active" data-tab="story">Version A: Emotional <span>STORY</span></button>
+<button class="tab-btn" data-tab="explain">Version B: Rational <span>EXPLAIN</span></button>
+</nav>
+<!-- Version A: Story -->
+<section class="tab-content story active" id="story">
+<!-- Version Indicator -->
+<div class="version-banner story">
+<div class="version-letter">A</div>
+<div class="version-info">
+<h3>Version A: Emotional Story</h3>
+<p>감성 중심 -- 환자의 심리 변화를 따라가는 스토리텔링 구조</p>
+</div>
+</div>
+<!-- Marketing Strategy -->
+<div class="strategy-section">
+<div class="strategy-header">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M12 20V10M18 20V4M6 20v-4"></path>
+</svg>
+<h2>Marketing Strategy Brief / 마케팅 전략 요약</h2>
+</div>
+<div class="strategy-grid">
+<!-- Campaign Objective -->
+<div class="strategy-block">
+<h3>
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+            Campaign Objective
+          </h3>
+<div class="strategy-content">
+<strong>병원 대기실에서 백내장 수술을 고려하는 환자에게 LAL의 핵심 차별점(수술 후 조정)을 감성적으로 전달</strong>하여 상담 요청으로 전환
+          </div>
+</div>
+<!-- Target Audience - STP -->
+<div class="strategy-block">
+<h3>
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            STP (State-Based Targeting)
+          </h3>
+<div class="stp-section">
+<div class="stp-label">Segmentation</div>
+<ul class="strategy-list">
+<li>백내장 진단 후 수술 결정을 미루고 있는 분</li>
+<li>가족 얼굴(손녀, 배우자)이 흐려지기 시작한 분</li>
+<li>주변에서 백내장 수술 후 불만족 사례를 들은 분</li>
+</ul>
+</div>
+<div class="stp-section" style="margin-top:16px">
+<div class="stp-label">Targeting</div>
+<div class="strategy-content">
+<strong>"한 번 넣으면 못 바꾼다"</strong>는 두려움에 수술을 미루고 있는 <strong>60-70대</strong>
+</div>
+</div>
+<div class="stp-section" style="margin-top:16px">
+<div class="stp-label">Positioning</div>
+<div class="message-highlight" style="margin-top:8px">
+<div class="message-main">"실패해도 다시 맞출 수 있는 유일한 렌즈"</div>
+</div>
+</div>
+</div>
+<!-- Emotional Journey -->
+<div class="strategy-block">
+<h3>
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+            Emotional Journey
+          </h3>
+<div class="strategy-content">
+            환자의 심리 변화를 6단계로 설계하여 <strong>자연스러운 감정 이입</strong>과 <strong>해결책 수용</strong> 유도
+          </div>
+<div class="emotion-journey">
+<span class="emotion-badge negative">Fear</span>
+<span class="emotion-arrow">-&gt;</span>
+<span class="emotion-badge negative">Loss</span>
+<span class="emotion-arrow">-&gt;</span>
+<span class="emotion-badge neutral">Hope</span>
+<span class="emotion-arrow">-&gt;</span>
+<span class="emotion-badge neutral">Trust</span>
+<span class="emotion-arrow">-&gt;</span>
+<span class="emotion-badge positive">Relief</span>
+<span class="emotion-arrow">-&gt;</span>
+<span class="emotion-badge positive">Joy</span>
+</div>
+</div>
+<!-- Key Message -->
+<div class="strategy-block">
+<h3>
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            Key Message
+          </h3>
+<div class="message-highlight">
+<div class="message-main">"내 눈에 맞출 때까지"</div>
+<div class="message-sub">한 번에 결정하는 것이 아닌, 조정하며 완성해가는 시력</div>
+</div>
+<ul class="strategy-list" style="margin-top:16px">
+<li><strong>Primary:</strong> 수술 후에도 조정할 수 있다는 안도감</li>
+<li><strong>Secondary:</strong> 내가 직접 선택하고 결정한다는 주도권</li>
+<li><strong>Emotional:</strong> 소중한 사람을 선명하게 볼 수 있는 행복</li>
+</ul>
+</div>
+<!-- USP -->
+<div class="strategy-block">
+<h3>
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            USP / Differentiators
+          </h3>
+<div class="usp-cards">
+<div class="usp-card">
+<div class="usp-icon">*</div>
+<div class="usp-title">Post-Op Adjustment</div>
+<div class="usp-desc">World's Only<br/>FDA Approved</div>
+</div>
+<div class="usp-card">
+<div class="usp-icon">~</div>
+<div class="usp-title">90 Seconds</div>
+<div class="usp-desc">Non-invasive<br/>Light Treatment</div>
+</div>
+<div class="usp-card">
+<div class="usp-icon">+</div>
+<div class="usp-title">0.25D Precision</div>
+<div class="usp-desc">Industry-leading<br/>Fine-tuning</div>
+</div>
+</div>
+</div>
+<!-- Channel -->
+<div class="strategy-block">
+<h3>
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><rect height="14" rx="2" width="20" x="2" y="3"></rect><path d="M8 21h8M12 17v4"></path></svg>
+            Distribution Channels
+          </h3>
+<div class="channel-tags">
+<span class="channel-tag primary">Hospital Waiting Room</span>
+<span class="channel-tag primary">Consultation Tablet</span>
+<span class="channel-tag">YouTube Pre-roll</span>
+<span class="channel-tag">Instagram/Facebook</span>
+<span class="channel-tag">Hospital Website</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Concept Summary -->
+<div class="concept-summary">
+<div class="concept-item">
+<div class="concept-label">Title / 제목</div>
+<div class="concept-value">"눈을 맞추다"</div>
+</div>
+<div class="concept-item">
+<div class="concept-label">Appeal / 소구점</div>
+<div class="concept-value">Emotional (Fear -&gt; Relief -&gt; Joy)</div>
+</div>
+<div class="concept-item">
+<div class="concept-label">Target / 타겟</div>
+<div class="concept-value">60-70s, Fear-driven</div>
+</div>
+<div class="concept-item">
+<div class="concept-label">Tone / 톤앤매너</div>
+<div class="concept-value">Warm, Empathetic, Hopeful</div>
+</div>
+<div class="concept-item">
+<div class="concept-label">Music / 배경음악</div>
+<div class="concept-value">Piano -&gt; Strings</div>
+</div>
+</div>
+<!-- Timeline - 120초 (8씬) - 기능 기반 레이블 -->
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-bar"><div class="timeline-fill" style="width:100%"></div></div>
+<div class="timeline-label">S1 Hook</div>
+<div class="timeline-time">0:00-0:15</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-bar"><div class="timeline-fill" style="width:100%"></div></div>
+<div class="timeline-label">S2 Problem</div>
+<div class="timeline-time">0:15-0:30</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-bar"><div class="timeline-fill" style="width:100%"></div></div>
+<div class="timeline-label">S3 Solution</div>
+<div class="timeline-time">0:30-0:45</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-bar"><div class="timeline-fill" style="width:100%"></div></div>
+<div class="timeline-label">S4 Promise</div>
+<div class="timeline-time">0:45-1:00</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-bar"><div class="timeline-fill" style="width:100%"></div></div>
+<div class="timeline-label">S5 Proof</div>
+<div class="timeline-time">1:00-1:15</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-bar"><div class="timeline-fill" style="width:100%"></div></div>
+<div class="timeline-label">S6 Experience</div>
+<div class="timeline-time">1:15-1:35</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-bar"><div class="timeline-fill" style="width:100%"></div></div>
+<div class="timeline-label">S7 Benefit</div>
+<div class="timeline-time">1:35-1:50</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-bar"><div class="timeline-fill" style="width:100%"></div></div>
+<div class="timeline-label">S8 CTA</div>
+<div class="timeline-time">1:50-2:00</div>
+</div>
+</div>
+<!-- Content with Navigation -->
+<div class="content-with-nav">
+<!-- Side Navigation -->
+<nav class="scene-nav"><div class="scene-nav-header">
+<div class="scene-nav-title">Scene Navigation</div>
+<div class="scene-nav-subtitle">영상 구조와 각 씬의 전략적 역할</div>
+</div><a class="scene-nav-item active" data-target="scene-0" href="#scene-0" style="text-decoration: none;"><div class="scene-nav-num">00</div><div class="scene-nav-info"><div class="scene-nav-func">BRAND</div><div class="scene-nav-time">0:00 - 0:03</div></div></a><a class="scene-nav-item" data-target="scene-1" href="#scene-1" style="text-decoration: none;"><div class="scene-nav-num">01</div><div class="scene-nav-info"><div class="scene-nav-func">HOOK</div><div class="scene-nav-time">0:03 - 0:10</div></div></a><a class="scene-nav-item" data-target="scene-2" href="#scene-2" style="text-decoration: none;"><div class="scene-nav-num">02</div><div class="scene-nav-info"><div class="scene-nav-func">PROBLEM</div><div class="scene-nav-time">0:10 - 0:18</div></div></a><a class="scene-nav-item" data-target="scene-3" href="#scene-3" style="text-decoration: none;"><div class="scene-nav-num">03</div><div class="scene-nav-info"><div class="scene-nav-func">TENSION</div><div class="scene-nav-time">0:18 - 0:25</div></div></a><a class="scene-nav-item" data-target="scene-4" href="#scene-4" style="text-decoration: none;"><div class="scene-nav-num">04</div><div class="scene-nav-info"><div class="scene-nav-func">CLIMAX</div><div class="scene-nav-time">0:25 - 0:32</div></div></a><a class="scene-nav-item" data-target="scene-5" href="#scene-5" style="text-decoration: none;"><div class="scene-nav-num">05</div><div class="scene-nav-info"><div class="scene-nav-func">CONTRAST</div><div class="scene-nav-time">0:32 - 0:40</div></div></a><a class="scene-nav-item" data-target="scene-6" href="#scene-6" style="text-decoration: none;"><div class="scene-nav-num">06</div><div class="scene-nav-info"><div class="scene-nav-func">SUSPENSE</div><div class="scene-nav-time">0:40 - 0:45</div></div></a><a class="scene-nav-item" data-target="scene-7" href="#scene-7" style="text-decoration: none;"><div class="scene-nav-num">07</div><div class="scene-nav-info"><div class="scene-nav-func">SOLUTION</div><div class="scene-nav-time">0:45 - 0:52</div></div></a><a class="scene-nav-item" data-target="scene-8" href="#scene-8" style="text-decoration: none;"><div class="scene-nav-num">08</div><div class="scene-nav-info"><div class="scene-nav-func">BENEFIT</div><div class="scene-nav-time">0:52 - 1:00</div></div></a><a class="scene-nav-item" data-target="scene-9" href="#scene-9" style="text-decoration: none;"><div class="scene-nav-num">09</div><div class="scene-nav-info"><div class="scene-nav-func">REWARD</div><div class="scene-nav-time">1:00 - 1:08</div></div></a><a class="scene-nav-item" data-target="scene-10" href="#scene-10" style="text-decoration: none;"><div class="scene-nav-num">10</div><div class="scene-nav-info"><div class="scene-nav-func">CALL TO ACTION</div><div class="scene-nav-time">1:08 - 1:12</div></div></a><a class="scene-nav-item" data-target="scene-11" href="#scene-11" style="text-decoration: none;"><div class="scene-nav-num">11</div><div class="scene-nav-info"><div class="scene-nav-func">INFO</div><div class="scene-nav-time">1:12 - 1:15</div></div></a></nav>
+<!-- Scenes Container -->
+<div class="scenes-container"><article class="scene-card" id="scene-0"><div class="scene-header"><div class="scene-number"><div class="scene-badge">0</div><div class="scene-title">Intro - 브랜드 인지 <span class="scene-func-label">BRAND</span></div></div><div class="scene-time">0:00 - 0:03</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text">프리미엄 의료 기술이라는 첫인상 형성을 위한 깨끗하고 세련된 브랜드 앰배서더 로고 노출.</div></div><div class="scene-body"><div class="scene-visual"><img src="assets/RxSIGHT_logo.jpg" style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin: 0 auto; display: block; padding: 40px; background: #fff; object-fit: contain;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text">RxSight LAL (Light Adjustable Lens)</div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><strong>[카메라]</strong> 정면 고정. 로고가 중앙에 유려하게 페이드인.<br/><br/><strong>[조명]</strong> 부드러운 하이키 화이트 조명으로 신뢰감 형성.<br/><br/><strong>[트랜지션]</strong> 디졸브 아웃 (1.5초)</div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">(침묵)</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">맑고 투명한 시그니처 사운드 효과 (앰비언트 느낌)</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">부드러운 스위시 사운드 (로고 등장 시)</div></div></div></div></div></div></article><article class="scene-card" id="scene-1"><div class="scene-header"><div class="scene-number"><div class="scene-badge">1</div><div class="scene-title">Symptom - 흐릿한 세상 <span class="scene-func-label">HOOK</span></div></div><div class="scene-time">0:03 - 0:10</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text">백내장 증상을 1인칭 및 클로즈업 샷으로 보여주며 타겟 환자의 강력한 공감대 형성.</div></div><div class="scene-body"><div class="scene-visual"><img src="images/A/Woman_struggling_to_read_newspaper_88191d5e81.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text">점점 흐려지는 시야... 백내장?</div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><strong>[카메라]</strong> 주인공의 답답한 감정을 보여주는 타이트 앵글. 흐릿하게 왜곡되는 시야 필터 적용 (시점 전환).<br/><br/><strong>[조명]</strong> 창가 옆이지만 다소 어둡고 대비가 강한 조명으로 답답함 강조.<br/><br/><strong>[기타]</strong> 모델이 인상을 찌푸리며 신문을 얼굴에서 떼었다 붙였다 함.</div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">"요즘 들어 글씨도 잘 안 보이고, 손녀 얼굴도 흐릿하네..."</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">느리고 사색적인 피아노 (답답함, 먹먹함 연출)</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">신문 바스락거리는 소리, 약한 한숨 소리</div></div></div></div></div></div></article><article class="scene-card" id="scene-2"><div class="scene-header"><div class="scene-number"><div class="scene-badge">2</div><div class="scene-title">Diagnosis - 진단과 걱정 <span class="scene-func-label">PROBLEM</span></div></div><div class="scene-time">0:10 - 0:18</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text">수술이 필요하다는 사실 직면. 일생 한 번뿐인 눈 수술에 대한 걱정과 두려움 시작.</div></div><div class="scene-body"><div class="scene-visual"><img src="images/A/A_realistic_shot_inside_a_modern_ophthalmologists__5894088930.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text">백내장 진단, 일생 한 번의 수술</div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><strong>[카메라]</strong> 어깨 너머(Over the shoulder) 샷에서 환자 얼굴로 줌인.<br/><br/><strong>[조명]</strong> 병원의 차갑고 전문적인 푸른빛 베이스 조명.<br/><br/><strong>[연기]</strong> 깍지 낀 손을 만지작거리며 의사의 설명을 듣는 굳은 표정.</div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">"수술을 하긴 해야 하는데..."</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">백그라운드 앰비언스로 깔리는 메디컬 다큐멘터리 스타일의 조용한 일렉트로닉 패드</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">의료기기 작동음 (희미하게), 병원 대기실 앰비언스</div></div></div></div></div></div></article><article class="scene-card" id="scene-3"><div class="scene-header"><div class="scene-number"><div class="scene-badge">3</div><div class="scene-title">Confusion - 선택의 혼란 <span class="scene-func-label">TENSION</span></div></div><div class="scene-time">0:18 - 0:25</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text">수많은 인공수정체 렌즈 종류 앞에서 환자가 느끼는 복잡함과 막막함.</div></div><div class="scene-body"><div class="scene-visual"><img src="images/A/A_realistic_shot_inside_a_modern_ophthalmologists__8f62eab549.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text">단초점? 다초점? 너무 많은 렌즈 종류</div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><strong>[카메라]</strong> 카탈로그를 내려다보는 환자 클로즈업.<br/><br/><strong>[그래픽]</strong> 카탈로그 위로 복잡한 텍스트들이 어지럽게 둥둥 떠다니는 모션 그래픽 추가.<br/><br/><strong>[조명]</strong> 그림자가 강하게 져서 복잡한 심리를 극대화.</div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">"종류가 왜 이렇게 많아? 나한테 맞는 게 뭔지..."</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">불안감을 자아내는 첼로와 피아노 텐션 노트 반복</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">종이 넘기는 소리, 심장 박동 소리 (희미하게)</div></div></div></div></div></div></article><article class="scene-card" id="scene-4"><div class="scene-header"><div class="scene-number"><div class="scene-badge">4</div><div class="scene-title">Shock - 정보 충격 <span class="scene-func-label">CLIMAX</span></div></div><div class="scene-time">0:25 - 0:32</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text">가장 큰 리스크(수술 후 되돌릴 수 없음)를 환자가 알게 되어 불안이 최고조에 달함.</div></div><div class="scene-body"><div class="scene-visual"><img src="images/A/Woman_holding_medical_report_shock_dcdb34ff79.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text">한 번 눈에 넣으면 다시 뺄 수 없다고?</div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><strong>[카메라]</strong> 극단적인 얼굴 클로즈업. 동공 지진 묘사.<br/><br/><strong>[그래픽]</strong> '영구적'이라는 텍스트가 빨간색 위험 경고처럼 스크린을 스쳐 지나감.<br/><br/><strong>[조명]</strong> 대비가 가장 강한 드라마틱 사이드 라이팅.</div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">"뭐? 수술하면 다시는 렌즈를 바꿀 수 없다고요?"</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">갑자기 음악 멈춤(드롭) 또는 날카로운 스트링 글리산도</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">심장이 쿵 내려앉는 저주파 베이스 임팩트 (Boom)</div></div></div></div></div></div></article><article class="scene-card" id="scene-5"><div class="scene-header"><div class="scene-number"><div class="scene-badge">5</div><div class="scene-title">Comparison - 실패 vs 성공 <span class="scene-func-label">CONTRAST</span></div></div><div class="scene-time">0:32 - 0:40</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text">흐릿하고 적응 안되는 삶(실패)과 선명한 삶(성공)을 은유적으로 보여주며 LAL 렌즈의 필요성 대두.</div></div><div class="scene-body"><div class="scene-visual"><img src="images/A/Woman_looking_overjoyed_amazed_169564d363.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text">수술 후 시력이 내 맘 같지 않다면?</div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><strong>[카메라]</strong> 과거 회상/상상 씬 느낌의 화면 분할 또는 크로스 디졸브.<br/><br/><strong>[조명]</strong> 오른쪽(성공)은 극도로 따뜻하고 화사한 빛, 왼쪽(실패)은 푸르고 차가운 빛.<br/><br/><strong>[무브먼트]</strong> 여주인공이 행복해하며 미소를 짓는 모습으로 천천히 전환.</div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">"평생 이 눈으로 살아야 하는데..."</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">서서히 밝고 희망찬 메이저 코드 스트링 전개</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">(침묵) 시각적 대비에 집중</div></div></div></div></div></div></article><article class="scene-card" id="scene-6"><div class="scene-header"><div class="scene-number"><div class="scene-badge">6</div><div class="scene-title">Fear - 불안의 절정 <span class="scene-func-label">SUSPENSE</span></div></div><div class="scene-time">0:40 - 0:45</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text">결정 직전, 동의서를 잡고 주저하는 환자. 서스펜스의 피크포인트.</div></div><div class="scene-body"><div class="scene-visual"><img src="images/A/Woman_holding_medical_form_ad114aae3e.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text">나도 수술 결과가 나쁘면 어쩌지...</div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><strong>[카메라]</strong> 떨리는 손과 수술 동의서 포커스 아웃, 불안한 환자 얼굴 포커스 인.<br/><br/><strong>[조명]</strong> 어두운 실내에서 얼굴만 하이라이트.<br/><br/><strong>[연기]</strong> 펜을 쥔 손을 바들바들 떠는 디테일.</div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">(속마음) "도수가 안 맞으면 어떡하지..."</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">시계 초침 소리와 결합된 긴장감 넘치는 비트</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">펜 달칵거리는 소리, 숨소리 강조</div></div></div></div></div></div></article><article class="scene-card" id="scene-7"><div class="scene-header"><div class="scene-number"><div class="scene-badge">7</div><div class="scene-title">Turnaround - 희망의 발견 <span class="scene-func-label">SOLUTION</span></div></div><div class="scene-time">0:45 - 0:52</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text">드디어 '수술 후 조정 가능한 유일한 렌즈, LAL'을 알게 되며 눈빛에 확신이 참.</div></div><div class="scene-body"><div class="scene-visual"><img src="images/A/Doctor_shows_patient_lal_lens_102b43142c.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text">수술 후에도 시력을 빛으로 맞춘다고요?</div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><strong>[카메라]</strong> 환자 얼굴에서 퍼지는 안도감 클로즈업. 뿌옇던 화면이 갑자기 선명하게 포커싱됨.<br/><br/><strong>[조명]</strong> 차가운 톤에서 완전히 따뜻한 오렌지/옐로우 톤으로 전환.<br/><br/><strong>[기타]</strong> LAL 렌즈 그래픽이 영롱하게 환자 눈앞에서 빛남.</div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">의사: "LAL은 다릅니다. 수술 후 빛으로 꼭 맞게 조정해 드리니까요."</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">따뜻하고 벅차오르는 오케스트라 / 피아노 아르페지오</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">마법같은 '샤라랑~' (빛 조정 사운드 은유), 부드러운 안도의 한숨</div></div></div></div></div></div></article><article class="scene-card" id="scene-8"><div class="scene-header"><div class="scene-number"><div class="scene-badge">8</div><div class="scene-title">Process - 맞춤의 여정 <span class="scene-func-label">BENEFIT</span></div></div><div class="scene-time">0:52 - 1:00</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text">편안하게 의자에 앉아 LDD 광원으로 시력을 조정하는 마법 같은 과정.</div></div><div class="scene-body"><div class="scene-visual"><img src="images/A/Woman_receiving_uv_light_treatment_3a2cbb436c.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text">내 눈에 완벽하게 맞출 때까지, 빛으로 정교하게</div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><strong>[카메라]</strong> LDD 기기의 부드러운 빛이 눈을 향하는 안정적인 사이드 앵글.<br/><br/><strong>[그래픽]</strong> 초점이 조율되는 듯한 UI 슬라이더가 화면에 겹침.<br/><br/><strong>[조명]</strong> 럭셔리 스파 같은 편안한 메디컬 조명.</div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">"내 눈에 딱 맞을 때까지... 렌즈가 내게 맞춰지네요."</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">안정감 지향, 미래지향적이면서 부드러운 일렉트로닉 앰비언트</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">부드럽고 안전하게 작동하는 첨단 기기 사운드 (우우웅-)</div></div></div></div></div></div></article><article class="scene-card" id="scene-9"><div class="scene-header"><div class="scene-number"><div class="scene-badge">9</div><div class="scene-title">Joy - 선명한 일상 <span class="scene-func-label">REWARD</span></div></div><div class="scene-time">1:00 - 1:08</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text">안경 없이도 태블릿/신문과 먼 풍경을 자유롭게 보는 행복한 모습 (클라이맥스).</div></div><div class="scene-body"><div class="scene-visual"><img src="images/A/A_highly_emotional_beautiful_portrait_of_a_65yearo_2aaaf0cfb2.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text">다시 찾은 맑고 선명한 세상</div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><strong>[카메라]</strong> 매우 밝고 컬러풀한 화면. 활짝 웃는 환자 정면.<br/><br/><strong>[조명]</strong> 역광으로 빛나는 햇살 (렌즈 플레어 효과 적용).<br/><br/><strong>[연출]</strong> 손녀와 시선을 맞추며 사랑스럽게 웃는 완벽한 행복.</div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">"이제 손녀 얼굴이 매일 선명해요. 정말 행복합니다."</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">완전한 화성의 풍성한 스트링 연주. 승리감 결말.</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">아이의 웃음소리, 기분 좋은 야외 앰비언스 (새소리)</div></div></div></div></div></div></article><article class="scene-card" id="scene-10"><div class="scene-header"><div class="scene-number"><div class="scene-badge">10</div><div class="scene-title">CTA - 선택 촉구 <span class="scene-func-label">CALL TO ACTION</span></div></div><div class="scene-time">1:08 - 1:12</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text">영상의 핵심 카피 메시지를 강렬한 타이포그래피 슬라이드로 전달.</div></div><div class="scene-body"><div class="scene-visual"><img src="images/A/Kinetic_typography_still_frame_on_a_premium_dark_b_6ba9578376.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text">수술 후 조정 가능한 유일한 인공수정체</div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><strong>[카메라]</strong> 검은 배경에서 텍스트가 빛나며 역동적으로 타이핑/팝업 등장.<br/><br/><strong>[디자인]</strong> RxSight 브랜드 컬러(Teal)를 강조하여 신뢰감 극대화.</div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">"수술 후 맞추는 유일한 렌즈, RxSight LAL을 확인하세요."</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">엔딩 브레이크. 단단하고 세련된 타격음 후 잔향 확산</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">글라시(Glassy)한 텍스트 팝업 사운드 효과</div></div></div></div></div></div></article><article class="scene-card" id="scene-11"><div class="scene-header"><div class="scene-number"><div class="scene-badge">11</div><div class="scene-title">Outro - 병원 안내 <span class="scene-func-label">INFO</span></div></div><div class="scene-time">1:12 - 1:15</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text">마지막으로 협력 병원의 정보와 상세 상담을 유도하는 랜딩 페이지 엔딩.</div></div><div class="scene-body"><div class="scene-visual"><img src="images/A/아라케어_capture_logo.png" style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin: 0 auto; display: block; padding: 40px; background: #fff; object-fit: contain;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text">(해당 안과 / 아라케어 로고 및 안내 정보)</div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><strong>[카메라]</strong> 로고가 화면 중앙으로 부드럽게 스케일 아웃하여 안착.<br/><br/><strong>[그래픽]</strong> 하단에 작은 안내 텍스트와 상담 QR 코드 페이드인.<br/><br/><strong>[트랜지션]</strong> 블랙 페이드 아웃.</div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">(침묵)</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">음악이 서서히 페이드아웃 되며 영상 종료</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">(없음)</div></div></div></div></div></div></article></div><!-- /.scenes-container -->
+</div><!-- /.content-with-nav -->
+</section>
+<!-- Version B: Explain -->
+<section class="tab-content explain" id="explain">
+<!-- Version Indicator -->
+<div class="version-banner explain">
+<div class="version-letter">B</div>
+<div class="version-info">
+<h3>Version B: Rational Explain</h3>
+<p>이성 중심 -- 데이터와 논리로 설득하는 AIDA 구조</p>
+</div>
+</div>
+<!-- Marketing Strategy -->
+<div class="strategy-section">
+<div class="strategy-header">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M12 20V10M18 20V4M6 20v-4"></path>
+</svg>
+<h2>Marketing Strategy Brief / 마케팅 전략 요약</h2>
+</div>
+<div class="strategy-grid">
+<!-- Campaign Objective -->
+<div class="strategy-block">
+<h3>
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+            Campaign Objective
+          </h3>
+<div class="strategy-content">
+<strong>정보 수집형 환자에게 LAL의 기술적 우위와 임상 데이터를 명확히 전달</strong>하여 "이게 더 낫다"는 확신 형성 및 상담 전환
+          </div>
+</div>
+<!-- Target Audience - STP -->
+<div class="strategy-block">
+<h3>
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            STP (State-Based Targeting)
+          </h3>
+<div class="stp-section">
+<div class="stp-label">Segmentation</div>
+<ul class="strategy-list">
+<li>젊을 때 라식/라섹 수술을 받은 경험이 있는 분</li>
+<li>다초점 렌즈를 넣었다가 실패/불만족 경험이 있는 분</li>
+<li>건강/의료 정보 수집에 적극적인 분</li>
+<li>비용보다 결과를 중시하는 분</li>
+</ul>
+</div>
+<div class="stp-section" style="margin-top:16px">
+<div class="stp-label">Targeting</div>
+<div class="strategy-content">
+              정보를 충분히 수집한 후 결정하는 <strong>50-60대</strong>, 특히 <strong>라식 이력자</strong>
+</div>
+</div>
+<div class="stp-section" style="margin-top:16px">
+<div class="stp-label">Positioning</div>
+<div class="message-highlight" style="margin-top:8px">
+<div class="message-main">"70% 예측이 아닌 92% 확정, 데이터로 증명된 선택"</div>
+</div>
+</div>
+</div>
+<!-- Rational Journey -->
+<div class="strategy-block">
+<h3>
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+            Rational Journey (AIDA)
+          </h3>
+<div class="strategy-content">
+<strong>논리적 설득 구조</strong>로 문제 인식 -&gt; 해결책 제시 -&gt; 증거 -&gt; 행동 유도
+          </div>
+<div class="emotion-journey">
+<span class="emotion-badge negative">Problem</span>
+<span class="emotion-arrow">-&gt;</span>
+<span class="emotion-badge neutral">Difference</span>
+<span class="emotion-arrow">-&gt;</span>
+<span class="emotion-badge neutral">How</span>
+<span class="emotion-arrow">-&gt;</span>
+<span class="emotion-badge positive">Data</span>
+<span class="emotion-arrow">-&gt;</span>
+<span class="emotion-badge positive">Action</span>
+</div>
+</div>
+<!-- Key Message -->
+<div class="strategy-block">
+<h3>
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            Key Message
+          </h3>
+<div class="message-highlight">
+<div class="message-main">"예측이 아닌 확정"</div>
+<div class="message-sub">70% 예측에서 92% 확정으로, 패러다임의 전환</div>
+</div>
+<ul class="strategy-list" style="margin-top:16px">
+<li><strong>Primary:</strong> 수술 후 조정 = 세계 유일 FDA 승인 기술</li>
+<li><strong>Secondary:</strong> 92.1% 목표 달성률, 98% 환자 추천율</li>
+<li><strong>Rational:</strong> Test Drive 개념 - 체험 후 결정</li>
+</ul>
+</div>
+<!-- Data Points -->
+<div class="strategy-block">
+<h3>
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M3 3v18h18"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg>
+            Key Data Points
+          </h3>
+<div class="usp-cards">
+<div class="usp-card">
+<div class="usp-title" style="font-size:1.5rem">92.1%</div>
+<div class="usp-desc">Target Refraction<br/>Achievement Rate</div>
+</div>
+<div class="usp-card">
+<div class="usp-title" style="font-size:1.5rem">98%</div>
+<div class="usp-desc">Patient<br/>Recommendation</div>
+</div>
+<div class="usp-card">
+<div class="usp-title" style="font-size:1.5rem">87%</div>
+<div class="usp-desc">Binocular 20/20<br/>Achievement</div>
+</div>
+</div>
+<div class="data-source">
+<div class="data-source-title">Data Source</div>
+<div class="data-source-text">FDA P160055 Approval Document - RxSight Light Adjustable Lens Clinical Trial Results</div>
+</div>
+</div>
+<!-- Channel -->
+<div class="strategy-block">
+<h3>
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><rect height="14" rx="2" width="20" x="2" y="3"></rect><path d="M8 21h8M12 17v4"></path></svg>
+            Distribution Channels
+          </h3>
+<div class="channel-tags">
+<span class="channel-tag primary">YouTube Education</span>
+<span class="channel-tag primary">Naver Search Ads</span>
+<span class="channel-tag">Hospital Website</span>
+<span class="channel-tag">Blog/Cafe</span>
+<span class="channel-tag">Consultation Support</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Concept Summary -->
+<div class="concept-summary">
+<div class="concept-item">
+<div class="concept-label">Title / 제목</div>
+<div class="concept-value">"맞춤의 원리"</div>
+</div>
+<div class="concept-item">
+<div class="concept-label">Appeal / 소구점</div>
+<div class="concept-value">Rational (Problem -&gt; Solution -&gt; Data)</div>
+</div>
+<div class="concept-item">
+<div class="concept-label">Target / 타겟</div>
+<div class="concept-value">50-60s, Data-driven</div>
+</div>
+<div class="concept-item">
+<div class="concept-label">Tone / 톤앤매너</div>
+<div class="concept-value">Clean, Refined, Trustworthy</div>
+</div>
+<div class="concept-item">
+<div class="concept-label">Music / 배경음악</div>
+<div class="concept-value">Minimal Electronic</div>
+</div>
+</div>
+<!-- Timeline - 80초 (12씬, Scene 0-11) - 기능 기반 레이블 -->
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-bar"><div class="timeline-fill" style="width:100%"></div></div>
+<div class="timeline-label">S0-1 Hook/Problem</div>
+<div class="timeline-time">0:00-0:12</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-bar"><div class="timeline-fill" style="width:100%"></div></div>
+<div class="timeline-label">S2-3 Risk/Analysis</div>
+<div class="timeline-time">0:12-0:26</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-bar"><div class="timeline-fill" style="width:100%"></div></div>
+<div class="timeline-label">S4-5 Compare/Solution</div>
+<div class="timeline-time">0:26-0:42</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-bar"><div class="timeline-fill" style="width:100%"></div></div>
+<div class="timeline-label">S6-7 Tech/Fact</div>
+<div class="timeline-time">0:42-0:58</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-bar"><div class="timeline-fill" style="width:100%"></div></div>
+<div class="timeline-label">S8 Trust</div>
+<div class="timeline-time">0:58-1:04</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-bar"><div class="timeline-fill" style="width:100%"></div></div>
+<div class="timeline-label">S9-10 Key Msg/CTA</div>
+<div class="timeline-time">1:04-1:15</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-bar"><div class="timeline-fill" style="width:100%"></div></div>
+<div class="timeline-label">S11 Outro</div>
+<div class="timeline-time">1:15-1:20</div>
+</div>
+</div>
+<!-- Content with Navigation -->
+<div class="content-with-nav">
+<!-- Side Navigation -->
+<nav class="scene-nav"><div class="scene-nav-header">
+<div class="scene-nav-title">Scene Navigation</div>
+<div class="scene-nav-subtitle">논리적 설득 구조와 각 씬의 전략적 역할</div>
+</div><a class="scene-nav-item active" data-target="b-scene-0" href="#b-scene-0" style="text-decoration: none;"><div class="scene-nav-num">00</div><div class="scene-nav-info"><div class="scene-nav-func">HOOK</div><div class="scene-nav-time">0:00 - 0:04</div></div></a><a class="scene-nav-item" data-target="b-scene-1" href="#b-scene-1" style="text-decoration: none;"><div class="scene-nav-num">01</div><div class="scene-nav-info"><div class="scene-nav-func">PROBLEM</div><div class="scene-nav-time">0:04 - 0:12</div></div></a><a class="scene-nav-item" data-target="b-scene-2" href="#b-scene-2" style="text-decoration: none;"><div class="scene-nav-num">02</div><div class="scene-nav-info"><div class="scene-nav-func">RISK</div><div class="scene-nav-time">0:12 - 0:18</div></div></a><a class="scene-nav-item" data-target="b-scene-3" href="#b-scene-3" style="text-decoration: none;"><div class="scene-nav-num">03</div><div class="scene-nav-info"><div class="scene-nav-func">ANALYSIS</div><div class="scene-nav-time">0:18 - 0:26</div></div></a><a class="scene-nav-item" data-target="b-scene-4" href="#b-scene-4" style="text-decoration: none;"><div class="scene-nav-num">04</div><div class="scene-nav-info"><div class="scene-nav-func">COMPARISON</div><div class="scene-nav-time">0:26 - 0:34</div></div></a><a class="scene-nav-item" data-target="b-scene-5" href="#b-scene-5" style="text-decoration: none;"><div class="scene-nav-num">05</div><div class="scene-nav-info"><div class="scene-nav-func">SOLUTION</div><div class="scene-nav-time">0:34 - 0:42</div></div></a><a class="scene-nav-item" data-target="b-scene-6" href="#b-scene-6" style="text-decoration: none;"><div class="scene-nav-num">06</div><div class="scene-nav-info"><div class="scene-nav-func">TECH</div><div class="scene-nav-time">0:42 - 0:50</div></div></a><a class="scene-nav-item" data-target="b-scene-7" href="#b-scene-7" style="text-decoration: none;"><div class="scene-nav-num">07</div><div class="scene-nav-info"><div class="scene-nav-func">FACT</div><div class="scene-nav-time">0:50 - 0:58</div></div></a><a class="scene-nav-item" data-target="b-scene-8" href="#b-scene-8" style="text-decoration: none;"><div class="scene-nav-num">08</div><div class="scene-nav-info"><div class="scene-nav-func">TRUST</div><div class="scene-nav-time">0:58 - 1:04</div></div></a><a class="scene-nav-item" data-target="b-scene-9" href="#b-scene-9" style="text-decoration: none;"><div class="scene-nav-num">09</div><div class="scene-nav-info"><div class="scene-nav-func">CALL TO ACTION</div><div class="scene-nav-time">1:04 - 1:10</div></div></a><a class="scene-nav-item" data-target="b-scene-10" href="#b-scene-10" style="text-decoration: none;"><div class="scene-nav-num">10</div><div class="scene-nav-info"><div class="scene-nav-func">CTA</div><div class="scene-nav-time">1:10 - 1:15</div></div></a><a class="scene-nav-item" data-target="b-scene-11" href="#b-scene-11" style="text-decoration: none;"><div class="scene-nav-num">11</div><div class="scene-nav-info"><div class="scene-nav-func">INFO</div><div class="scene-nav-time">1:15 - 1:20</div></div></a></nav>
+<!-- Scenes Container -->
+<div class="scenes-container"><article class="scene-card" id="b-scene-0"><div class="scene-header"><div class="scene-number"><div class="scene-badge">0</div><div class="scene-title">Intro - 프리젠터 등장 <span class="scene-func-label">HOOK</span></div></div><div class="scene-time">0:00 - 0:04</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text"><div class="scene-intent-text">전문성 있는 의사가 최고급 대학병원 VIP 진료실에서 직접 프레젠테이션을 시작함.</div></div></div><div class="scene-body"><div class="scene-visual"><img src="images/B/A_cinematic_professional_shot_of_a_bright_premium__63956c032b.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text"><div class="content-text">백내장 수술의 새로운 파러다임</div></div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><div class="content-text"><strong>[카메라]</strong> 자연광이 들어오는 밝고 신뢰감 있는 진료실에서 핀조명을 받는 의사를 로우 앵글로 웅장하게 포착.<br/><br/><strong>[조명]</strong> 부드러운 화이트 톤과 따뜻한 자연광 (채광) 조명.<br/><br/><strong>[연기]</strong> 의사가 카메라를 정면으로 응시하며 신뢰감 넘치는 미소를 지음.</div></div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">의사: "백내장 수술, 단 한 번의 눈 수술인데 왜 아직도 예측에만 의존하십니까?"</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">첨단, IT, 프레젠테이션 톤의 테크 하우스 / 일렉트로닉 (긴장감 있음)</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">마이크 울림(리버브) 효과 살짝 추가, 핀 조명 켜지는 소리</div></div></div></div></div></div></article><article class="scene-card" id="b-scene-1"><div class="scene-header"><div class="scene-number"><div class="scene-badge">1</div><div class="scene-title">Data - 수술 만족도의 진실 <span class="scene-func-label">PROBLEM</span></div></div><div class="scene-time">0:04 - 0:12</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text"><div class="scene-intent-text">충격적인 통계 정보(목표 도수 도달 실패 확률)를 스마트 모니터의 모션 그래픽으로 시각화하여 이성적 위기감 조성.</div></div></div><div class="scene-body"><div class="scene-visual"><img src="images/B/Doctor_pointing_at_infographic_42e4fef29f.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text"><div class="content-text">절반 가까운 환자가 수술 후 시력에 100% 만족하지 못합니다.</div></div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><div class="content-text"><strong>[카메라]</strong> 트래킹 샷. 의사가 태블릿 PC 화면을 넘길 때 모니터에 신뢰감 있는 3D 숫자 그래픽들이 연결되어 띄워짐.<br/><br/><strong>[통계 그래픽]</strong> 대형 디스플레이 화면 속에서 '최대 30% 오차 가능' 이라는 붉은색 데이터가 역동적으로 회전함.<br/><br/><strong>[조명]</strong> 모니터의 데이터가 부각되며 진중한 분위기를 연출함.</div></div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">의사: "실제 수술 시 목표 도수에서 오차가 발생할 확률입니다. 이게 기존 렌즈의 한계죠."</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">심장 템포와 유사한 베이스 신스 반복</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">3D 데이터 팝업 사운드 (테크니컬 비프음)</div></div></div></div></div></div></article><article class="scene-card" id="b-scene-2"><div class="scene-header"><div class="scene-number"><div class="scene-badge">2</div><div class="scene-title">Risk - 도수 불만족 <span class="scene-func-label">RISK</span></div></div><div class="scene-time">0:12 - 0:18</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text"><div class="scene-intent-text">오차 발생 시 환자가 겪는 부작용(빛 번짐, 안경 재착용)의 논리적 분석.</div></div></div><div class="scene-body"><div class="scene-visual"><img src="images/B/Doctor_explaining_with_pie_chart_1be5b0cf27.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text"><div class="content-text">빛 번짐, 불편한 시야... 평생 감수하시겠습니까?</div></div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><div class="content-text"><strong>[카메라]</strong> 의사 상반신 클로즈업. 대형 모니터의 파이 차트가 강조되며 불만족 비율(30%)이 붉게 돌출되는 모션 그래픽.<br/><br/><strong>[조명]</strong> 차트의 붉은 부분이 강조될 때 화면 톤이 살짝 잡히며 심각함 묘사.<br/><br/><strong>[기타]</strong> 수술 불만족을 묘사하는 모션 효과 극대화.</div></div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">의사: "렌즈가 눈에 들어간 직후부터 환자는 그 결과를 무조건 수용해야만 했습니다."</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">텐션이 고조되는 사운드 트랙 유지</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">유리 깨지는 듯한 강렬한 이펙트, 경고음</div></div></div></div></div></div></article><article class="scene-card" id="b-scene-3"><div class="scene-header"><div class="scene-number"><div class="scene-badge">3</div><div class="scene-title">Limitation - 한계점 분석 <span class="scene-func-label">ANALYSIS</span></div></div><div class="scene-time">0:18 - 0:26</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text"><div class="scene-intent-text">안구 측정-예측-삽입 프로세스의 본질적인 한계를 3가지 팩트로 정리.</div></div></div><div class="scene-body"><div class="scene-visual"><img src="images/B/Doctor_swiping_hand_camera_12d2ef6ced.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text"><div class="content-text">예측 오차 | 수정체 위치 변화 | 안구 아물기 반응</div></div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><div class="content-text"><strong>[카메라]</strong> 의사가 리모컨(클리커)으로 자연스럽게 화면을 넘기면 3개의 팩트 카드가 모니터 화면에 차례대로 띄워짐. 카메라가 카드를 훑고 지나감(Swish Pan).<br/><br/><strong>[디자인]</strong> 미니멀한 UI 그래픽. 빨간색 금지 기호 활용.</div></div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">의사: "절개된 안구가 아물면서 도수는 필연적으로 변합니다. 의사의 실력 문제가 아닙니다."</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">빠른 비트 추가되어 지루하지 않게 텐션 상승</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">스와이프 (훅- 넘어가는) 소리 연달아 3번</div></div></div></div></div></div></article><article class="scene-card" id="b-scene-4"><div class="scene-header"><div class="scene-number"><div class="scene-badge">4</div><div class="scene-title">Comparison - 데이터 팩트 체크 <span class="scene-func-label">COMPARISON</span></div></div><div class="scene-time">0:26 - 0:34</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text"><div class="scene-intent-text">타 렌즈 대비 LAL의 20/20 달성률 데이터 기둥 비교 (시각적 압도).</div></div></div><div class="scene-body"><div class="scene-visual"><img src="images/B/Doctor_explaining_with_data_overlay_e5e8ea5696.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text"><div class="content-text">일반 렌즈 vs 빛으로 조정하는 LAL</div></div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><div class="content-text"><strong>[카메라]</strong> 프레젠테이션 스크린에 두 개의 비교 그래프가 모션으로 역동적으로 솟아오름. 카메라 로우 앵글 와이드 샷.<br/><br/><strong>[기타]</strong> LAL 기둥이 확연히 높게 올라가며 밝은 청록빛을 뿜어냄. 의사는 당당하게 LAL 기둥을 짚음.</div></div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">의사: "하지만 수술 후 빛으로 도수를 미세 조정한다면, 결과는 완전히 달라집니다."</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">드롭 이후 반전되는 메이저/희망찬 테크 코드로 변환</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">웅장하게 기둥이 솟아오르는 우르릉 사운드, 청명한 칭! 소리</div></div></div></div></div></div></article><article class="scene-card" id="b-scene-5"><div class="scene-header"><div class="scene-number"><div class="scene-badge">5</div><div class="scene-title">Solution - LAL의 원리 공개 <span class="scene-func-label">SOLUTION</span></div></div><div class="scene-time">0:34 - 0:42</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text">가장 이성적이고 설득력 있는 해결책으로서 LAL 렌즈 클로즈업 소개.</div></div><div class="scene-body"><div class="scene-visual"><img src="images/B/Doctor_holding_intraocular_lens_cf1b953d6f.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text">세계 유일, 미국 FDA 승인 빛 조절 인공수정체</div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><strong>[카메라]</strong> 의사가 손바닥 위에 떠오르는 아름답고 투명한 렌즈 모델을 자애롭고 경이롭게 바라보는 클로즈업.<br/><br/><strong>[조명]</strong> 렌즈에서 뿜어져 나오는 극적인 다채로운 빛 굴절 효과(Caustics)가 화면을 채움.</div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">의사: "이것이 세계에서 유일한, 수술 후 외부 빛을 통해 분자를 재배열하는 LAL 렌즈의 원리입니다."</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">신비롭고 고급스러운 엠비언트 선율</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">SF 영화의 플라즈마/에테르 진동 사운드</div></div></div></div></div></div></article><article class="scene-card" id="b-scene-6"><div class="scene-header"><div class="scene-number"><div class="scene-badge">6</div><div class="scene-title">Mechanism - 과학적 시각화 <span class="scene-func-label">TECH</span></div></div><div class="scene-time">0:42 - 0:50</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text"><div class="scene-intent-text">자외선(UV) 빛을 받으면 렌즈 속 분자가 결합하는 과정을 거대한 애니메이션으로 보여줌.</div></div></div><div class="scene-body"><div class="scene-visual"><img src="images/B/Doctor_with_light_delivery_device_0b2e1d7ebe.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text"><div class="content-text">안전한 단파장 자외선으로 완벽한 도수 최적화</div></div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><div class="content-text"><strong>[카메라]</strong> 진료실 뒷벽의 대형 스크린 전체가 전자현미경 뷰어 화면으로 전환되며 럭셔리한 분자 결합 구조가 애니메이션됨.<br/><br/><strong>[기타]</strong> 정밀 과학 다큐멘터리를 연상시키는 극도로 샤프한 CGI 구현.</div></div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">의사: "눈이 모두 회복된 후, LDD 기기의 빛을 약 90초간 조사하여 내 눈에 100% 맞는 도수를 찾아갑니다."</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">지성적이고 전문적인 비트에 퓨처리스틱 아르페지오 추가</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">분자 결합을 표현하는 따다닥- 컴퓨터 작동음</div></div></div></div></div></div></article><article class="scene-card" id="b-scene-7"><div class="scene-header"><div class="scene-number"><div class="scene-badge">7</div><div class="scene-title">Performance - 20/20 데이터 <span class="scene-func-label">FACT</span></div></div><div class="scene-time">0:50 - 0:58</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text"><div class="scene-intent-text">최고 완벽한 1.0(20/20) 시력 도달 확률을 다시 한번 그래픽으로 강타.</div></div></div><div class="scene-body"><div class="scene-visual"><img src="images/B/Doctor_with_bar_chart_statistics_857c4694a9.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text"><div class="content-text">일반 렌즈 대비 2배 높은 1.0 목표시력 달성률</div></div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><div class="content-text"><strong>[카메라]</strong> 의사와 70.1%라는 화면에 1.0 시력을 보장하는 'Fact Checklist' 모션 그래픽이 슬라이드됨.<br/><br/><strong>[그래픽]</strong> 화면 양 끝에서 'Fact Checklist' 모션 그래픽이 슬라이드됨.</div></div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">의사: "결과는 숫자가 증명합니다. 일반 렌즈의 2배에 달하는 완벽한 1.0 시력 달성률."</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">음악이 절정으로 치닫는 빌드업 구간</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">강력한 키보드 타건음 또는 디지털 도장 찍히는 '쾅' 소리</div></div></div></div></div></div></article><article class="scene-card" id="b-scene-8"><div class="scene-header"><div class="scene-number"><div class="scene-badge">8</div><div class="scene-title">Trust - 글로벌 검증 인증 <span class="scene-func-label">TRUST</span></div></div><div class="scene-time">0:58 - 1:04</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text"><div class="scene-intent-text">모든 과학적 데이터의 마침표. 환자의 이성적 불안감을 완벽히 차단함.</div></div></div><div class="scene-body"><div class="scene-visual"><img src="images/B/Doctor_with_fda_approval_badges_8a13797d59.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text"><div class="content-text">100만 번 이상의 임상 수술 건수, 미국 FDA의 까다로운 검증</div></div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><div class="content-text"><strong>[카메라]</strong> 의사 바스트 샷 줌인. 환자(유저)와 강렬한 아이 컨택.<br/><br/><strong>[그래픽]</strong> 의사 머리 주변으로 세련된 FDA 승인 인증서와 글로벌 임상 데이터가 모니터에 영롱하게 빛남.</div></div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">의사: "수십만 명의 글로벌 임상 케이스, 그리고 가장 까다로운 FDA가 최초로 인증한 안전성."</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">웅장한 메인 테마 코러스 파트</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">신비로운 차임벨(Chime) 소리</div></div></div></div></div></div></article><article class="scene-card" id="b-scene-9"><div class="scene-header"><div class="scene-number"><div class="scene-badge">9</div><div class="scene-title">Key Message - 이성적 촉구 <span class="scene-func-label">CALL TO ACTION</span></div></div><div class="scene-time">1:04 - 1:10</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text"><div class="scene-intent-text">최종 설득 메시지를 띄우며 환자에게 결정의 확신을 줌. 노벨상 기법 및 의사의 신뢰를 강조.</div></div></div><div class="scene-body"><div class="scene-visual"><img src="images/B/Doctor_making_eye_contact_smiling_d98c96b114.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text"><div class="content-text">노벨상 수상 기술이 적용된 세계 유일의 빛 조절 렌즈. 안과의사도 선택하는 수술입니다.</div></div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><div class="content-text"><strong>[카메라]</strong> 매우 역동적인 타이포그래피 애니메이션 텍스트가 화면을 덮고 의사가 가운데 섬.<br/><br/><strong>[조명]</strong> 텍스트 자체가 화면의 밝은 빛이 의사 얼굴을 화사하고 신뢰감 있게 비춤.</div></div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">의사: "노벨상 수상 기술이 빚어낸 세계 유일의 빛 조절 렌즈. 수많은 안과의사 본인들도 이 수술을 선택합니다. 백내장 렌즈 선택의 확실한 정답, RxSight LAL입니다."</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">빠른 컷아웃으로 클라이맥스 종료</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">묵직하고 거대한 철문이 닫히는 듯한 우웅- 하는 붐 비트</div></div></div></div></div></div></article><article class="scene-card" id="b-scene-10"><div class="scene-header"><div class="scene-number"><div class="scene-badge">10</div><div class="scene-title">CTA - 행동 촉구 <span class="scene-func-label">CTA</span></div></div><div class="scene-time">1:10 - 1:15</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text"><div class="scene-intent-text">의사가 직접 시청자에게 "지금 바로 LAL을 선택하라, 상담을 시작하라"고 강력히 후킹하는 결정적 CTA 화면. 키네틱 타이포그래피와 스포트라이트 연출로 클라이맥스를 형성.</div></div></div><div class="scene-body"><div class="scene-visual"><img src="images/B/Doctor_making_eye_contact_smiling_ea280b8701.jpeg" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover; max-height: 500px;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text"><div class="content-text">지금, 당신의 눈을 맞추십시오.</div></div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><div class="content-text"><strong>[카메라]</strong> 어둠 속에서 스포트라이트가 켜지며 의사가 그림자에서 한 발 앞으로 걸어나옴. 카메라 정면 응시. 뒤편에 거대한 키네틱 타이포그래피 모션 그래픽.<br/><br/><strong>[텍스트]</strong> "지금, 당신의 눈을 맞추십시오" 글로잉 틸(#8FD6D6) 대형 타이포, 하단에 "RxSight LAL" 퍼플(#813A74) 로고 타이프. 뒤에서 다이나믹 광선이 방사됨.<br/><br/><strong>[조명]</strong> 극적인 스포트라이트 + 림라이트(역광). 고급 기업 영상 클라이맥스 미학.</div></div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">의사: "지금이 바로 당신의 눈을 맞출 시간입니다. RxSight LAL, 상담을 시작하십시오."</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">절정 빌드업 후 임팩트 드롭, 여운 있는 서스테인</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">묵직한 시네마틱 붐(Boom) 임팩트, 스포트라이트 점등 사운드</div></div></div></div></div></div></article><article class="scene-card" id="b-scene-11"><div class="scene-header"><div class="scene-number"><div class="scene-badge">11</div><div class="scene-title">Outro - 아라케어 안내 <span class="scene-func-label">INFO</span></div></div><div class="scene-time">1:15 - 1:20</div></div><div class="scene-intent"><div class="scene-intent-label">Scene Intent / 씬 의도</div><div class="scene-intent-text"><div class="scene-intent-text">아라케어 브랜드 로고와 상담 연락처를 노출하는 엔드 카드. 전문성과 신뢰감을 유지하며 실제 행동(전화/QR)으로 연결.</div></div></div><div class="scene-body"><div class="scene-visual"><img src="images/A/아라케어_capture_logo.png" style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin: 0 auto; display: block; padding: 40px; background: #fff; object-fit: contain;"/></div><div class="scene-content"><div class="content-section"><div class="content-label">Subtitle / 자막 (무음 대응)</div><div class="content-text"><div class="content-text">(ARACARE 로고 및 상담 안내)</div></div></div><div class="content-section"><div class="content-label">Visual Direction / 비주얼 디렉션</div><div class="content-text"><div class="content-text"><strong>[카메라]</strong> 깔끔한 다크 배경에 ARACARE 로고(파란 아크 심볼 + 산세리프 텍스트)가 중앙에 페이드인.<br/><br/><strong>[레이아웃]</strong> 로고 아래 상담 전화번호(크리스프 화이트 타이포), QR 코드 배치. 하단에 "FDA P160055" 인증 번호와 "RxSight LAL" 브랜딩 작게 표기.<br/><br/><strong>[톤]</strong> 미니멀하고 권위 있는 엔드 카드. 여운과 신뢰감.</div></div></div><div class="content-section"><div class="content-label">Audio / 오디오</div><div class="audio-grid"><div class="audio-item"><div class="audio-type">NA (Narration/Dialog)</div><div class="audio-content na">(침묵)</div></div><div class="audio-item"><div class="audio-type">BGM (Music)</div><div class="audio-content">여운을 남기는 짧은 엠비언트 잔여음 페이드아웃</div></div><div class="audio-item"><div class="audio-type">SFX (Sound Effects)</div><div class="audio-content">(없음)</div></div></div></div></div></div></article></div><!-- /.scenes-container -->
+</div><!-- /.content-with-nav -->
+</section>
+<!-- Footer with Legal Information -->
+<footer class="footer">
+<div class="footer-content">
+<div class="footer-grid">
+<div class="footer-section">
+<h4>Legal Notice &amp; Copyright</h4>
+<p>
+            본 문서는 아라케어 마케팅에서 RxSight LAL 제품의 B2C 홍보 영상 제작을 위해 작성된 내부 기획 문서입니다.
+            본 문서에 포함된 모든 콘텐츠(텍스트, 이미지 프롬프트, 기획 내용)는 저작권법의 보호를 받습니다.
+          </p>
+<p>
+<strong>RxSight(R) 및 Light Adjustable Lens(R)</strong>는 RxSight, Inc.의 등록 상표입니다.
+            본 문서에서의 상표 사용은 제품 홍보 목적으로만 허용되며, RxSight, Inc.의 공식 승인을 받은 범위 내에서만 사용 가능합니다.
+          </p>
+</div>
+<div class="footer-section">
+<h4>Clinical Data Source</h4>
+<ul class="legal-list">
+<li>92.1% Target Achievement: FDA P160055 Approval Document</li>
+<li>98% Patient Recommendation: Post-market Survey Data</li>
+<li>87% Binocular 20/20: Clinical Trial Results</li>
+</ul>
+<div class="data-source">
+<div class="data-source-title">Disclaimer</div>
+<div class="data-source-text">
+              개별 환자의 결과는 다를 수 있습니다. 모든 의료 결정은 담당 의료진과 상담 후 이루어져야 합니다.
+            </div>
+</div>
+</div>
+<div class="footer-section">
+<h4>Usage Guidelines</h4>
+<ul class="legal-list">
+<li>병원 내 사용 시 로고 및 연락처 교체 필요</li>
+<li>온라인 배포 시 의료광고 심의 필수</li>
+<li>AI 생성 이미지는 상업적 사용 라이선스 확인 필요</li>
+<li>음원 사용 시 저작권료 정산 필요</li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<div class="copyright">
+          (C) 2026 Aracare Marketing. All rights reserved.<br/>
+          Document prepared for RxSight LAL Marketing Campaign.
+        </div>
+<div class="confidential-badge">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<rect height="11" rx="2" width="18" x="3" y="11"></rect>
+<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+</svg>
+          CONFIDENTIAL - INTERNAL USE ONLY
+        </div>
+</div>
+</div>
+</footer>
+<script>
+    // Tab switching
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    function switchTab(tab) {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+      const targetBtn = document.querySelector(`.tab-btn[data-tab="${tab}"]`);
+      if (targetBtn) targetBtn.classList.add('active');
+      const targetContent = document.getElementById(tab);
+      if (targetContent) targetContent.classList.add('active');
+    }
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
+
+    // URL hash → auto tab switch (#story or #explain)
+    const hash = window.location.hash.replace('#', '');
+    if (hash === 'story' || hash === 'explain') {
+      switchTab(hash);
+    }
+
+    // Copy prompt
+    function copyPrompt(btn) {
+      const promptText = btn.parentElement.nextElementSibling.textContent;
+      navigator.clipboard.writeText(promptText).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    // DOM Restructure: Reorder scene elements
+    // Order: Image -> Scene Intent -> Subtitle -> Visual Direction -> Audio -> Prompt
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.scene-card').forEach(card => {
+        const sceneIntent = card.querySelector('.scene-intent');
+        const sceneBody = card.querySelector('.scene-body');
+        const sceneVisual = card.querySelector('.scene-visual');
+        const sceneContent = card.querySelector('.scene-content');
+        const promptSection = sceneVisual?.querySelector('.prompt-section');
+
+        if (sceneIntent && sceneBody && sceneVisual) {
+          // Move scene-intent inside scene-body, after scene-visual
+          sceneBody.insertBefore(sceneIntent, sceneContent);
+        }
+
+        if (promptSection && sceneContent) {
+          // Move prompt to end of scene-content
+          sceneContent.appendChild(promptSection);
+        }
+      });
+    });
+  </script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Smooth scrolling for nav items
+    document.querySelectorAll('.scene-nav-item').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('data-target');
+            const targetElement = document.getElementById(targetId);
+            if(targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // Intersection Observer to highlight active nav item on scroll
+    const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -70% 0px',
+        threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('id');
+                // find active tab
+                const activeTab = document.querySelector('.tab-content.active');
+                if(!activeTab) return;
+                
+                // remove active class from all nav items in current tab
+                activeTab.querySelectorAll('.scene-nav-item').forEach(navItem => {
+                    navItem.classList.remove('active');
+                });
+                
+                // add active class to matching nav item
+                const activeNavItem = activeTab.querySelector(`.scene-nav-item[data-target="${id}"]`);
+                if (activeNavItem) {
+                    activeNavItem.classList.add('active');
+                }
+            }
+        });
+    }, observerOptions);
+
+    // Observe all scene cards
+    document.querySelectorAll('.scene-card').forEach(card => {
+        observer.observe(card);
+    });
+});
+</script></body>
+</html>

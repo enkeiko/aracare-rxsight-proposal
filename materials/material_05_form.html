@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>RxSight LAL — 상담 설문지 및 시술 동의서</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --p:    #813A74;
+            --pd:   #5C2853;
+            --pp:   #F3EBF1;
+            --pm:   #6E3363;
+            --t:    #8FD6D6;
+            --tp:   #3FA8A8;
+            --w:    #FFFFFF;
+            --bg:   #F0ECF5;
+            --ink:  #1C1C1E;
+            --inkm: #3D3540;
+            --inkl: #78728A;
+            --bdr:  #E2DCE8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
+            background: var(--bg);
+            padding: 48px 32px 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .v-title {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+        .v-title h1 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--pd);
+            letter-spacing: -0.01em;
+        }
+        .v-title p {
+            font-size: 11px;
+            color: var(--inkl);
+            margin-top: 5px;
+            letter-spacing: 0.04em;
+        }
+
+        .page-label {
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--inkl);
+            margin-bottom: 10px;
+            text-align: left;
+            width: 595px;
+        }
+
+        /* ===== A4 SHEET ===== */
+        .sheet {
+            width: 595px;
+            background: var(--w);
+            box-shadow: 0 8px 48px rgba(92,40,83,0.18), 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+
+        /* ===== HEADER ===== */
+        .sheet-header {
+            background: linear-gradient(135deg, var(--pd) 0%, var(--pm) 60%, var(--p) 100%);
+            padding: 22px 36px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--tp);
+        }
+        .sh-brand img {
+            height: 26px;
+            width: auto;
+            filter: brightness(0) invert(1) brightness(0.9) sepia(1) hue-rotate(130deg) saturate(2);
+        }
+        .sh-doc-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.01em;
+            margin-top: 4px;
+        }
+        .sh-doc-sub {
+            font-size: 11px;
+            color: rgba(255,255,255,0.55);
+            margin-top: 3px;
+            letter-spacing: 0.02em;
+        }
+        .sh-right {
+            text-align: right;
+        }
+        .sh-clinic {
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+            opacity: 0.9;
+            margin-bottom: 4px;
+        }
+        .sh-date-row {
+            display: flex;
+            gap: 16px;
+            justify-content: flex-end;
+        }
+        .sh-date-item {
+            font-size: 10px;
+            color: rgba(255,255,255,0.5);
+        }
+        .sh-date-item span {
+            color: rgba(255,255,255,0.75);
+            font-weight: 600;
+            font-size: 11px;
+        }
+
+        /* ===== BODY ===== */
+        .sheet-body {
+            padding: 24px 36px 28px;
+        }
+
+        /* ===== SECTION HEADER ===== */
+        .sec-hd {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 12px;
+        }
+        .sec-hd-bar {
+            width: 4px;
+            height: 18px;
+            background: linear-gradient(180deg, var(--p), var(--tp));
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        .sec-hd h3 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--ink);
+            letter-spacing: 0.01em;
+        }
+        .sec-hd .sec-num {
+            margin-left: auto;
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--p);
+            letter-spacing: 0.06em;
+        }
+
+        /* ===== DIVIDER ===== */
+        .div-line {
+            width: 100%;
+            height: 1px;
+            background: var(--bdr);
+            margin: 18px 0;
+        }
+
+        /* ===== PATIENT INFO GRID ===== */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+        .info-grid.col3 {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+        .info-field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .info-field.full {
+            grid-column: 1 / -1;
+        }
+        .info-label {
+            font-size: 9.5px;
+            font-weight: 700;
+            color: var(--inkl);
+            letter-spacing: 0.04em;
+        }
+        .info-line {
+            height: 28px;
+            border-bottom: 1.5px solid var(--bdr);
+        }
+
+        /* ===== NOTICE BAND ===== */
+        .notice-band {
+            background: var(--pp);
+            border-left: 4px solid var(--p);
+            padding: 10px 16px;
+            margin-bottom: 18px;
+            border-radius: 0 4px 4px 0;
+        }
+        .notice-band p {
+            font-size: 10px;
+            line-height: 1.65;
+            color: var(--inkm);
+        }
+
+        /* ===== CHECKBOX GROUP ===== */
+        .q-group {
+            margin-bottom: 16px;
+        }
+        .q-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 8px;
+            padding-left: 2px;
+        }
+        .q-label .q-hint {
+            font-weight: 400;
+            color: var(--inkl);
+            font-size: 9.5px;
+            margin-left: 6px;
+        }
+        .chk-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+        }
+        .chk-grid.col1 {
+            grid-template-columns: 1fr;
+        }
+        .chk-grid.col3 {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+        .chk-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 6px 10px;
+            border-radius: 4px;
+            background: #FAFAFA;
+            border: 1px solid var(--bdr);
+        }
+        .chk-box {
+            width: 14px;
+            height: 14px;
+            border: 1.5px solid #BFBAB8;
+            border-radius: 2px;
+            flex-shrink: 0;
+            margin-top: 1px;
+            background: #fff;
+        }
+        .chk-text {
+            font-size: 9.5px;
+            line-height: 1.55;
+            color: var(--inkm);
+        }
+
+        /* ===== TEXTAREA (빈 필드) ===== */
+        .text-area {
+            width: 100%;
+            min-height: 48px;
+            border: 1.5px solid var(--bdr);
+            border-radius: 4px;
+            background: #FAFAFA;
+            padding: 8px 10px;
+            font-size: 9px;
+            color: var(--inkl);
+        }
+
+        /* ===== IMPORTANCE SCALE ===== */
+        .scale-row {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            padding: 7px 10px;
+            background: #FAFAFA;
+            border: 1px solid var(--bdr);
+            border-radius: 4px;
+            margin-bottom: 5px;
+        }
+        .scale-label {
+            font-size: 9.5px;
+            color: var(--inkm);
+            width: 160px;
+            flex-shrink: 0;
+        }
+        .scale-dots {
+            display: flex;
+            gap: 12px;
+            flex: 1;
+            justify-content: center;
+        }
+        .scale-dot {
+            width: 16px;
+            height: 16px;
+            border: 1.5px solid #BFBAB8;
+            border-radius: 50%;
+            background: #fff;
+        }
+        .scale-head {
+            display: flex;
+            align-items: center;
+            padding: 4px 10px;
+            margin-bottom: 4px;
+        }
+        .scale-head .sh-label {
+            width: 160px;
+            flex-shrink: 0;
+        }
+        .scale-head .sh-vals {
+            display: flex;
+            gap: 0;
+            flex: 1;
+            justify-content: center;
+            font-size: 8px;
+            color: var(--inkl);
+            letter-spacing: 0.02em;
+        }
+        .scale-head .sh-vals span {
+            width: 28px;
+            text-align: center;
+        }
+
+        /* ===== FOOTER ===== */
+        .sheet-footer {
+            background: linear-gradient(135deg, var(--pd), var(--pm));
+            padding: 10px 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .sf-left {
+            font-size: 9px;
+            color: rgba(255,255,255,0.45);
+            letter-spacing: 0.06em;
+        }
+        .sf-pg {
+            font-size: 9px;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 0.08em;
+        }
+
+        /* ===== CONSENT (뒷면) ===== */
+        .consent-intro {
+            font-size: 10.5px;
+            line-height: 1.75;
+            color: var(--inkm);
+            background: #FAFAFA;
+            border: 1px solid var(--bdr);
+            border-radius: 5px;
+            padding: 12px 14px;
+            margin-bottom: 16px;
+        }
+        .consent-items {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            margin-bottom: 18px;
+        }
+        .consent-item {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            padding: 9px 12px;
+            border: 1px solid var(--bdr);
+            border-radius: 5px;
+            background: #FAFAFA;
+        }
+        .consent-num {
+            width: 20px;
+            height: 20px;
+            background: var(--p);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .consent-text {
+            font-size: 10px;
+            line-height: 1.68;
+            color: var(--inkm);
+        }
+        .consent-text strong {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .risk-box {
+            background: #FFF8F0;
+            border: 1px solid #E8C97A;
+            border-left: 4px solid #D4941A;
+            border-radius: 0 5px 5px 0;
+            padding: 10px 14px;
+            margin-bottom: 16px;
+        }
+        .risk-box .risk-title {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #8B5E00;
+            margin-bottom: 5px;
+        }
+        .risk-box ul {
+            padding-left: 14px;
+        }
+        .risk-box ul li {
+            font-size: 9.5px;
+            line-height: 1.65;
+            color: #6B4800;
+        }
+
+        .sig-section {
+            border: 1px solid var(--bdr);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .sig-header {
+            background: var(--pp);
+            padding: 9px 14px;
+            border-bottom: 1px solid var(--bdr);
+        }
+        .sig-header span {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--pd);
+            letter-spacing: 0.03em;
+        }
+        .sig-body {
+            padding: 16px 14px;
+        }
+        .sig-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+        .sig-field {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .sig-label {
+            font-size: 9.5px;
+            font-weight: 700;
+            color: var(--inkl);
+            letter-spacing: 0.04em;
+        }
+        .sig-line {
+            height: 32px;
+            border-bottom: 1.5px solid var(--bdr);
+        }
+        .sig-line.sig-sign {
+            height: 48px;
+        }
+        .sig-note {
+            font-size: 8.5px;
+            color: var(--inkl);
+            margin-top: 2px;
+        }
+
+        .consent-agree-box {
+            background: var(--pp);
+            border: 1.5px solid var(--p);
+            border-radius: 5px;
+            padding: 12px 14px;
+            margin-bottom: 14px;
+        }
+        .consent-agree-box p {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--pd);
+            line-height: 1.7;
+        }
+
+        .doc-stamp {
+            border-top: 1px dashed var(--bdr);
+            padding-top: 12px;
+            text-align: center;
+            font-size: 9px;
+            color: var(--inkl);
+            letter-spacing: 0.04em;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .v-title, .page-label { display: none; }
+            .sheet { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="v-title">
+        <h1>상담 설문지 -- 시술 동의서</h1>
+        <p>A4 양면 / 앞면: 백내장 수술 상담 설문지 / 뒷면: 시술 동의서</p>
+    </div>
+
+    <!-- ===== 앞면: 상담 설문지 ===== -->
+    <div class="page-label">앞면 — 백내장 수술 상담 설문지</div>
+    <div class="sheet">
+
+        <div class="sheet-header">
+            <div>
+                <div class="sh-brand"><img src="assets/lal-logo-horizontal.png" alt="RxSight LAL"></div>
+                <div class="sh-doc-title">백내장 수술 상담 설문지</div>
+                <div class="sh-doc-sub">수술 상담 전 아래 항목을 작성하여 주시기 바랍니다</div>
+            </div>
+            <div class="sh-right">
+                <div class="sh-clinic">아라케어 안과의원</div>
+                <div class="sh-date-row">
+                    <div class="sh-date-item">작성일 <span>____.__.__</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sheet-body">
+
+            <!-- 1. 기본 정보 -->
+            <div class="sec-hd">
+                <div class="sec-hd-bar"></div>
+                <h3>기본 정보</h3>
+                <span class="sec-num">SECTION 01</span>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-field">
+                    <div class="info-label">환자 성명</div>
+                    <div class="info-line"></div>
+                </div>
+                <div class="info-field">
+                    <div class="info-label">생년월일</div>
+                    <div class="info-line"></div>
+                </div>
+                <div class="info-field">
+                    <div class="info-label">연락처</div>
+                    <div class="info-line"></div>
+                </div>
+                <div class="info-field">
+                    <div class="info-label">직업</div>
+                    <div class="info-line"></div>
+                </div>
+            </div>
+
+            <div style="margin-top:8px;">
+                <div class="q-label">불편한 눈</div>
+                <div style="display:flex; gap:16px; margin-top:4px;">
+                    <div class="chk-item"><div class="chk-box"></div><span>오른쪽</span></div>
+                    <div class="chk-item"><div class="chk-box"></div><span>왼쪽</span></div>
+                    <div class="chk-item"><div class="chk-box"></div><span>양쪽</span></div>
+                </div>
+                <div style="display:flex; gap:16px; margin-top:6px;">
+                    <div class="q-label" style="width:auto;">안경/콘택트렌즈 착용 여부</div>
+                    <div class="chk-item"><div class="chk-box"></div><span>안경</span></div>
+                    <div class="chk-item"><div class="chk-box"></div><span>콘택트렌즈</span></div>
+                    <div class="chk-item"><div class="chk-box"></div><span>미착용</span></div>
+                </div>
+            </div>
+
+            <div class="div-line"></div>
+
+            <!-- 2. 백내장 수술 동기 -->
+            <div class="sec-hd">
+                <div class="sec-hd-bar"></div>
+                <h3>백내장 수술 동기</h3>
+                <span class="sec-num">SECTION 02</span>
+            </div>
+
+            <div class="q-group">
+                <div class="q-label">백내장 수술을 고려하게 된 계기는 무엇인가요? <span class="q-hint">(해당 항목 모두 체크)</span></div>
+                <div class="chk-grid">
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">시력이 많이 떨어져서 일상생활이 불편합니다</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">안과 검진에서 백내장 진단을 받았습니다</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">빛 번짐/눈부심이 심해 운전이 어렵습니다</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">안경/돋보기 의존에서 벗어나고 싶습니다</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">지인/가족의 수술 경험을 보고 결심했습니다</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">기타: ________________________________</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-group">
+                <div class="q-label">RxSight LAL(광조정 렌즈)에 대해 어떻게 알게 되셨나요?</div>
+                <div class="chk-grid col3">
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">담당 의사 추천</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">인터넷 검색</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">지인 추천</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">유튜브/SNS</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">원내 안내물</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">기타</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="div-line"></div>
+
+            <!-- 3. 수술에서 중요하게 생각하는 것 -->
+            <div class="sec-hd">
+                <div class="sec-hd-bar"></div>
+                <h3>수술에서 중요하게 생각하는 것</h3>
+                <span class="sec-num">SECTION 03</span>
+            </div>
+
+            <div class="q-group">
+                <div class="q-label">수술 후 가장 기대하는 결과는 무엇인가요? <span class="q-hint">(1순위에 O 표시)</span></div>
+                <div class="chk-grid">
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">먼 거리가 잘 보이는 시력 (운전, TV 등)</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">가까운 거리가 잘 보이는 시력 (독서, 핸드폰)</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">안경/돋보기 없이 생활하고 싶습니다</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">빛 번짐/눈부심이 없는 깨끗한 시야</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-group">
+                <div class="q-label">렌즈 선택 시 중요도를 표시해 주세요</div>
+                <div class="scale-head">
+                    <span class="sh-label"></span>
+                    <div class="sh-vals">
+                        <span>매우<br>낮음</span>
+                        <span>낮음</span>
+                        <span>보통</span>
+                        <span>높음</span>
+                        <span>매우<br>높음</span>
+                    </div>
+                </div>
+                <div class="scale-row">
+                    <span class="scale-label">수술 후 시력의 정확도</span>
+                    <div class="scale-dots">
+                        <div class="scale-dot"></div>
+                        <div class="scale-dot"></div>
+                        <div class="scale-dot"></div>
+                        <div class="scale-dot"></div>
+                        <div class="scale-dot"></div>
+                    </div>
+                </div>
+                <div class="scale-row">
+                    <span class="scale-label">수술 후 미세 조정 가능 여부</span>
+                    <div class="scale-dots">
+                        <div class="scale-dot"></div>
+                        <div class="scale-dot"></div>
+                        <div class="scale-dot"></div>
+                        <div class="scale-dot"></div>
+                        <div class="scale-dot"></div>
+                    </div>
+                </div>
+                <div class="scale-row">
+                    <span class="scale-label">수술 비용 대비 효과</span>
+                    <div class="scale-dots">
+                        <div class="scale-dot"></div>
+                        <div class="scale-dot"></div>
+                        <div class="scale-dot"></div>
+                        <div class="scale-dot"></div>
+                        <div class="scale-dot"></div>
+                    </div>
+                </div>
+                <div class="scale-row">
+                    <span class="scale-label">수술 안전성 / 부작용 최소화</span>
+                    <div class="scale-dots">
+                        <div class="scale-dot"></div>
+                        <div class="scale-dot"></div>
+                        <div class="scale-dot"></div>
+                        <div class="scale-dot"></div>
+                        <div class="scale-dot"></div>
+                    </div>
+                </div>
+                <div class="scale-row">
+                    <span class="scale-label">최신 기술 / FDA 승인 여부</span>
+                    <div class="scale-dots">
+                        <div class="scale-dot"></div>
+                        <div class="scale-dot"></div>
+                        <div class="scale-dot"></div>
+                        <div class="scale-dot"></div>
+                        <div class="scale-dot"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="div-line"></div>
+
+            <!-- 4. 안과 병력 -->
+            <div class="sec-hd">
+                <div class="sec-hd-bar"></div>
+                <h3>안과 병력 및 전신 질환</h3>
+                <span class="sec-num">SECTION 04</span>
+            </div>
+
+            <div class="q-group">
+                <div class="q-label">이전에 받은 안과 수술이 있나요? <span class="q-hint">(해당 항목 체크)</span></div>
+                <div class="chk-grid col3">
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">없음</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">라식/라섹</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">백내장 (반대편 눈)</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">녹내장 수술</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">망막 수술</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">기타: __________</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-group">
+                <div class="q-label">현재 진단받은 전신 질환이 있나요? <span class="q-hint">(해당 항목 체크)</span></div>
+                <div class="chk-grid col3">
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">없음</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">당뇨</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">고혈압</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">심장 질환</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">자가면역질환</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">갑상선 질환</div>
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box"></div>
+                        <div class="chk-text">기타: __________</div>
+                    </div>
+                </div>
+
+                <div class="q-label" style="margin-top:10px;">현재 복용 중인 약물이 있나요?</div>
+                <div style="display:flex; gap:16px; margin-top:4px; margin-bottom:4px;">
+                    <div class="chk-item"><div class="chk-box"></div><span>없음</span></div>
+                    <div class="chk-item"><div class="chk-box"></div><span>항응고제/항혈소판제</span></div>
+                    <div class="chk-item"><div class="chk-box"></div><span>기타</span></div>
+                </div>
+                <div class="info-field" style="margin-top:2px;">
+                    <div class="info-label" style="font-size:8px;">약물명 기재</div>
+                    <div class="info-line"></div>
+                </div>
+
+                <div class="q-label" style="margin-top:10px;">알레르기 유무</div>
+                <div style="display:flex; gap:16px; margin-top:4px;">
+                    <div class="chk-item"><div class="chk-box"></div><span>없음</span></div>
+                    <div class="chk-item"><div class="chk-box"></div><span>약물 알레르기</span></div>
+                    <div class="chk-item"><div class="chk-box"></div><span>라텍스</span></div>
+                    <div class="chk-item"><div class="chk-box"></div><span>기타: _____</span></div>
+                </div>
+            </div>
+
+            <div class="div-line"></div>
+
+            <!-- 5. 추가 메모 / 서명 -->
+            <div class="q-group">
+                <div class="q-label">상담 시 추가로 궁금한 사항이 있으시면 적어주세요</div>
+                <div class="text-area" style="min-height:42px;"></div>
+            </div>
+
+            <div style="display:flex; justify-content:flex-end; align-items:flex-end; gap:24px; margin-top:14px;">
+                <div>
+                    <div class="info-label" style="margin-bottom:4px;">환자 서명</div>
+                    <div style="width:120px; border-bottom:1.5px solid var(--bdr); height:28px;"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="sheet-footer">
+            <span class="sf-left">ARACARE -- RxSight LAL 상담 설문지</span>
+            <span class="sf-pg">1 / 2</span>
+        </div>
+    </div>
+
+    <!-- ===== 뒷면: 시술 동의서 ===== -->
+    <div class="page-label" style="margin-top:12px;">뒷면 — 시술 동의서</div>
+    <div class="sheet">
+
+        <div class="sheet-header">
+            <div>
+                <div class="sh-brand"><img src="assets/lal-logo-horizontal.png" alt="RxSight LAL"></div>
+                <div class="sh-doc-title">시술 동의서</div>
+                <div class="sh-doc-sub">광조정 인공수정체(LAL) 삽입술 및 LDD 광조정 시술</div>
+            </div>
+            <div class="sh-right">
+                <div class="sh-clinic">아라케어 안과의원</div>
+                <div class="sh-date-row">
+                    <div class="sh-date-item">환자명 <span>___________</span></div>
+                    <div class="sh-date-item">생년월일 <span>____.__.__</span></div>
+                </div>
+                <div class="sh-date-row" style="margin-top:4px;">
+                    <div class="sh-date-item">수술 예정 안: <span style="letter-spacing:0.5em;">[ ] 우안&nbsp;&nbsp;[ ] 좌안&nbsp;&nbsp;[ ] 양안</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sheet-body">
+
+            <div class="consent-intro">
+                본 동의서는 RxSight LAL(광조정 인공수정체) 삽입술 및 수술 후 LDD(Light Delivery Device) 광조사 도수 조정 시술에 관한 내용을 설명하고, 환자의 자유로운 의사에 따른 동의를 받기 위해 작성됩니다. 충분한 설명을 듣고 이해하신 후 서명해 주십시오.
+            </div>
+
+            <div class="sec-hd">
+                <div class="sec-hd-bar"></div>
+                <h3>시술 동의 항목</h3>
+            </div>
+
+            <div class="consent-items">
+                <div class="consent-item">
+                    <div class="consent-num">1</div>
+                    <div class="consent-text">
+                        <strong>수술 목적 및 방법</strong><br>
+                        백내장 제거 및 RxSight LAL 인공수정체 삽입 수술의 목적, 수술 방법, 예상 결과에 관한 충분한 설명을 의료진으로부터 들었습니다.
+                    </div>
+                </div>
+                <div class="consent-item">
+                    <div class="consent-num">2</div>
+                    <div class="consent-text">
+                        <strong>LDD 광조정 시술</strong><br>
+                        수술 후 2-4회의 LDD 외래 방문을 통해 도수를 조정하는 과정과 자외선 차단 안경 착용의 필요성을 충분히 안내받았습니다.
+                    </div>
+                </div>
+                <div class="consent-item">
+                    <div class="consent-num">3</div>
+                    <div class="consent-text">
+                        <strong>시술의 한계 및 결과 보증 불가</strong><br>
+                        LAL 시술이 최선의 방법으로 시행되더라도 개인의 각막 상태/치유 과정에 따라 결과가 달라질 수 있으며, 특정 시력 달성을 보증하지 않음을 인지합니다.
+                    </div>
+                </div>
+                <div class="consent-item">
+                    <div class="consent-num">4</div>
+                    <div class="consent-text">
+                        <strong>개인정보 및 의료 기록 활용</strong><br>
+                        임상 추적 및 의료 서비스 향상을 위해 수술 결과 데이터가 익명 처리되어 활용될 수 있음을 동의합니다.
+                    </div>
+                </div>
+            </div>
+
+            <div class="risk-box">
+                <div class="risk-title">주요 위험 및 부작용 안내 (발생 가능성이 낮으나 사전 고지 사항)</div>
+                <ul>
+                    <li>일시적 시력 저하, 빛 번짐(글레어), 달무리(헤일로) -- 대부분 적응 후 호전</li>
+                    <li>감염, 안압 상승, 후낭 혼탁(YAG 레이저로 교정 가능)</li>
+                    <li>자외선 차단 지침 미준수 시 의도치 않은 도수 변화 가능</li>
+                </ul>
+            </div>
+
+            <div class="consent-agree-box">
+                <p>
+                    본인은 위 내용을 충분히 이해하였으며, 의료진의 설명을 듣고 궁금한 사항을 충분히 질문하였습니다.<br>
+                    이에 RxSight LAL 삽입술 및 LDD 광조정 시술에 자유로운 의사로 동의합니다.
+                </p>
+            </div>
+
+            <div class="sig-section">
+                <div class="sig-header">
+                    <span>서명란</span>
+                </div>
+                <div class="sig-body">
+                    <div class="sig-grid">
+                        <div class="sig-field">
+                            <div class="sig-label">환자 성명</div>
+                            <div class="sig-line"></div>
+                        </div>
+                        <div class="sig-field">
+                            <div class="sig-label">환자 생년월일</div>
+                            <div class="sig-line"></div>
+                        </div>
+                        <div class="sig-field">
+                            <div class="sig-label">보호자 성명 (해당 시)</div>
+                            <div class="sig-line"></div>
+                        </div>
+                        <div class="sig-field">
+                            <div class="sig-label">환자와의 관계</div>
+                            <div class="sig-line"></div>
+                        </div>
+                    </div>
+                    <div class="sig-grid">
+                        <div class="sig-field">
+                            <div class="sig-label">동의 날짜</div>
+                            <div class="sig-line"></div>
+                        </div>
+                        <div class="sig-field">
+                            <div class="sig-label">환자 서명</div>
+                            <div class="sig-line sig-sign"></div>
+                            <div class="sig-note">또는 무인(拇印)</div>
+                        </div>
+                    </div>
+                    <div class="sig-grid">
+                        <div class="sig-field">
+                            <div class="sig-label">설명 의료진 성명</div>
+                            <div class="sig-line"></div>
+                        </div>
+                        <div class="sig-field">
+                            <div class="sig-label">의료진 서명</div>
+                            <div class="sig-line sig-sign"></div>
+                        </div>
+                    </div>
+
+                    <div class="doc-stamp">
+                        ARACARE 안과의원 -- 본 동의서는 의무기록으로 보관됩니다
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="sheet-footer">
+            <span class="sf-left">ARACARE -- RxSight LAL 시술 동의서</span>
+            <span class="sf-pg">2 / 2</span>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RxSight LAL 경쟁 분석 보고서</title>
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+</head>
+<body>
+    <div class="back-nav-fixed">
+        <a href="../index.html" class="btn-back">← 메인으로 돌아가기 (Back to Master Viewer)</a>
+    </div>
+
+    <div class="main-container single-column">
+        <main class="content full-width">
+            <h1 style="color:var(--primary-color); margin-bottom:2rem;">RxSight 광조절렌즈(LAL) 시스템 경쟁 분석 보고서</h1>
+
+            <section class="chapter">
+                <h2>1. 경쟁 우위: 예측(Prediction) vs 조정(Adjustment)</h2>
+                <div class="card">
+                    <p>기존 IOL은 수술 전 계측에 <span class="highlight">100% 의존</span>합니다. 하지만 생체 계측의 오차나 상처 치유 과정의 변수로 인해 '굴절 오차'는 필연적으로 발생합니다.</p>
+                    <p><strong>LAL의 패러다임:</strong> "예측 불가능성을 통제 가능한 확실성으로 바꿉니다."</p>
+                </div>
+            </section>
+
+            <section class="chapter">
+                <h2>3. 제품별 비교 분석 (Head-to-Head)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>구분</th>
+                            <th>RxSight LAL</th>
+                            <th>다초점/EDOF (PanOptix/Vivity)</th>
+                            <th>LASIK 터치업</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>접근 방식</strong></td>
+                            <td><strong>수술 후 조정 (Post-op)</strong></td>
+                            <td>수술 전 고정 (Pre-op)</td>
+                            <td>각막 절삭 (추가 수술)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>시력의 질</strong></td>
+                            <td><strong>단초점 수준의 선명함</strong><br>(낮은 빛 번짐)<sup>[1]</sup></td>
+                            <td>회절 링으로 인한<br><strong>빛 번짐(Halo/Glare)</strong> 존재</td>
+                            <td>각막 혼탁/건조증 위험</td>
+                        </tr>
+                        <tr>
+                            <td><strong>야간 시력</strong></td>
+                            <td>우수함</td>
+                            <td>고스팅(Ghosting) 현상 가능성</td>
+                            <td>동공 크기에 따라 저하</td>
+                        </tr>
+                         <tr>
+                            <td><strong>적응증</strong></td>
+                            <td><strong>LASIK 이력 환자 (최적)</strong></td>
+                            <td>LASIK 환자에게 제한적</td>
+                            <td>잔여 각막 두께 필요</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="chapter">
+                <h2>4. 비용 효율성 분석 (Cost-Effectiveness)</h2>
+                <div class="card implication">
+                    <h3>💰 경제성 평가</h3>
+                    <ul>
+                        <li><strong>ICER (증분 비용-효용비):</strong> $10,072/QALY (임계값 $50,000 대비 매우 낮음)<sup>[2]</sup></li>
+                        <li><strong>해석:</strong> 초기 비용은 높지만, 삶의 질 향상(QALY) 효과가 매우 커서 <strong>"매우 비용 효율적인"</strong> 치료법으로 입증됨.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="chapter">
+                <h2>5. 이해관계자별 전략적 제언</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>🏥 병원 (Clinic)</h3>
+                        <p>단순 백내장 수술을 <strong>"프리미엄 시력 교정 서비스"</strong>로 격상시킬 기회입니다. 특히 라식 수술 이력이 있는 환자를 위한 <strong>'특화 클리닉'</strong>으로 포지셔닝하십시오.</p>
+                    </div>
+                    <div class="card">
+                         <h3>🩺 의사 (Surgeon)</h3>
+                        <p>수술 결과에 대한 스트레스를 줄이고, 환자에게 <strong>"결과를 보장하는 의사"</strong>라는 신뢰를 구축할 수 있는 도구로 활용하십시오.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="references" style="margin-top: 3rem; padding-top: 1rem; border-top: 1px dashed #ccc; font-size: 0.85rem; color: #666;">
+                <h4>참고문헌 (References)</h4>
+                <ol>
+                    <li>Hengerer FH, et al. Prospective, randomized, multicenter clinical trial... J Cataract Refract Surg. 2020.</li>
+                    <li>Hatch et al. Cost-effectiveness analysis of the Light Adjustable Lens.</li>
+                </ol>
+            </section>
+
+             <footer style="margin-top: 2rem; text-align: center; color: #888; border-top: 1px solid #eee; padding-top: 2rem;">
+                <p>Based on Internal Report: RxSight 광조절렌즈(LAL) 시스템 경쟁 분석 보고서.md</p>
+            </footer>
+        </main>
+    </div>
+</body>
+</html>

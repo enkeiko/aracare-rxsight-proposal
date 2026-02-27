@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>RxSight LAL — 환자 안내 리플릿 (3단 접지)</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --p:        #813A74;
+            --pd:       #5C2853;
+            --pm:       #6E3363;
+            --pp:       #F3EBF1;
+            --t:        #8FD6D6;
+            --tp:       #3FA8A8;
+            --cream:    #F8F6F1;
+            --w:        #FFFFFF;
+            --ink:      #1C1C1E;
+            --inkm:     #3D3540;
+            --inkl:     #78728A;
+            --rule:     #E9E4EE;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
+            background: #E8E3EF;
+            padding: 52px 32px 80px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== VIEWER TITLE ===== */
+        .v-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .v-title h1 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--pd);
+            letter-spacing: -0.01em;
+        }
+        .v-title p {
+            font-size: 11px;
+            color: var(--inkl);
+            margin-top: 5px;
+            letter-spacing: 0.04em;
+        }
+
+        /* ===== SIDE LABEL ===== */
+        .s-label {
+            text-align: center;
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--inkl);
+            margin-bottom: 10px;
+        }
+
+        /* ===== TRIFOLD SPREAD ===== */
+        .tf-block {
+            margin-bottom: 52px;
+        }
+        .tf-spread {
+            display: flex;
+            justify-content: center;
+            filter: drop-shadow(0 10px 40px rgba(92,40,83,0.22)) drop-shadow(0 2px 6px rgba(0,0,0,0.1));
+        }
+
+        /* ===== PANEL BASE ===== */
+        .panel {
+            width: 260px;
+            height: 555px;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .panel + .panel {
+            border-left: 1px solid rgba(162, 130, 155, 0.3);
+        }
+
+        /* ===== COVER PANEL ===== */
+        .p-cover {
+            background: linear-gradient(158deg, #2E1128 0%, #4A1F42 30%, #6E3363 65%, #9A5A8A 100%);
+            display: flex;
+            flex-direction: column;
+            padding: 28px 22px 24px;
+        }
+
+        .cv-brand {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .cv-brand-bar {
+            width: 24px;
+            height: 1.5px;
+            background: var(--t);
+        }
+        /* 영문 브랜드명 - Cormorant Garamond 사용 (브랜드 가이드 준수) */
+        .cv-brand-name {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 10.5px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--t);
+            font-weight: 400;
+        }
+
+        .cv-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 24px 0 18px;
+        }
+        .cv-eyebrow {
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(143, 214, 214, 0.6);
+            margin-bottom: 12px;
+        }
+        /* 한글 헤드라인 - Pretendard (브랜드 가이드: 한글은 Pretendard 통일) */
+        .cv-headline {
+            font-size: 34px;
+            font-weight: 800;
+            line-height: 1.15;
+            color: rgba(255,255,255,0.95);
+            letter-spacing: -0.02em;
+        }
+        .cv-headline em {
+            font-style: normal;
+            color: var(--t);
+        }
+        .cv-rule {
+            width: 36px;
+            height: 1px;
+            background: var(--t);
+            margin: 16px 0;
+            opacity: 0.7;
+        }
+        .cv-sub {
+            font-size: 10.5px;
+            line-height: 1.78;
+            color: rgba(255,255,255,0.52);
+            letter-spacing: 0.01em;
+        }
+        /* 영문 서브라인 - Cormorant Garamond (영문 포인트) */
+        .cv-en {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 11px;
+            font-weight: 300;
+            font-style: italic;
+            color: rgba(143,214,214,0.5);
+            margin-top: 10px;
+            letter-spacing: 0.06em;
+        }
+
+        .cv-badges {
+            display: flex;
+            gap: 6px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+        .cv-badge {
+            font-size: 8.5px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            padding: 3px 7px;
+            border: 1px solid rgba(143, 214, 214, 0.35);
+            border-radius: 2px;
+            color: rgba(143, 214, 214, 0.75);
+        }
+
+        .cv-footer {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .cv-clinic {
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.38);
+        }
+        .cv-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--t);
+            opacity: 0.55;
+        }
+
+        /* ===== INNER PANELS ===== */
+        .p-inner {
+            background: var(--w);
+            display: flex;
+            flex-direction: column;
+            padding: 0 20px 20px;
+        }
+        .p-inner-cream { background: var(--cream); }
+
+        .p-top-bar {
+            height: 3px;
+            background: linear-gradient(90deg, var(--p), var(--tp));
+            flex-shrink: 0;
+            margin-bottom: 20px;
+        }
+
+        /* 섹션 아이브로우 - Pretendard (한글/영문 레이블 통일) */
+        .p-eyebrow {
+            font-size: 8.5px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--p);
+            margin-bottom: 7px;
+        }
+        /* 패널 제목 - Pretendard Bold (한글 통일) */
+        .p-title {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.25;
+            color: var(--ink);
+            letter-spacing: -0.01em;
+            margin-bottom: 11px;
+        }
+        .p-body {
+            font-size: 10px;
+            line-height: 1.76;
+            color: var(--inkm);
+        }
+        .thin-rule {
+            width: 100%;
+            height: 1px;
+            background: var(--rule);
+            margin: 12px 0;
+            flex-shrink: 0;
+        }
+
+        /* ===== FEATURE LIST ===== */
+        .feat-list {
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+            margin-top: 12px;
+            flex: 1;
+        }
+        .feat-item {
+            display: flex;
+            gap: 9px;
+            align-items: flex-start;
+        }
+        .feat-num {
+            width: 19px;
+            height: 19px;
+            border-radius: 50%;
+            background: var(--pp);
+            border: 1.5px solid var(--p);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8.5px;
+            font-weight: 700;
+            color: var(--p);
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .feat-text strong {
+            display: block;
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 1px;
+        }
+        .feat-text span {
+            font-size: 9.5px;
+            line-height: 1.55;
+            color: var(--inkl);
+        }
+
+        /* ===== COMPARE TABLE ===== */
+        .cmp-wrap {
+            border: 1px solid var(--rule);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 11px;
+            flex-shrink: 0;
+        }
+        .cmp-head {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        .cmp-lbl {
+            padding: 6px 8px;
+            font-size: 8.5px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .cmp-lbl.iol { background: #F2EEF5; color: var(--inkl); border-right: 1px solid var(--rule); }
+        .cmp-lbl.lal { background: var(--p); color: #fff; }
+        .cmp-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-top: 1px solid var(--rule);
+        }
+        .cmp-cell {
+            padding: 6.5px 8px;
+            font-size: 9.5px;
+            line-height: 1.45;
+        }
+        .cmp-cell.iol { color: var(--inkl); border-right: 1px solid var(--rule); }
+        .cmp-cell.lal { color: var(--ink); font-weight: 500; }
+        .cmp-cell .ck { color: var(--p); font-weight: 700; margin-right: 2px; }
+
+        .cta-box {
+            margin-top: auto;
+            background: linear-gradient(135deg, var(--pd), var(--p));
+            border-radius: 5px;
+            padding: 11px 14px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .cta-box p { font-size: 9.5px; color: rgba(255,255,255,0.65); margin-bottom: 3px; }
+        .cta-box strong { font-size: 11px; font-weight: 600; color: #fff; }
+
+        /* ===== STAT PANEL ===== */
+        .stat-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 12px;
+            flex: 1;
+        }
+        /* 수치 - Pretendard Bold (브랜드 가이드: 통일) */
+        .stat-big {
+            font-size: 44px;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--tp);
+            letter-spacing: -0.02em;
+        }
+        .stat-big .unit {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .stat-desc {
+            font-size: 10px;
+            line-height: 1.62;
+            color: var(--inkm);
+            margin-top: 3px;
+        }
+        .stat-src {
+            font-size: 8.5px;
+            color: var(--inkl);
+            margin-top: 1px;
+            letter-spacing: 0.02em;
+        }
+
+        /* ===== STEP PANEL ===== */
+        .step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 12px;
+            flex: 1;
+        }
+        .step-item {
+            display: flex;
+            gap: 9px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--rule);
+            align-items: flex-start;
+        }
+        .step-item:last-child { border-bottom: none; }
+        .step-num {
+            width: 17px;
+            height: 17px;
+            background: var(--p);
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8.5px;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .step-con strong { display: block; font-size: 10.5px; font-weight: 600; color: var(--ink); }
+        .step-con span { font-size: 9.5px; color: var(--inkl); line-height: 1.5; }
+
+        /* ===== HOSPITAL PANEL ===== */
+        .hosp-intro {
+            font-size: 10px;
+            line-height: 1.72;
+            color: var(--inkm);
+            margin-bottom: 12px;
+        }
+        .qr-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .qr-box {
+            width: 60px;
+            height: 60px;
+            border: 1.5px solid var(--rule);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 7.5px;
+            color: var(--inkl);
+            background: #F8F8F8;
+            flex-shrink: 0;
+        }
+        .qr-hint { font-size: 9.5px; color: var(--inkl); line-height: 1.7; }
+
+        .hosp-card {
+            margin-top: auto;
+            border-top: 1px solid var(--rule);
+            padding-top: 12px;
+        }
+        .hosp-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--pd);
+            margin-bottom: 6px;
+        }
+        .hosp-detail {
+            font-size: 9.5px;
+            line-height: 1.85;
+            color: var(--inkl);
+        }
+        .hosp-badge {
+            display: inline-block;
+            margin-top: 9px;
+            font-size: 8.5px;
+            font-weight: 600;
+            background: var(--pp);
+            color: var(--pd);
+            padding: 3px 8px;
+            border-radius: 3px;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .v-title, .s-label { display: none; }
+            .tf-block { margin-bottom: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="v-title">
+        <h1>환자 안내 리플릿 -- 3단 접지</h1>
+        <p>A4 가로 / Letter Fold (99mm x 210mm x 3) / 양면 컬러 인쇄</p>
+    </div>
+
+    <!-- 앞면 -->
+    <div class="tf-block">
+        <div class="s-label">앞면 (Front) — 펼친 상태 기준</div>
+        <div class="tf-spread">
+
+            <!-- 패널 1: 왼쪽 -->
+            <div class="panel p-inner">
+                <div class="p-top-bar"></div>
+                <div class="p-eyebrow">왜 LAL인가</div>
+                <div class="p-title">기존 렌즈와<br>무엇이 다를까요</div>
+                <p class="p-body">기존 인공수정체는 수술 직후 도수가 고정됩니다. RxSight LAL은 수술 후에도 빛으로 도수를 미세 조정할 수 있는 세계 유일의 렌즈입니다.</p>
+
+                <div class="cmp-wrap">
+                    <div class="cmp-head">
+                        <div class="cmp-lbl iol">기존 IOL</div>
+                        <div class="cmp-lbl lal">RxSight LAL</div>
+                    </div>
+                    <div class="cmp-row">
+                        <div class="cmp-cell iol">수술 후 도수 고정</div>
+                        <div class="cmp-cell lal"><span class="ck">V</span> 수술 후 조정</div>
+                    </div>
+                    <div class="cmp-row">
+                        <div class="cmp-cell iol">목표 미달 시<br>재수술 필요</div>
+                        <div class="cmp-cell lal"><span class="ck">V</span> 외래 LDD<br>비침습 교정</div>
+                    </div>
+                    <div class="cmp-row">
+                        <div class="cmp-cell iol">고도근시/불규칙<br>각막 한계</div>
+                        <div class="cmp-cell lal"><span class="ck">V</span> 다양한 굴절<br>이상 적용 가능</div>
+                    </div>
+                </div>
+
+                <div class="thin-rule"></div>
+
+                <div class="cta-box">
+                    <p>상담 및 수술 예약</p>
+                    <strong>접수대에 문의해 주세요</strong>
+                </div>
+            </div>
+
+            <!-- 패널 2: 중앙 -->
+            <div class="panel p-inner p-inner-cream">
+                <div class="p-top-bar"></div>
+                <div class="p-eyebrow">Light Adjustable Lens</div>
+                <div class="p-title">LAL이란<br>무엇인가요?</div>
+                <p class="p-body">특수 광반응 소재로 만들어진 인공수정체로, 수술 후 자외선 조사 장치(LDD)를 통해 도수를 정밀하게 조정합니다.</p>
+
+                <div class="feat-list">
+                    <div class="feat-item">
+                        <div class="feat-num">1</div>
+                        <div class="feat-text">
+                            <strong>빛으로 도수 조정</strong>
+                            <span>자외선이 렌즈 내 광반응 물질을 변형시켜 굴절력을 미세 조정합니다.</span>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-num">2</div>
+                        <div class="feat-text">
+                            <strong>FDA 승인 / 30만 건+</strong>
+                            <span>미국 FDA 정식 승인, 전 세계 30만 건 이상 시술 실적을 보유합니다.</span>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-num">3</div>
+                        <div class="feat-text">
+                            <strong>비침습적 정밀 교정</strong>
+                            <span>추가 수술 없이 외래 방문만으로 목표 시력에 도달합니다.</span>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-num">4</div>
+                        <div class="feat-text">
+                            <strong>맞춤형 시력 결과</strong>
+                            <span>환자의 생활 패턴에 맞는 최적의 시력을 구현할 수 있습니다.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 패널 3: 표지 -->
+            <div class="panel p-cover">
+                <div class="cv-brand">
+                    <div class="cv-brand-bar"></div>
+                    <span class="cv-brand-name">RxSight LAL</span>
+                </div>
+                <div style="margin-top:8px;">
+                    <img src="assets/lal-mark.png" alt="LAL Mark" style="height:26px; width:auto; opacity:0.8;">
+                </div>
+
+                <div class="cv-main">
+                    <div class="cv-eyebrow">Light Adjustable Lens</div>
+                    <div class="cv-headline">
+                        수술 후에도<br>
+                        <em>조정 가능한</em><br>
+                        유일한 렌즈
+                    </div>
+                    <div class="cv-rule"></div>
+                    <p class="cv-sub">
+                        세계 최초 빛 조정 인공수정체<br>
+                        FDA 승인 -- 백내장 수술의<br>
+                        새로운 기준
+                    </p>
+                    <p class="cv-en">The only lens customized after surgery</p>
+                    <div class="cv-badges">
+                        <span class="cv-badge">FDA 승인</span>
+                        <span class="cv-badge">30만 건+</span>
+                        <span class="cv-badge">아라케어</span>
+                    </div>
+                </div>
+
+                <div class="cv-footer">
+                    <span class="cv-clinic">ARACARE</span>
+                    <div class="cv-dot"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 뒷면 -->
+    <div class="tf-block" style="margin-top: 32px;">
+        <div class="s-label">뒷면 (Back) — 펼친 상태 기준</div>
+        <div class="tf-spread">
+
+            <!-- 패널 4: 임상 데이터 -->
+            <div class="panel p-inner">
+                <div class="p-top-bar"></div>
+                <div class="p-eyebrow">Clinical Evidence</div>
+                <div class="p-title">FDA 임상<br>연구 결과</div>
+
+                <div class="stat-stack">
+                    <div>
+                        <div class="stat-big">70.1<span class="unit">%</span></div>
+                        <div class="stat-desc">나안 20/20 (시력 1.0) 달성률</div>
+                        <div class="stat-src">* FDA PMA P200006 임상 연구</div>
+                    </div>
+                    <div class="thin-rule"></div>
+                    <div>
+                        <div class="stat-big">92<span class="unit">%</span></div>
+                        <div class="stat-desc">목표 시력 +/-0.5D 이내 도달</div>
+                    </div>
+                    <div class="thin-rule"></div>
+                    <div>
+                        <div class="stat-big" style="font-size:34px;">30<span class="unit" style="font-size:16px;">만+</span></div>
+                        <div class="stat-desc">전 세계 누적 시술 건수</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 패널 5: 수술 과정 -->
+            <div class="panel p-inner p-inner-cream">
+                <div class="p-top-bar"></div>
+                <div class="p-eyebrow">수술 프로세스</div>
+                <div class="p-title">어떻게<br>진행되나요?</div>
+
+                <div class="step-list">
+                    <div class="step-item">
+                        <div class="step-num">1</div>
+                        <div class="step-con">
+                            <strong>수술 전 정밀 검사</strong>
+                            <span>각막/안축장 계측 및 도수 계산</span>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-num">2</div>
+                        <div class="step-con">
+                            <strong>LAL 삽입 수술</strong>
+                            <span>기존 백내장 수술과 동일한 절차</span>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-num">3</div>
+                        <div class="step-con">
+                            <strong>초기 회복 (1-2주)</strong>
+                            <span>시력 안정화, 자외선 차단 착용 필수</span>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-num">4</div>
+                        <div class="step-con">
+                            <strong>LDD 빛 조정 (외래)</strong>
+                            <span>2-4회 방문으로 목표 시력 구현</span>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-num">5</div>
+                        <div class="step-con">
+                            <strong>도수 영구 고정</strong>
+                            <span>최종 조정 후 렌즈 도수 Lock-in</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="thin-rule" style="margin-top: auto;"></div>
+                <p style="font-size:9px; color:var(--inkl); line-height:1.6;">
+                    LDD: 자외선 조사 장치. 외래에서 약 40-90초 시술로 도수를 조정합니다.
+                </p>
+            </div>
+
+            <!-- 패널 6: 병원 정보 -->
+            <div class="panel p-inner">
+                <div class="p-top-bar"></div>
+                <div class="p-eyebrow">아라케어</div>
+                <div class="p-title">상담 및<br>예약 안내</div>
+
+                <p class="hosp-intro">
+                    아라케어 안과는 RxSight LAL 공인 시술 기관으로, 전문 의료진이 최적의 시력 결과를 위해 함께합니다.
+                </p>
+
+                <div class="thin-rule"></div>
+
+                <div class="qr-row">
+                    <div class="qr-box">QR</div>
+                    <p class="qr-hint">QR코드를 스캔하여<br>온라인 상담 예약을<br>진행하세요</p>
+                </div>
+
+                <div class="hosp-card">
+                    <div style="margin-bottom:6px;"><img src="assets/aracare-logo.png" alt="아라케어" style="height:18px; width:auto;"></div>
+                    <div class="hosp-name">아라케어 안과의원</div>
+                    <div class="hosp-detail">
+                        주소: (플레이스홀더)<br>
+                        전화: 02-000-0000<br>
+                        진료시간: 평일 09:00 - 18:00<br>
+                        토요일 09:00 - 13:00
+                    </div>
+                    <div class="hosp-badge">LAL 공인 시술 기관</div>
+                </div>
+
+                <p style="font-size:7px; color:var(--inkl); text-align:center; margin-top:8px; line-height:1.6;">
+                    * 개인에 따라 결과가 다를 수 있습니다<br>
+                    의료기기 광고 심의필 제00호
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>RxSight LAL - Table Banner 시안</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --p:   #813A74;
+            --pd:  #5C2853;
+            --pm:  #6E3363;
+            --pl:  #A85D99;
+            --pp:  #F3EBF1;
+            --t:   #8FD6D6;
+            --td:  #5BBDBD;
+            --tp:  #3FA8A8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
+            background: #E8E4DF;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .page-info {
+            text-align: center;
+            margin-bottom: 28px;
+            font-size: 13px;
+            color: #5C2853;
+            line-height: 1.8;
+        }
+
+        .stand-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ===== TABLE BANNER (A5: 340 x 482) ===== */
+        .tb {
+            width: 340px;
+            height: 482px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px 4px 0 0;
+            box-shadow: 0 12px 60px rgba(92,40,83,0.18), 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        /* ===== 배경 ===== */
+        .bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(165deg,
+                #0F0710 0%,
+                var(--pd) 22%,
+                var(--p) 45%,
+                var(--pm) 60%,
+                #1E0E1A 82%,
+                #0A040A 100%
+            );
+        }
+
+        /* 장식 링 */
+        .deco-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(143,214,214,0.06);
+        }
+        .deco-ring.r1 { width: 220px; height: 220px; top: 130px; left: 50%; transform: translateX(-50%); }
+        .deco-ring.r2 { width: 140px; height: 140px; top: 170px; left: 50%; transform: translateX(-50%); }
+
+        .vig-t { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,4,10,0.35) 0%, transparent 25%); }
+        .vig-b { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(10,4,10,0.75) 0%, rgba(10,4,10,0.15) 35%, transparent 55%); }
+
+        /* ===== LENS VISUAL ===== */
+        .lens-zone {
+            position: absolute;
+            width: 100%;
+            top: 160px;
+            height: 170px;
+            pointer-events: none;
+            z-index: 5;
+        }
+        /* 입사광 */
+        .beam {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform-origin: top center;
+        }
+        .beam-c {
+            width: 2px;
+            height: 65px;
+            background: linear-gradient(180deg, transparent, rgba(143,214,214,0.05) 20%, rgba(143,214,214,0.22) 100%);
+            transform: translateX(-50%);
+        }
+        .beam-l {
+            width: 1px;
+            height: 70px;
+            background: linear-gradient(180deg, transparent, rgba(143,214,214,0.1) 100%);
+            transform: translateX(-50%) rotate(-9deg);
+        }
+        .beam-r {
+            width: 1px;
+            height: 70px;
+            background: linear-gradient(180deg, transparent, rgba(143,214,214,0.1) 100%);
+            transform: translateX(-50%) rotate(9deg);
+        }
+        .beam-wl {
+            width: 1px;
+            height: 65px;
+            background: linear-gradient(180deg, transparent, rgba(168,93,153,0.06) 50%, rgba(143,214,214,0.07) 100%);
+            transform: translateX(-50%) rotate(-18deg);
+        }
+        .beam-wr {
+            width: 1px;
+            height: 65px;
+            background: linear-gradient(180deg, transparent, rgba(168,93,153,0.06) 50%, rgba(143,214,214,0.07) 100%);
+            transform: translateX(-50%) rotate(18deg);
+        }
+
+        /* 렌즈 */
+        .lens {
+            position: absolute;
+            left: 50%;
+            top: 62px;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 28px;
+        }
+        .lens-body {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(180deg,
+                rgba(143,214,214,0.16) 0%,
+                rgba(143,214,214,0.05) 40%,
+                rgba(255,255,255,0.03) 60%,
+                rgba(143,214,214,0.1) 100%
+            );
+            border: 1px solid rgba(143,214,214,0.18);
+            box-shadow: 0 0 24px rgba(143,214,214,0.1), 0 0 50px rgba(143,214,214,0.05);
+        }
+        .lens-hl {
+            position: absolute;
+            top: 5px;
+            left: 18%;
+            width: 64%;
+            height: 6px;
+            border-radius: 50%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.14) 50%, transparent);
+        }
+        .lens-optic {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 38px;
+            height: 12px;
+            border-radius: 50%;
+            border: 1px solid rgba(143,214,214,0.1);
+        }
+        .lens-glow {
+            position: absolute;
+            left: 50%;
+            top: 55px;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 45px;
+            border-radius: 50%;
+            background: radial-gradient(ellipse, rgba(143,214,214,0.08) 0%, transparent 70%);
+        }
+
+        /* 굴절광 */
+        .focal {
+            position: absolute;
+            left: 50%;
+            top: 92px;
+            transform: translateX(-50%);
+        }
+        .focal-l {
+            position: absolute;
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(180deg, rgba(143,214,214,0.32), rgba(143,214,214,0.06) 60%, transparent);
+            transform-origin: top center;
+            transform: rotate(11deg);
+        }
+        .focal-c {
+            position: absolute;
+            width: 1.5px;
+            height: 48px;
+            left: -0.75px;
+            background: linear-gradient(180deg, rgba(143,214,214,0.38), rgba(255,255,255,0.5) 85%, rgba(255,255,255,0.8));
+        }
+        .focal-r {
+            position: absolute;
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(180deg, rgba(143,214,214,0.32), rgba(143,214,214,0.06) 60%, transparent);
+            transform-origin: top center;
+            transform: rotate(-11deg);
+        }
+        .focal-pt {
+            position: absolute;
+            top: 45px;
+            left: -3px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 6px rgba(255,255,255,0.8), 0 0 14px rgba(143,214,214,0.5), 0 0 36px rgba(143,214,214,0.2);
+        }
+        .lens-tag {
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 6.5px;
+            font-weight: 500;
+            color: rgba(143,214,214,0.3);
+            letter-spacing: 0.12em;
+        }
+
+        /* ===== CONTENT ===== */
+        .ct {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+        }
+
+        /* 상단 로고 바 */
+        .top {
+            padding: 18px 22px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .top img {
+            height: 18px;
+            filter: brightness(0) invert(1);
+            opacity: 0.85;
+        }
+        .top .badge {
+            font-size: 7.5px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.45);
+            letter-spacing: 0.1em;
+            padding: 2px 8px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 16px;
+        }
+
+        /* 메인 카피 */
+        .main {
+            text-align: center;
+            padding: 20px 22px 0;
+        }
+        .main .en {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 10px;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--t);
+            letter-spacing: 0.08em;
+            opacity: 0.7;
+            margin-bottom: 10px;
+        }
+        .main h1 {
+            font-size: 30px;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+        .main h1 em {
+            font-style: normal;
+            color: var(--t);
+        }
+        .main .sub {
+            font-size: 12px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.45);
+            margin-top: 10px;
+            line-height: 1.65;
+        }
+        .main .sub strong {
+            color: rgba(255,255,255,0.75);
+            font-weight: 600;
+        }
+
+        /* 수치 3열 */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 0 22px;
+            margin-top: 8px;
+        }
+        .st { text-align: center; }
+        .st .val {
+            font-size: 22px;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+        .st .val .unit {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--td);
+        }
+        .st .lbl {
+            font-size: 8.5px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.35);
+            margin-top: 3px;
+        }
+        .dot-sep {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.12);
+            align-self: center;
+            margin-top: -8px;
+        }
+
+        /* 하단 영역 */
+        .bottom {
+            margin-top: auto;
+            padding: 0 22px 16px;
+        }
+
+        /* QR + CTA */
+        .qr-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .qr-box {
+            width: 46px;
+            height: 46px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            color: rgba(255,255,255,0.5);
+            flex-shrink: 0;
+        }
+        .qr-text .qr-main {
+            font-size: 12px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.85);
+        }
+        .qr-text .qr-sub {
+            font-size: 9px;
+            color: rgba(255,255,255,0.4);
+            margin-top: 2px;
+            line-height: 1.5;
+        }
+
+        /* 병원 정보 */
+        .hosp {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .hosp .nm {
+            font-size: 11px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.8);
+        }
+        .hosp .tel {
+            font-size: 9px;
+            color: rgba(255,255,255,0.35);
+            margin-top: 1px;
+        }
+        .hosp .logos {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .hosp .logos img {
+            height: 12px;
+            filter: brightness(0) invert(1);
+            opacity: 0.45;
+        }
+
+        .legal {
+            text-align: center;
+            font-size: 8px;
+            color: rgba(255,255,255,0.4);
+            margin-top: 8px;
+        }
+
+        /* 스탠드 */
+        .stand-base {
+            width: 340px;
+            height: 8px;
+            background: linear-gradient(180deg, #C8C0CC, #B8B0BC);
+            border-radius: 0 0 3px 3px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+        .stand-pole {
+            width: 5px;
+            height: 20px;
+            background: linear-gradient(180deg, #C8C0CC, #A89CB0);
+            margin: 0 auto;
+        }
+        .stand-foot {
+            width: 70px;
+            height: 5px;
+            background: linear-gradient(180deg, #C0BAC8, #ADA8B8);
+            margin: 0 auto;
+            border-radius: 0 0 30px 30px;
+        }
+
+        @media print {
+            body { background: none; padding: 0; }
+            .page-info, .stand-base, .stand-pole, .stand-foot { display: none; }
+            .tb { box-shadow: none; border-radius: 0; width: 148mm; height: 210mm; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-info">
+        <strong>MATERIAL 06: 테이블 배너 (Table Stand Banner)</strong><br>
+        A5 (148 x 210mm) / 단면 인쇄 / 아크릴 스탠드형<br>
+        <small>* 접수대 / 상담 테이블 위 비치용</small>
+    </div>
+
+    <div class="stand-wrapper">
+        <div class="tb">
+            <div class="bg"></div>
+            <div class="deco-ring r1"></div>
+            <div class="deco-ring r2"></div>
+
+            <!-- LENS VISUAL -->
+            <div class="lens-zone">
+                <div class="beam beam-wl"></div>
+                <div class="beam beam-l"></div>
+                <div class="beam beam-c"></div>
+                <div class="beam beam-r"></div>
+                <div class="beam beam-wr"></div>
+                <div class="lens-glow"></div>
+                <div class="lens">
+                    <div class="lens-body"></div>
+                    <div class="lens-hl"></div>
+                    <div class="lens-optic"></div>
+                </div>
+                <div class="focal">
+                    <div class="focal-l"></div>
+                    <div class="focal-c"></div>
+                    <div class="focal-r"></div>
+                    <div class="focal-pt"></div>
+                </div>
+                <span class="lens-tag">LIGHT ADJUSTABLE LENS</span>
+            </div>
+
+            <div class="vig-t"></div>
+            <div class="vig-b"></div>
+
+            <div class="ct">
+
+                <!-- 로고 -->
+                <div class="top">
+                    <img src="assets/lal-logo-horizontal.png" alt="RxSight LAL">
+                    <span class="badge">FDA APPROVED</span>
+                </div>
+
+                <!-- 메인 카피 -->
+                <div class="main">
+                    <p class="en">Light Adjustable Lens</p>
+                    <h1>수술 후에도<br><em>조정 가능한</em><br>유일한 렌즈</h1>
+                    <p class="sub">
+                        한 번 넣으면 끝?<br>
+                        LAL은 <strong>빛으로 맞춤 시력</strong>을 완성합니다.
+                    </p>
+                </div>
+
+                <!-- 렌즈 비주얼 공간 확보 -->
+                <div style="height: 110px;"></div>
+
+                <!-- 수치 -->
+                <div class="stats">
+                    <div class="st">
+                        <div class="val">92<span class="unit">%</span></div>
+                        <div class="lbl">시력 달성</div>
+                    </div>
+                    <div class="dot-sep"></div>
+                    <div class="st">
+                        <div class="val">90<span class="unit">초</span></div>
+                        <div class="lbl">빛 조사</div>
+                    </div>
+                    <div class="dot-sep"></div>
+                    <div class="st">
+                        <div class="val">0.25<span class="unit">D</span></div>
+                        <div class="lbl">정밀 조정</div>
+                    </div>
+                </div>
+
+                <!-- 하단 -->
+                <div class="bottom">
+                    <div class="qr-row">
+                        <div class="qr-box">QR</div>
+                        <div class="qr-text">
+                            <p class="qr-main">상담 예약</p>
+                            <p class="qr-sub">QR 스캔으로 간편 예약</p>
+                        </div>
+                    </div>
+
+                    <div class="hosp">
+                        <div>
+                            <p class="nm">[병원명]</p>
+                            <p class="tel">[전화번호]</p>
+                        </div>
+                        <div class="logos">
+                            <img src="assets/lal-mark.png" alt="LAL">
+                            <img src="assets/aracare-logo.png" alt="아라케어">
+                        </div>
+                    </div>
+
+                    <p class="legal">* 개인에 따라 결과가 다를 수 있습니다 | 의료기기 광고 심의필 제00호</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="stand-base"></div>
+        <div class="stand-pole"></div>
+        <div class="stand-foot"></div>
+    </div>
+</body>
+</html>

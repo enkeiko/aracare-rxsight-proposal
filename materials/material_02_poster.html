@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>RxSight LAL - 원내 포스터 시안</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --purple:        #813A74;
+            --purple-dark:   #5C2853;
+            --purple-mid:    #6E3363;
+            --purple-light:  #A85D99;
+            --teal:          #8FD6D6;
+            --teal-dark:     #5BBDBD;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Pretendard Variable', 'Pretendard', -apple-system, sans-serif;
+            background: #E8E4DF;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .page-info {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+            color: #3D3D3D;
+        }
+
+        /* ===== POSTER ===== */
+        .poster {
+            width: 440px;
+            height: 620px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 48px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        /* ===== BACKGROUND ===== */
+        .bg-layer {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(170deg,
+                #120810 0%,
+                var(--purple-dark) 30%,
+                var(--purple) 50%,
+                var(--purple-mid) 65%,
+                #1E0E1A 85%,
+                #0C050A 100%
+            );
+        }
+
+        /* ===== LENS VISUAL ===== */
+        .lens-zone {
+            position: absolute;
+            width: 100%;
+            top: 150px;
+            height: 260px;
+            pointer-events: none;
+        }
+
+        /* 빛줄기 - 위에서 렌즈로 내려옴 */
+        .beam {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform-origin: top center;
+        }
+        .beam-center {
+            width: 2px;
+            height: 120px;
+            background: linear-gradient(180deg,
+                transparent 0%,
+                rgba(143,214,214,0.06) 20%,
+                rgba(143,214,214,0.25) 90%,
+                rgba(143,214,214,0.5) 100%
+            );
+            transform: translateX(-50%);
+        }
+        .beam-left {
+            width: 1.5px;
+            height: 130px;
+            background: linear-gradient(180deg,
+                transparent 0%,
+                rgba(143,214,214,0.04) 20%,
+                rgba(143,214,214,0.15) 100%
+            );
+            transform: translateX(-50%) rotate(-8deg);
+        }
+        .beam-right {
+            width: 1.5px;
+            height: 130px;
+            background: linear-gradient(180deg,
+                transparent 0%,
+                rgba(143,214,214,0.04) 20%,
+                rgba(143,214,214,0.15) 100%
+            );
+            transform: translateX(-50%) rotate(8deg);
+        }
+        .beam-wide-l {
+            width: 1px;
+            height: 125px;
+            background: linear-gradient(180deg,
+                transparent 0%,
+                rgba(168,93,153,0.08) 40%,
+                rgba(143,214,214,0.1) 100%
+            );
+            transform: translateX(-50%) rotate(-16deg);
+        }
+        .beam-wide-r {
+            width: 1px;
+            height: 125px;
+            background: linear-gradient(180deg,
+                transparent 0%,
+                rgba(168,93,153,0.08) 40%,
+                rgba(143,214,214,0.1) 100%
+            );
+            transform: translateX(-50%) rotate(16deg);
+        }
+
+        /* 렌즈 몸체 */
+        .lens {
+            position: absolute;
+            left: 50%;
+            top: 115px;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 36px;
+        }
+        .lens-body {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(180deg,
+                rgba(143,214,214,0.18) 0%,
+                rgba(143,214,214,0.06) 40%,
+                rgba(255,255,255,0.04) 60%,
+                rgba(143,214,214,0.12) 100%
+            );
+            border: 1px solid rgba(143,214,214,0.2);
+            box-shadow:
+                0 0 30px rgba(143,214,214,0.12),
+                0 0 60px rgba(143,214,214,0.06),
+                inset 0 -2px 8px rgba(143,214,214,0.08);
+        }
+        /* 렌즈 하이라이트 */
+        .lens-highlight {
+            position: absolute;
+            top: 6px;
+            left: 20%;
+            width: 60%;
+            height: 8px;
+            border-radius: 50%;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(255,255,255,0.12) 30%,
+                rgba(255,255,255,0.18) 50%,
+                rgba(255,255,255,0.12) 70%,
+                transparent
+            );
+        }
+        /* 렌즈 옵틱 존 링 */
+        .lens-optic {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 16px;
+            border-radius: 50%;
+            border: 1px solid rgba(143,214,214,0.12);
+        }
+
+        /* 빛 초점 - 렌즈 아래 수렴 */
+        .focal {
+            position: absolute;
+            left: 50%;
+            top: 155px;
+            transform: translateX(-50%);
+        }
+        .focal-beam-l {
+            position: absolute;
+            width: 1.5px;
+            height: 80px;
+            top: 0;
+            left: 0;
+            background: linear-gradient(180deg,
+                rgba(143,214,214,0.4) 0%,
+                rgba(143,214,214,0.15) 60%,
+                transparent 100%
+            );
+            transform-origin: top center;
+            transform: rotate(12deg);
+        }
+        .focal-beam-r {
+            position: absolute;
+            width: 1.5px;
+            height: 80px;
+            top: 0;
+            left: 0;
+            background: linear-gradient(180deg,
+                rgba(143,214,214,0.4) 0%,
+                rgba(143,214,214,0.15) 60%,
+                transparent 100%
+            );
+            transform-origin: top center;
+            transform: rotate(-12deg);
+        }
+        .focal-beam-c {
+            position: absolute;
+            width: 2px;
+            height: 75px;
+            top: 0;
+            left: -1px;
+            background: linear-gradient(180deg,
+                rgba(143,214,214,0.5) 0%,
+                rgba(255,255,255,0.6) 85%,
+                rgba(255,255,255,0.9) 100%
+            );
+        }
+        /* 초점 포인트 */
+        .focal-point {
+            position: absolute;
+            top: 72px;
+            left: -4px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow:
+                0 0 8px rgba(255,255,255,0.9),
+                0 0 20px rgba(143,214,214,0.6),
+                0 0 50px rgba(143,214,214,0.3),
+                0 0 80px rgba(143,214,214,0.15);
+        }
+
+        /* 렌즈 주변 글로우 */
+        .lens-glow {
+            position: absolute;
+            left: 50%;
+            top: 105px;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 60px;
+            border-radius: 50%;
+            background: radial-gradient(ellipse,
+                rgba(143,214,214,0.1) 0%,
+                rgba(143,214,214,0.04) 50%,
+                transparent 70%
+            );
+        }
+
+        /* 배경 장식 링 */
+        .deco-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(143,214,214,0.06);
+        }
+        .deco-ring.r1 {
+            width: 320px;
+            height: 320px;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .deco-ring.r2 {
+            width: 200px;
+            height: 200px;
+            top: 180px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* 비네팅 */
+        .vig-top {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(12,5,10,0.45) 0%, transparent 25%);
+        }
+        .vig-btm {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(12,5,10,0.85) 0%, rgba(12,5,10,0.2) 30%, transparent 50%);
+        }
+
+        /* ===== CONTENT ===== */
+        .content {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 26px 32px 22px;
+            color: #FFFFFF;
+        }
+
+        /* -- 상단 로고 -- */
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .top img {
+            height: 18px;
+            filter: brightness(0) invert(1);
+            opacity: 0.85;
+        }
+        .top .badge {
+            font-size: 8px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 0.1em;
+            padding: 3px 9px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+        }
+
+        /* -- 메인 카피 -- */
+        .copy {
+            text-align: center;
+            margin-top: 24px;
+        }
+        .copy .en {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 12px;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--teal);
+            letter-spacing: 0.1em;
+            opacity: 0.7;
+            margin-bottom: 14px;
+        }
+        .copy h1 {
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.025em;
+        }
+        .copy h1 .accent {
+            position: relative;
+            display: inline-block;
+            color: var(--teal);
+        }
+        .copy .sub {
+            font-size: 13px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.75;
+            margin-top: 14px;
+        }
+        .copy .sub strong {
+            color: rgba(255,255,255,0.8);
+            font-weight: 600;
+        }
+
+        /* 렌즈 비주얼 텍스트 */
+        .lens-caption {
+            text-align: center;
+            margin-top: 150px;
+        }
+        .lens-caption span {
+            font-size: 8px;
+            font-weight: 500;
+            color: rgba(143,214,214,0.4);
+            letter-spacing: 0.15em;
+        }
+
+        /* -- 수치 스트립 -- */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .st { text-align: center; }
+        .st .val {
+            font-size: 26px;
+            font-weight: 700;
+            color: #FFFFFF;
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+        .st .val .unit {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--teal-dark);
+        }
+        .st .lbl {
+            font-size: 10px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.35);
+            margin-top: 4px;
+            letter-spacing: 0.02em;
+        }
+        .dot {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.12);
+            align-self: center;
+            margin-top: -8px;
+        }
+
+        /* -- 하단 -- */
+        .bottom {
+            margin-top: auto;
+        }
+        .cta {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .cta span {
+            display: inline-block;
+            padding: 10px 34px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            color: #FFFFFF;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 30px;
+            backdrop-filter: blur(4px);
+        }
+        .hosp {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .hosp .name {
+            font-size: 13px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.8);
+        }
+        .hosp .tel {
+            font-size: 10px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.35);
+            margin-top: 2px;
+            letter-spacing: 0.02em;
+        }
+        .hosp .logos {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .hosp .logos img {
+            height: 13px;
+            filter: brightness(0) invert(1);
+            opacity: 0.45;
+        }
+        .legal {
+            text-align: center;
+            font-size: 8px;
+            color: rgba(255,255,255,0.4);
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-info">
+        <strong>MATERIAL 02: 원내 포스터</strong><br>
+        A3 사이즈 (420 x 297mm) / 세로형 / 고화질 인쇄<br>
+        <small>* 대기실, 복도 부착용</small>
+    </div>
+
+    <div class="poster">
+        <!-- BG -->
+        <div class="bg-layer"></div>
+        <div class="deco-ring r1"></div>
+        <div class="deco-ring r2"></div>
+
+        <!-- LENS VISUAL -->
+        <div class="lens-zone">
+            <!-- 입사광 (위에서 내려오는 빛) -->
+            <div class="beam beam-wide-l"></div>
+            <div class="beam beam-left"></div>
+            <div class="beam beam-center"></div>
+            <div class="beam beam-right"></div>
+            <div class="beam beam-wide-r"></div>
+
+            <!-- 렌즈 글로우 -->
+            <div class="lens-glow"></div>
+
+            <!-- 렌즈 -->
+            <div class="lens">
+                <div class="lens-body"></div>
+                <div class="lens-highlight"></div>
+                <div class="lens-optic"></div>
+            </div>
+
+            <!-- 굴절광 (렌즈 아래로 수렴) -->
+            <div class="focal">
+                <div class="focal-beam-l"></div>
+                <div class="focal-beam-c"></div>
+                <div class="focal-beam-r"></div>
+                <div class="focal-point"></div>
+            </div>
+        </div>
+
+        <div class="vig-top"></div>
+        <div class="vig-btm"></div>
+
+        <!-- CONTENT -->
+        <div class="content">
+
+            <!-- 로고 -->
+            <div class="top">
+                <img src="assets/lal-logo-horizontal.png" alt="RxSight LAL">
+                <span class="badge">FDA APPROVED</span>
+            </div>
+
+            <!-- 메인 카피 -->
+            <div class="copy">
+                <p class="en">Light Adjustable Lens</p>
+                <h1>
+                    수술 후에도<br>
+                    <span class="accent">조정 가능한</span><br>
+                    유일한 렌즈
+                </h1>
+                <p class="sub">
+                    한 번 넣으면 못 바꾼다?<br>
+                    LAL은 <strong>빛으로 맞춤 시력</strong>을 완성합니다.
+                </p>
+            </div>
+
+            <!-- 렌즈 캡션 -->
+            <div class="lens-caption">
+                <span>LIGHT ADJUSTABLE LENS TECHNOLOGY</span>
+            </div>
+
+            <!-- 수치 -->
+            <div class="stats">
+                <div class="st">
+                    <div class="val">92<span class="unit">%</span></div>
+                    <div class="lbl">목표 시력 달성</div>
+                </div>
+                <div class="dot"></div>
+                <div class="st">
+                    <div class="val">90<span class="unit">초</span></div>
+                    <div class="lbl">빛 조사 시간</div>
+                </div>
+                <div class="dot"></div>
+                <div class="st">
+                    <div class="val">0.25<span class="unit">D</span></div>
+                    <div class="lbl">정밀 조정 단위</div>
+                </div>
+            </div>
+
+            <!-- 하단 -->
+            <div class="bottom">
+                <div class="cta">
+                    <span>상담 예약 문의</span>
+                </div>
+                <div class="hosp">
+                    <div>
+                        <p class="name">[병원명]</p>
+                        <p class="tel">[전화번호] | [주소]</p>
+                    </div>
+                    <div class="logos">
+                        <img src="assets/lal-mark.png" alt="LAL">
+                        <img src="assets/aracare-logo.png" alt="아라케어">
+                    </div>
+                </div>
+                <p class="legal">* 개인에 따라 결과가 다를 수 있습니다 | 의료기기 광고 심의필 제00호</p>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

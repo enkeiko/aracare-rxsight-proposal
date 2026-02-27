@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>RxSight LAL - 환자용 브로슈어 시안 (8p)</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --purple:        #813A74;
+            --purple-dark:   #5C2853;
+            --purple-light:  #A85D99;
+            --purple-pale:   #F3EBF1;
+            --teal:          #8FD6D6;
+            --teal-print:    #5BBDBD;
+            --bg:            #FFFFFF;
+            --bg-section:    #F7F7F5;
+            --text:          #1A1A1A;
+            --text-mid:      #3D3D3D;
+            --text-muted:    #888888;
+            --border:        #E4E4E7;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Pretendard Variable', 'Pretendard', -apple-system, sans-serif;
+            background: #F0EDF3;
+            padding: 40px 20px 80px;
+        }
+        .page-info {
+            text-align: center;
+            margin-bottom: 32px;
+            font-size: 14px;
+            color: #3D3D3D;
+        }
+        .page-info strong {
+            color: var(--purple);
+            font-size: 15px;
+        }
+
+        /* ===== SPREAD 레이아웃 ===== */
+        .spread {
+            display: flex;
+            gap: 0;
+            justify-content: center;
+            margin-bottom: 40px;
+            filter: drop-shadow(0 6px 20px rgba(0,0,0,0.12));
+        }
+        .spread.single {
+            justify-content: center;
+        }
+
+        /* ===== A5 페이지 (148mm x 210mm = 297px x 420px @ 2x) ===== */
+        .page {
+            width: 297px;
+            height: 420px;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        /* 짝수 페이지 (왼쪽) 왼쪽 그림자 */
+        .spread .page:first-child {
+            border-right: 1px solid rgba(0,0,0,0.08);
+        }
+
+        /* 스프레드 중앙 바인딩 그림자 효과 */
+        .spread .page:first-child::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 12px; height: 100%;
+            background: linear-gradient(to left, rgba(0,0,0,0.06), transparent);
+            pointer-events: none;
+            z-index: 10;
+        }
+        .spread .page:last-child::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 12px; height: 100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.06), transparent);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .spread-label {
+            text-align: center;
+            font-size: 10px;
+            color: #aaa;
+            margin-bottom: 8px;
+            letter-spacing: 0.1em;
+        }
+
+        .page-num-badge {
+            position: absolute;
+            bottom: 10px;
+            font-size: 9px;
+            color: var(--text-muted);
+            font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
+            font-weight: 500;
+        }
+        .page-num-badge.left { left: 16px; }
+        .page-num-badge.right { right: 16px; }
+
+        /* ===================================
+           P1 - 표지 (앞)
+           =================================== */
+        .p1 {
+            background: linear-gradient(150deg, var(--purple-dark) 0%, var(--purple) 55%, #9B4F8C 100%);
+        }
+        .p1 .teal-line {
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 100%;
+            background: linear-gradient(180deg, var(--teal) 0%, transparent 100%);
+            opacity: 0.6;
+        }
+        .p1 .cover-inner {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 28px 24px;
+        }
+        .p1 .brand-mark {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .p1 .brand-en {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 13px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.9);
+            letter-spacing: 3px;
+        }
+        .p1 .brand-sub {
+            font-size: 8px;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 2px;
+        }
+        .p1 .cover-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .p1 .eyebrow {
+            font-size: 9px;
+            color: var(--teal);
+            letter-spacing: 3px;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+        }
+        .p1 h1 {
+            font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
+            font-size: 30px;
+            font-weight: 300;
+            color: #fff;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+        }
+        .p1 h1 strong {
+            font-weight: 600;
+            color: var(--teal);
+            display: block;
+        }
+        .p1 .cover-tagline {
+            font-size: 11px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.6;
+            margin-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            padding-top: 12px;
+        }
+        .p1 .cover-footer {
+            text-align: left;
+        }
+        .p1 .cert-badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .p1 .badge {
+            font-size: 8px;
+            color: rgba(255,255,255,0.5);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 3px;
+            padding: 2px 6px;
+        }
+        .p1 .aracare {
+            font-size: 8px;
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 2px;
+        }
+
+        /* ===================================
+           P2 - 목차 & 소개
+           =================================== */
+        .p2 {
+            background: var(--bg);
+        }
+        .p2 .inner {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 20px;
+            border-left: 3px solid var(--purple-pale);
+        }
+        .p2 .section-label {
+            font-size: 8px;
+            font-weight: 700;
+            color: var(--purple);
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+        }
+        .p2 h2 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        .toc-list {
+            flex: 1;
+        }
+        .toc-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 0;
+            border-bottom: 1px solid #f5f5f5;
+            font-size: 11px;
+        }
+        .toc-item:last-child { border-bottom: none; }
+        .toc-num {
+            font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
+            font-size: 9px;
+            color: var(--purple);
+            font-weight: 600;
+            width: 20px;
+            flex-shrink: 0;
+        }
+        .toc-title {
+            color: var(--text-mid);
+            flex: 1;
+        }
+        .toc-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--border);
+        }
+        .aracare-box {
+            margin-top: 14px;
+            padding: 12px;
+            background: var(--purple-pale);
+            border-radius: 6px;
+        }
+        .aracare-box .ab-label {
+            font-size: 8px;
+            font-weight: 700;
+            color: var(--purple);
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+        .aracare-box p {
+            font-size: 10px;
+            color: var(--text-mid);
+            line-height: 1.6;
+        }
+
+        /* ===================================
+           P3 - LAL 기술 원리
+           =================================== */
+        .p3 {
+            background: var(--bg-section);
+        }
+        .p3 .inner {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 20px;
+        }
+        .p3 .section-label {
+            font-size: 8px;
+            font-weight: 700;
+            color: var(--teal-print);
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+        .p3 h2 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        .p3 .subtitle {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+        .mechanism-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+        }
+        .mech-step {
+            background: var(--bg);
+            border-radius: 6px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 3px solid var(--teal-print);
+        }
+        .mech-step .ms-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--teal-print);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .mech-step .ms-content h5 {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+        .mech-step .ms-content p {
+            font-size: 9.5px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .mech-arrow {
+            text-align: center;
+            font-size: 10px;
+            color: var(--border);
+        }
+        .tech-note {
+            margin-top: 10px;
+            padding: 8px 10px;
+            background: rgba(129,58,116,0.06);
+            border-radius: 4px;
+            font-size: 9.5px;
+            color: var(--purple);
+            line-height: 1.5;
+            border-left: 2px solid var(--purple);
+        }
+
+        /* ===================================
+           P4 - 임상 데이터
+           =================================== */
+        .p4 {
+            background: var(--bg);
+        }
+        .p4 .inner {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 20px;
+        }
+        .p4 .section-label {
+            font-size: 8px;
+            font-weight: 700;
+            color: var(--purple);
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+        .p4 h2 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 16px;
+        }
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .data-card {
+            background: var(--bg-section);
+            border-radius: 8px;
+            padding: 12px 10px;
+            text-align: center;
+            border-top: 2px solid var(--purple);
+        }
+        .data-card .dc-num {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--teal-print);
+            line-height: 1;
+        }
+        .data-card .dc-unit {
+            font-size: 12px;
+            color: var(--teal-print);
+        }
+        .data-card .dc-label {
+            font-size: 9px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+        .data-card.highlight {
+            background: var(--purple-pale);
+            border-top-color: var(--purple);
+        }
+        .data-card.highlight .dc-num {
+            color: var(--purple);
+        }
+        .data-source {
+            font-size: 8.5px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .trial-info {
+            padding: 10px 12px;
+            background: var(--bg-section);
+            border-radius: 6px;
+            border-left: 2px solid var(--teal-print);
+        }
+        .trial-info h5 {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        .trial-info p {
+            font-size: 9.5px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ===================================
+           P5 - IOL 비교표
+           =================================== */
+        .p5 {
+            background: var(--bg);
+        }
+        .p5 .inner {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 20px;
+        }
+        .p5 .section-label {
+            font-size: 8px;
+            font-weight: 700;
+            color: var(--purple);
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+        .p5 h2 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 14px;
+        }
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+        }
+        .compare-table th {
+            padding: 8px 6px;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 700;
+        }
+        .compare-table th:first-child {
+            text-align: left;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .compare-table th.th-lal {
+            background: var(--purple);
+            color: #fff;
+            border-radius: 4px 4px 0 0;
+        }
+        .compare-table th.th-mono {
+            color: var(--text-muted);
+        }
+        .compare-table th.th-multi {
+            color: var(--text-muted);
+        }
+        .compare-table td {
+            padding: 7px 6px;
+            text-align: center;
+            border-bottom: 1px solid #f5f5f5;
+            color: var(--text-mid);
+        }
+        .compare-table td:first-child {
+            text-align: left;
+            color: var(--text-muted);
+            font-size: 9.5px;
+        }
+        .compare-table tr:last-child td {
+            border-bottom: none;
+        }
+        .compare-table td.lal-col {
+            background: rgba(129,58,116,0.05);
+            color: var(--purple);
+            font-weight: 600;
+        }
+        .tick { color: var(--teal-print); font-weight: 700; }
+        .cross { color: #ccc; }
+        .partial { color: #dda; }
+        .compare-note {
+            margin-top: 10px;
+            font-size: 8.5px;
+            color: var(--text-muted);
+        }
+
+        /* ===================================
+           P6 - 수술 과정 & 적응증
+           =================================== */
+        .p6 {
+            background: var(--bg-section);
+        }
+        .p6 .inner {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 20px;
+        }
+        .p6 .section-label {
+            font-size: 8px;
+            font-weight: 700;
+            color: var(--teal-print);
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+        .p6 h2 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 14px;
+        }
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+        .proc-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .proc-line {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .proc-dot {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--purple);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .proc-connector {
+            width: 1px;
+            height: 10px;
+            background: var(--border);
+            margin: 2px 0;
+        }
+        .proc-step:last-child .proc-connector { display: none; }
+        .proc-content {
+            padding-top: 2px;
+        }
+        .proc-content h5 {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 1px;
+        }
+        .proc-content p {
+            font-size: 9.5px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+        .indication-box {
+            background: var(--bg);
+            border-radius: 6px;
+            padding: 10px 12px;
+            border-left: 3px solid var(--purple);
+        }
+        .indication-box h5 {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--purple);
+            margin-bottom: 6px;
+        }
+        .indication-list {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .ind-item {
+            font-size: 10px;
+            color: var(--text-mid);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .ind-item::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--teal-print);
+            flex-shrink: 0;
+        }
+
+        /* ===================================
+           P7 - 환자 후기 & FAQ
+           =================================== */
+        .p7 {
+            background: var(--bg);
+        }
+        .p7 .inner {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 20px;
+        }
+        .p7 .section-label {
+            font-size: 8px;
+            font-weight: 700;
+            color: var(--purple);
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+        .p7 h2 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+        .testimonial {
+            padding: 10px 12px;
+            background: var(--purple-pale);
+            border-radius: 6px;
+            border-left: 3px solid var(--purple);
+            margin-bottom: 8px;
+        }
+        .testimonial q {
+            font-size: 10.5px;
+            color: var(--text-mid);
+            line-height: 1.6;
+            font-style: italic;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .testimonial .author {
+            font-size: 9px;
+            color: var(--text-muted);
+        }
+        .faq-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 10px 0 8px;
+        }
+        .faq-mini-label {
+            font-size: 8px;
+            font-weight: 700;
+            color: var(--teal-print);
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+        .faq-item-mini {
+            margin-bottom: 8px;
+        }
+        .faq-item-mini .fq {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--purple);
+            margin-bottom: 2px;
+        }
+        .faq-item-mini .fa {
+            font-size: 9.5px;
+            color: var(--text-mid);
+            line-height: 1.5;
+        }
+
+        /* ===================================
+           P8 - 뒤표지
+           =================================== */
+        .p8 {
+            background: linear-gradient(150deg, var(--purple-dark) 0%, var(--purple) 100%);
+        }
+        .p8 .teal-line {
+            position: absolute;
+            top: 0; right: 0;
+            width: 3px; height: 100%;
+            background: linear-gradient(180deg, var(--teal) 0%, transparent 100%);
+            opacity: 0.6;
+        }
+        .p8 .inner {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 30px 24px;
+            text-align: center;
+        }
+        .p8 .back-top {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        .p8 .brand-en {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 18px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.9);
+            letter-spacing: 3px;
+        }
+        .p8 .brand-tagline {
+            font-size: 9px;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 2px;
+        }
+        .p8 .qr-area {
+            width: 72px;
+            height: 72px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            color: rgba(255,255,255,0.4);
+        }
+        .p8 .contact-info {
+            font-size: 10px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.8;
+        }
+        .p8 .contact-info strong {
+            color: var(--teal);
+            display: block;
+            font-size: 11px;
+        }
+        .p8 .back-footer {
+            font-size: 8px;
+            color: rgba(255,255,255,0.25);
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-info">
+        <strong>MATERIAL 01: 환자용 브로슈어</strong><br>
+        A5 중철 8페이지 / 양면 컬러 / 무광 코팅<br>
+        <small>대상: 구매 의사 확정 환자 · 의료인 | 스프레드 2페이지씩 펼침 뷰</small>
+    </div>
+
+    <!-- SPREAD 1: 표지 + 목차 -->
+    <div class="spread-label">P1 표지 &nbsp;/&nbsp; P2 목차·소개</div>
+    <div class="spread">
+        <!-- P1: 표지 -->
+        <div class="page p1">
+            <div class="teal-line"></div>
+            <div class="cover-inner">
+                <div class="brand-mark">
+                    <img src="assets/lal-mark.png" alt="LAL" style="height:30px; width:auto; opacity:0.85; margin-bottom:4px;">
+                    <span class="brand-en">RxSight LAL</span>
+                    <span class="brand-sub">Light Adjustable Lens</span>
+                </div>
+                <div class="cover-main">
+                    <p class="eyebrow">Patient Brochure</p>
+                    <h1>
+                        빛으로 맞추는<br>
+                        <strong>정밀 시력</strong>
+                    </h1>
+                    <p class="cover-tagline">
+                        수술 후에도 조정 가능한<br>
+                        세계 유일의 인공수정체<br>
+                        RxSight LAL의 모든 것
+                    </p>
+                </div>
+                <div class="cover-footer">
+                    <div class="cert-badges">
+                        <span class="badge">FDA Approved</span>
+                        <span class="badge">CE Marked</span>
+                    </div>
+                    <img src="assets/aracare-logo.png" alt="아라케어" style="height:14px; width:auto; opacity:0.55; margin-bottom:4px; display:block;">
+                    <p class="aracare">Provided by ARACARE</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- P2: 목차 & 소개 -->
+        <div class="page p2">
+            <div class="inner">
+                <p class="section-label">CONTENTS</p>
+                <h2>목차</h2>
+                <div class="toc-list">
+                    <div class="toc-item">
+                        <span class="toc-num">03</span>
+                        <span class="toc-title">LAL 기술 원리</span>
+                        <div class="toc-dot"></div>
+                    </div>
+                    <div class="toc-item">
+                        <span class="toc-num">04</span>
+                        <span class="toc-title">FDA 임상 데이터</span>
+                        <div class="toc-dot"></div>
+                    </div>
+                    <div class="toc-item">
+                        <span class="toc-num">05</span>
+                        <span class="toc-title">기존 IOL과 비교</span>
+                        <div class="toc-dot"></div>
+                    </div>
+                    <div class="toc-item">
+                        <span class="toc-num">06</span>
+                        <span class="toc-title">수술 과정 &amp; 적응증</span>
+                        <div class="toc-dot"></div>
+                    </div>
+                    <div class="toc-item">
+                        <span class="toc-num">07</span>
+                        <span class="toc-title">환자 후기 &amp; FAQ</span>
+                        <div class="toc-dot"></div>
+                    </div>
+                </div>
+                <div class="aracare-box">
+                    <p class="ab-label">ABOUT ARACARE</p>
+                    <p>아라케어는 RxSight 공식 파트너로서, 국내 LAL 시술 도입 및 교육을 전담합니다. 환자 맞춤형 정밀 시력 솔루션을 제공합니다.</p>
+                </div>
+            </div>
+            <span class="page-num-badge right">02</span>
+        </div>
+    </div>
+
+    <!-- SPREAD 2: 기술 원리 + 임상 데이터 -->
+    <div class="spread-label">P3 LAL 기술 원리 &nbsp;/&nbsp; P4 FDA 임상 데이터</div>
+    <div class="spread">
+        <!-- P3: 기술 원리 -->
+        <div class="page p3">
+            <div class="inner">
+                <p class="section-label">HOW IT WORKS</p>
+                <h2>LAL 기술 원리</h2>
+                <p class="subtitle">광반응 단량체 기반 렌즈 굴절력 조정</p>
+                <div class="mechanism-flow">
+                    <div class="mech-step">
+                        <div class="ms-icon">1</div>
+                        <div class="ms-content">
+                            <h5>LAL 렌즈 삽입</h5>
+                            <p>일반 백내장 수술과 동일한 방법으로 광반응 폴리머 렌즈 삽입</p>
+                        </div>
+                    </div>
+                    <div class="mech-arrow">↓</div>
+                    <div class="mech-step">
+                        <div class="ms-icon">2</div>
+                        <div class="ms-content">
+                            <h5>시력 측정 & 처방 계산</h5>
+                            <p>수술 2~3주 후 안정된 시력을 정밀 측정하여 조정량 계산</p>
+                        </div>
+                    </div>
+                    <div class="mech-arrow">↓</div>
+                    <div class="mech-step">
+                        <div class="ms-icon">3</div>
+                        <div class="ms-content">
+                            <h5>UV 빛 조사 (90초)</h5>
+                            <p>LDD 장비로 정밀 UV 빛 조사, 렌즈 내 단량체 이동으로 굴절력 변화</p>
+                        </div>
+                    </div>
+                    <div class="mech-arrow">↓</div>
+                    <div class="mech-step">
+                        <div class="ms-icon">4</div>
+                        <div class="ms-content">
+                            <h5>Lock-In (렌즈 고정)</h5>
+                            <p>목표 시력 확인 후 전체 조사로 렌즈 영구 고정</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tech-note">
+                    조정 단위: <strong>0.25D</strong> — 기존 IOL 대비 압도적 정밀도
+                </div>
+            </div>
+            <span class="page-num-badge right">03</span>
+        </div>
+
+        <!-- P4: 임상 데이터 -->
+        <div class="page p4">
+            <div class="inner">
+                <p class="section-label">CLINICAL DATA</p>
+                <h2>FDA 임상 결과</h2>
+                <div class="data-grid">
+                    <div class="data-card highlight">
+                        <div class="dc-num">92<span class="dc-unit">%</span></div>
+                        <div class="dc-label">목표시력<br>달성률</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="dc-num">96<span class="dc-unit">%</span></div>
+                        <div class="dc-label">환자<br>추천율</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="dc-num">70<span class="dc-unit">%</span></div>
+                        <div class="dc-label">나안 20/20<br>달성</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="dc-num">1M<span class="dc-unit">+</span></div>
+                        <div class="dc-label">글로벌<br>시술 건수</div>
+                    </div>
+                </div>
+                <p class="data-source">* FDA PMA 승인 임상 데이터 기준 (RxSight, Inc.)</p>
+                <div class="trial-info">
+                    <h5>FDA 임상 시험 개요</h5>
+                    <p>
+                        N=600+, 다기관 전향적 연구<br>
+                        1차 목표: 나안시력 20/40 이상 달성률<br>
+                        추적 기간: 수술 후 12개월<br>
+                        대상: 단안 또는 양안 백내장 환자
+                    </p>
+                </div>
+            </div>
+            <span class="page-num-badge right">04</span>
+        </div>
+    </div>
+
+    <!-- SPREAD 3: IOL 비교 + 수술 과정 -->
+    <div class="spread-label">P5 IOL 비교 &nbsp;/&nbsp; P6 수술 과정·적응증</div>
+    <div class="spread">
+        <!-- P5: IOL 비교 -->
+        <div class="page p5">
+            <div class="inner">
+                <p class="section-label">COMPARISON</p>
+                <h2>기존 IOL과의 비교</h2>
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="th-lal">LAL</th>
+                            <th class="th-mono">단초점<br>IOL</th>
+                            <th class="th-multi">멀티포컬<br>IOL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>수술 후 시력 조정</td>
+                            <td class="lal-col"><span class="tick">✓</span></td>
+                            <td><span class="cross">—</span></td>
+                            <td><span class="cross">—</span></td>
+                        </tr>
+                        <tr>
+                            <td>목표시력 정밀 달성</td>
+                            <td class="lal-col"><span class="tick">92%</span></td>
+                            <td><span class="partial">55%</span></td>
+                            <td><span class="partial">60%</span></td>
+                        </tr>
+                        <tr>
+                            <td>라식 이력 환자 적합</td>
+                            <td class="lal-col"><span class="tick">최적</span></td>
+                            <td><span class="partial">가능</span></td>
+                            <td><span class="cross">비권장</span></td>
+                        </tr>
+                        <tr>
+                            <td>빛 번짐 (Halo/Glare)</td>
+                            <td class="lal-col"><span class="tick">최소</span></td>
+                            <td><span class="tick">최소</span></td>
+                            <td><span class="cross">발생</span></td>
+                        </tr>
+                        <tr>
+                            <td>비침습적 재조정</td>
+                            <td class="lal-col"><span class="tick">✓</span></td>
+                            <td><span class="cross">—</span></td>
+                            <td><span class="cross">—</span></td>
+                        </tr>
+                        <tr>
+                            <td>FDA 승인</td>
+                            <td class="lal-col"><span class="tick">✓</span></td>
+                            <td><span class="tick">✓</span></td>
+                            <td><span class="tick">✓</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="compare-note">* 자료: RxSight 공개 임상 자료 기준 비교. 개인별 결과는 다를 수 있습니다.</p>
+            </div>
+            <span class="page-num-badge right">05</span>
+        </div>
+
+        <!-- P6: 수술 과정 & 적응증 -->
+        <div class="page p6">
+            <div class="inner">
+                <p class="section-label">PROCEDURE</p>
+                <h2>수술 과정</h2>
+                <div class="process-steps">
+                    <div class="proc-step">
+                        <div class="proc-line">
+                            <div class="proc-dot">1</div>
+                            <div class="proc-connector"></div>
+                        </div>
+                        <div class="proc-content">
+                            <h5>백내장 수술 + LAL 삽입</h5>
+                            <p>기존 방식과 동일, 수술 시간 10~15분</p>
+                        </div>
+                    </div>
+                    <div class="proc-step">
+                        <div class="proc-line">
+                            <div class="proc-dot">2</div>
+                            <div class="proc-connector"></div>
+                        </div>
+                        <div class="proc-content">
+                            <h5>시력 안정화 (2~3주)</h5>
+                            <p>UV 차단 안경 착용 필수, 정기 검진</p>
+                        </div>
+                    </div>
+                    <div class="proc-step">
+                        <div class="proc-line">
+                            <div class="proc-dot">3</div>
+                            <div class="proc-connector"></div>
+                        </div>
+                        <div class="proc-content">
+                            <h5>빛 조사 (LDD, 1~3회)</h5>
+                            <p>90초 UV 조사, 도수 미세 조정</p>
+                        </div>
+                    </div>
+                    <div class="proc-step">
+                        <div class="proc-line">
+                            <div class="proc-dot">4</div>
+                            <div class="proc-connector"></div>
+                        </div>
+                        <div class="proc-content">
+                            <h5>Lock-In (최종 고정, 2회)</h5>
+                            <p>목표 달성 확인 후 렌즈 영구 잠금</p>
+                        </div>
+                    </div>
+                    <div class="proc-step">
+                        <div class="proc-line">
+                            <div class="proc-dot">5</div>
+                        </div>
+                        <div class="proc-content">
+                            <h5>최종 확인 (4~6주 완료)</h5>
+                            <p>안경 불필요한 생활 시력 확인</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="indication-box">
+                    <h5>주요 적응증</h5>
+                    <div class="indication-list">
+                        <div class="ind-item">백내장 수술 예정 환자</div>
+                        <div class="ind-item">라식/라섹 이력 환자 (특히 추천)</div>
+                        <div class="ind-item">고도 근시/난시 환자</div>
+                        <div class="ind-item">단안시 목표 환자</div>
+                    </div>
+                </div>
+            </div>
+            <span class="page-num-badge right">06</span>
+        </div>
+    </div>
+
+    <!-- SPREAD 4: 후기/FAQ + 뒤표지 -->
+    <div class="spread-label">P7 환자 후기·FAQ &nbsp;/&nbsp; P8 뒤표지</div>
+    <div class="spread">
+        <!-- P7: 후기 & FAQ -->
+        <div class="page p7">
+            <div class="inner">
+                <p class="section-label">TESTIMONIAL & FAQ</p>
+                <h2>환자 후기</h2>
+                <div class="testimonial">
+                    <q>"수술 후에도 시력을 맞출 수 있다는 게 큰 안심이었어요. 지금은 안경 없이 운전도 합니다."</q>
+                    <span class="author">— 김OO, 58세 (라섹 이력, 서울)</span>
+                </div>
+                <div class="testimonial" style="border-left-color: var(--teal-print); background: #f0fafa;">
+                    <q>"기존 렌즈로 두 번 수술했다가 실망했는데, LAL로 완벽하게 맞췄습니다."</q>
+                    <span class="author">— 이OO, 65세 (안과의사 권유, 부산)</span>
+                </div>
+                <div class="faq-divider"></div>
+                <p class="faq-mini-label">FAQ</p>
+                <div class="faq-item-mini">
+                    <p class="fq">Q. 빛 조사 횟수 제한이 있나요?</p>
+                    <p class="fa">통상 1~3회 조정으로 목표 시력 달성. 추가 조정도 가능합니다.</p>
+                </div>
+                <div class="faq-item-mini">
+                    <p class="fq">Q. UV 안경은 언제까지 착용하나요?</p>
+                    <p class="fa">최종 Lock-In 완료 시까지 (약 4~6주). 실내 형광등도 포함됩니다.</p>
+                </div>
+                <div class="faq-item-mini">
+                    <p class="fq">Q. 기존 IOL 대비 추가 비용은?</p>
+                    <p class="fa">프리미엄 IOL 범주로 별도 비용 발생. 정확한 금액은 상담 시 안내.</p>
+                </div>
+            </div>
+            <span class="page-num-badge right">07</span>
+        </div>
+
+        <!-- P8: 뒤표지 -->
+        <div class="page p8">
+            <div class="teal-line"></div>
+            <div class="inner">
+                <div class="back-top">
+                    <img src="assets/lal-mark.png" alt="LAL" style="height:36px; width:auto; opacity:0.8; margin-bottom:6px;">
+                    <span class="brand-en">RxSight LAL</span>
+                    <span class="brand-tagline">The First &amp; Only Adjustable Lens</span>
+                </div>
+                <div class="qr-area">[QR]</div>
+                <div class="contact-info">
+                    <strong>[병원명]</strong>
+                    전화: [전화번호]<br>
+                    주소: [병원 주소]<br>
+                    <br>
+                    rxsight.com
+                </div>
+                <p class="back-footer">
+                    * 개인에 따라 결과가 다를 수 있습니다.<br>
+                    * 의료기기 광고 심의 필 제00호<br>
+                    Provided by ARACARE
+                </p>
+            </div>
+            <span class="page-num-badge left" style="color:rgba(255,255,255,0.3);">08</span>
+        </div>
+    </div>
+
+</body>
+</html>

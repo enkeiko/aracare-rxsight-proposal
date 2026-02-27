@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LAL Brand Content Management System | Aracare</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet"/>
+<style>
+:root {
+  --teal:#8FD6D6; --teal-dark:#5BBDBD; --teal-glow:rgba(143,214,214,0.3);
+  --purple:#813A74; --purple-light:#A85D99; --purple-glow:rgba(129,58,116,0.3);
+  --bg-primary:#161619; --bg-secondary:#1C1C20; --bg-tertiary:#222226; --bg-card:#26262B;
+  --border:#333338; --border-secondary:#3F3F46;
+  --text-primary:#FAFAFA; --text-secondary:#A1A1AA; --text-muted:#71717A;
+  --success:#22C55E; --warning:#F59E0B; --error:#EF4444; --info:#3B82F6;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Pretendard Variable','DM Sans',sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.6;font-size:15px;}
+a{color:var(--teal);text-decoration:none;}a:hover{text-decoration:underline;}
+
+/* Page ID Bar */
+.page-id-bar{height:4px;background:linear-gradient(90deg,var(--purple),var(--teal));}
+
+/* Header */
+.header{background:var(--bg-secondary);border-bottom:1px solid var(--border);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;max-width:1400px;margin:0 auto;}
+.header h1{font-family:'Pretendard Variable',sans-serif;font-size:1.15rem;font-weight:700;}
+.header p{font-size:0.75rem;color:var(--text-muted);}
+.header-right{display:flex;align-items:center;gap:12px;font-size:0.8rem;color:var(--text-muted);}
+.header-right .badge{background:var(--bg-tertiary);border:1px solid var(--border);padding:3px 10px;border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--text-secondary);}
+
+/* Tab Navigation */
+.tab-nav{max-width:1400px;margin:0 auto;display:flex;gap:0;border-bottom:1px solid var(--border);background:var(--bg-secondary);overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.tab-btn{padding:14px 20px;background:transparent;border:none;color:var(--text-muted);font-size:0.82rem;font-weight:600;cursor:pointer;transition:all .2s;border-bottom:2px solid transparent;white-space:nowrap;font-family:inherit;}
+.tab-btn:hover{color:var(--text-primary);background:var(--bg-tertiary);}
+.tab-btn.active{color:var(--teal);border-bottom-color:var(--teal);background:rgba(143,214,214,0.05);}
+.tab-btn.tab-masterbook{color:var(--purple-light);font-weight:700;}
+.tab-btn.tab-masterbook.active{color:#fff;border-bottom-color:var(--purple);background:linear-gradient(135deg,rgba(129,58,116,0.25),rgba(168,93,153,0.1));}
+
+/* Panels */
+.panel{display:none;max-width:1400px;margin:0 auto;padding:32px 40px;animation:fadeIn .3s ease;}
+.panel.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* Section Headers */
+.section-header{margin-bottom:24px;padding:16px 0 16px 20px;border-bottom:1px solid var(--border);border-left:3px solid;border-image:linear-gradient(to bottom,var(--purple),var(--teal)) 1;}
+.section-header h2{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;margin-bottom:4px;}
+.section-header p{font-size:0.85rem;color:var(--text-muted);}
+
+/* Cards */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:16px;}
+.card-highlight{border-left:3px solid var(--teal);}
+.card h4{font-size:0.95rem;font-weight:600;margin-bottom:12px;}
+.card p{font-size:0.9rem;color:var(--text-secondary);line-height:1.6;}
+
+/* Stat Cards */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
+.stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;}
+.stat-card .num{font-family:'JetBrains Mono',monospace;font-size:2.2rem;font-weight:700;color:var(--teal);}
+.stat-card .label{font-size:0.8rem;color:var(--text-muted);margin-top:6px;}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;font-size:0.88rem;}
+thead{background:var(--bg-tertiary);}
+th{padding:12px 16px;text-align:left;font-weight:600;color:var(--text-secondary);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--border);}
+td{padding:12px 16px;border-bottom:1px solid var(--border);color:var(--text-secondary);}
+tr:hover{background:rgba(143,214,214,0.03);}
+
+/* Status Badges */
+.status{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.72rem;font-weight:600;}
+.status-done{background:rgba(34,197,94,0.15);color:var(--success);}
+.status-wip{background:rgba(245,158,11,0.15);color:var(--warning);}
+.status-draft{background:rgba(239,68,68,0.15);color:var(--error);}
+.status-published{background:rgba(59,130,246,0.15);color:var(--info);}
+
+/* Category Tags */
+.cat-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.7rem;font-weight:600;}
+.cat-efficacy{background:rgba(143,214,214,0.15);color:var(--teal);}
+.cat-precision{background:rgba(129,58,116,0.15);color:var(--purple-light);}
+.cat-safety{background:rgba(34,197,94,0.15);color:var(--success);}
+.cat-market{background:rgba(59,130,246,0.15);color:var(--info);}
+.cat-economics{background:rgba(245,158,11,0.15);color:var(--warning);}
+.cat-track_record{background:rgba(168,93,153,0.15);color:#D4A0CC;}
+
+/* Target Grid */
+.target-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.target-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;}
+.target-card .label{font-size:0.7rem;font-weight:700;color:var(--teal);letter-spacing:0.08em;margin-bottom:8px;}
+.target-card .name{font-size:1.05rem;font-weight:600;color:var(--text-primary);line-height:1.5;}
+.target-card .desc{font-size:0.85rem;color:var(--text-secondary);margin-top:8px;line-height:1.5;}
+.forbidden{margin-top:16px;padding-top:12px;border-top:1px solid var(--border);}
+.forbidden-title{font-size:0.68rem;font-weight:700;color:var(--error);letter-spacing:0.08em;margin-bottom:4px;}
+.forbidden-text{font-size:0.82rem;color:var(--text-muted);}
+
+/* Script Cards */
+.script-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:12px;}
+.script-label{display:inline-block;padding:3px 10px;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.06em;margin-bottom:8px;}
+.script-label.roi{background:rgba(143,214,214,0.15);color:var(--teal);}
+.script-label.honor{background:rgba(245,158,11,0.15);color:var(--warning);}
+.script-label.safety{background:rgba(34,197,94,0.15);color:var(--success);}
+.script-title{font-size:0.9rem;font-weight:600;margin-bottom:8px;}
+.script-body{font-size:0.88rem;color:var(--text-secondary);line-height:1.7;font-style:italic;}
+.script-body em{color:var(--teal);font-style:normal;font-weight:600;}
+
+/* Email Template */
+.email-template{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:16px;}
+.email-header{padding:16px 20px;background:var(--bg-tertiary);border-bottom:1px solid var(--border);}
+.email-field{display:flex;gap:8px;padding:4px 0;font-size:0.85rem;}
+.field-label{color:var(--text-muted);font-weight:600;min-width:55px;}
+.field-value{color:var(--text-secondary);}
+.placeholder{background:rgba(143,214,214,0.1);padding:1px 6px;border-radius:3px;color:var(--teal);font-size:0.82rem;}
+.email-body{padding:20px;font-size:0.88rem;color:var(--text-secondary);line-height:1.8;white-space:pre-line;}
+
+/* FAQ Items */
+.faq-item{margin-bottom:12px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.faq-q{display:flex;align-items:center;gap:12px;padding:16px 20px;background:var(--bg-tertiary);}
+.q-badge{background:var(--teal);color:var(--bg-primary);padding:4px 10px;border-radius:6px;font-size:0.75rem;font-weight:700;flex-shrink:0;}
+.q-text{font-weight:600;font-size:0.95rem;}
+.faq-a{display:flex;gap:12px;padding:16px 20px;}
+.a-badge{background:var(--bg-tertiary);color:var(--text-muted);padding:4px 10px;border-radius:6px;font-size:0.75rem;font-weight:700;flex-shrink:0;}
+
+/* Checklist */
+.checklist{list-style:none;padding:0;margin-top:12px;}
+.checklist li{padding:10px 0 10px 28px;position:relative;font-size:0.9rem;color:var(--text-secondary);border-bottom:1px solid var(--border);}
+.checklist li:last-child{border-bottom:none;}
+.checklist li::before{content:"";position:absolute;left:0;top:14px;width:16px;height:16px;border:2px solid var(--border-secondary);border-radius:4px;}
+
+/* Compliance Note */
+.compliance-note{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:12px;padding:20px 24px;margin:24px 0;}
+.note-title{font-size:0.75rem;font-weight:700;color:var(--error);letter-spacing:0.08em;margin-bottom:12px;}
+.note-text{font-size:0.88rem;color:var(--text-secondary);line-height:1.7;}
+.note-text strong{color:var(--text-primary);}
+
+/* Naming Box */
+.naming-box{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:16px;}
+.naming-box .pattern{font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--teal);font-weight:600;}
+.naming-box .example{font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--text-secondary);}
+.naming-box .example span{color:var(--teal);}
+
+/* Process Steps */
+.process-steps{display:flex;align-items:center;gap:0;margin:20px 0;flex-wrap:wrap;justify-content:center;}
+.step-box{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:16px 20px;text-align:center;min-width:100px;}
+.step-num{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--text-muted);font-weight:700;margin-bottom:4px;}
+.step-text{font-size:0.85rem;font-weight:600;color:var(--text-primary);}
+.step-connector{width:24px;text-align:center;color:var(--text-muted);font-size:0.8rem;}
+.step-connector::after{content:">";}
+
+/* Diagram */
+.diagram-box{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:32px;margin-bottom:24px;}
+.diagram-title{font-size:0.7rem;font-weight:700;color:var(--text-muted);letter-spacing:0.1em;text-align:center;margin-bottom:20px;}
+.flow-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.flow-node{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:12px;padding:16px 24px;text-align:center;min-width:180px;}
+.flow-node.primary{background:linear-gradient(135deg,rgba(143,214,214,0.1),rgba(129,58,116,0.1));border-color:var(--teal);}
+.node-label{font-size:0.65rem;font-weight:700;color:var(--text-muted);letter-spacing:0.1em;margin-bottom:4px;}
+.node-text{font-size:0.95rem;font-weight:600;}
+
+/* Archive Links */
+.archive-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.archive-link{display:flex;align-items:center;gap:10px;padding:14px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;transition:border-color .2s;text-decoration:none;color:var(--text-primary);}
+.archive-link:hover{border-color:var(--teal);text-decoration:none;}
+.archive-link .dot{font-size:1.2rem;color:var(--teal);}
+.archive-link .title{font-weight:600;font-size:0.9rem;}
+.archive-link .sub{font-size:0.78rem;color:var(--text-muted);margin-top:2px;}
+
+/* Quote Box */
+.quote-box{background:linear-gradient(135deg,rgba(143,214,214,0.08),rgba(129,58,116,0.08));border:1px solid var(--border);border-radius:12px;padding:24px;text-align:center;margin-bottom:24px;}
+.quote-box .quote{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--teal);}
+.quote-box .source{font-size:0.85rem;color:var(--text-muted);margin-top:8px;}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--bg-card);border:1px solid var(--teal);color:var(--text-primary);padding:12px 24px;border-radius:8px;font-size:0.85rem;transform:translateY(100px);opacity:0;transition:all .3s ease;z-index:999;}
+.toast.show{transform:translateY(0);opacity:1;}
+
+/* Detail Drawer */
+.drawer-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:100;display:none;}
+.drawer-overlay.active{display:block;}
+.drawer{position:fixed;top:0;right:-420px;width:420px;height:100%;background:var(--bg-secondary);border-left:1px solid var(--border);z-index:101;transition:right .3s ease;overflow-y:auto;padding:24px;}
+.drawer.active{right:0;}
+.drawer h3{font-size:1rem;font-weight:600;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
+.drawer .close-btn{background:var(--bg-tertiary);border:1px solid var(--border);color:var(--text-muted);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:0.8rem;}
+.drawer .close-btn:hover{color:var(--text-primary);border-color:var(--text-muted);}
+.drawer .detail-field{margin-bottom:16px;}
+.drawer .detail-label{font-size:0.7rem;font-weight:700;color:var(--text-muted);letter-spacing:0.06em;margin-bottom:6px;}
+.drawer .detail-value{font-family:'JetBrains Mono',monospace;font-size:1.1rem;color:var(--teal);font-weight:600;}
+.drawer .detail-text{font-size:0.88rem;color:var(--text-secondary);line-height:1.6;}
+.editable{padding:8px 12px;border:1px dashed var(--border-secondary);border-radius:6px;outline:none;min-height:36px;}
+.editable:focus{border-color:var(--teal);}
+
+/* Search/Filter */
+.toolbar{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
+.search-input{background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:8px 16px;border-radius:8px;font-size:0.85rem;font-family:inherit;min-width:240px;outline:none;}
+.search-input:focus{border-color:var(--teal);}
+.filter-btn{background:var(--bg-card);border:1px solid var(--border);color:var(--text-muted);padding:6px 14px;border-radius:6px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;}
+.filter-btn:hover{color:var(--text-primary);border-color:var(--text-secondary);}
+.filter-btn.active{background:rgba(143,214,214,0.1);color:var(--teal);border-color:var(--teal);}
+.export-btn{background:var(--bg-card);border:1px solid var(--teal);color:var(--teal);padding:8px 16px;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;}
+.export-btn:hover{background:rgba(143,214,214,0.1);}
+
+/* Responsive */
+@media(max-width:900px){
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+  .target-grid{grid-template-columns:1fr;}
+  .archive-grid{grid-template-columns:1fr;}
+  .header{padding:16px 20px;}
+  .panel{padding:20px;}
+  .tab-nav{padding:0 12px;}
+  .tab-btn{padding:12px 14px;font-size:0.78rem;}
+}
+@media(max-width:600px){
+  .stat-grid{grid-template-columns:1fr 1fr;}
+}
+
+/* Utility */
+.mt-24{margin-top:24px;} .mt-32{margin-top:32px;} .mb-16{margin-bottom:16px;} .mb-24{margin-bottom:24px;}
+h3{font-size:1rem;font-weight:600;color:var(--text-primary);margin:24px 0 12px;}
+.term-ok{color:var(--success);} .term-bad{color:var(--error);}
+.mono{font-family:'JetBrains Mono',monospace;}
+.text-muted{color:var(--text-muted);}
+.text-sm{font-size:0.85rem;}
+
+/* Print */
+@media print{.tab-nav,.header,.toolbar,.export-btn,.drawer,.drawer-overlay,.toast{display:none!important;}.panel{display:block!important;padding:20px;page-break-inside:avoid;}}
+</style>
+</head>
+<body>
+
+<div class="page-id-bar"></div>
+
+<!-- Header -->
+<header class="header">
+<div>
+<h1>LAL Brand Content Management System</h1>
+<p>RxSight LAL 브랜드 콘텐츠 통합관리 시스템 &middot; Aracare x 42ment</p>
+</div>
+<div class="header-right">
+<span class="badge">v1.2</span>
+<span>2026.02.27</span>
+<button class="export-btn" onclick="exportData()">Export JSON</button>
+</div>
+</header>
+
+<!-- Tab Navigation -->
+<nav class="tab-nav">
+<button class="tab-btn active" data-panel="dashboard">Dashboard</button>
+<button class="tab-btn tab-masterbook" data-panel="masterbook">Masterbook</button>
+<button class="tab-btn" data-panel="clinical">Clinical Data</button>
+<button class="tab-btn" data-panel="messages">Messages & Templates</button>
+<button class="tab-btn" data-panel="compliance">Compliance</button>
+<button class="tab-btn" data-panel="archive">Archive</button>
+<button class="tab-btn" data-panel="system">System</button>
+</nav>
+
+<!-- ============================================================ -->
+<!-- PANEL 1: Dashboard -->
+<!-- ============================================================ -->
+<section class="panel active" id="panel-dashboard">
+<div class="section-header">
+<h2>Dashboard Overview</h2>
+<p>콘텐츠 현황 및 최근 업데이트</p>
+</div>
+
+<div class="quote-box">
+<div class="quote">"Bespoke Lens - 평생을 위한 단 하나의 맞춤"</div>
+<div class="source">The Only Adjustable Lens &middot; Single Source of Truth</div>
+</div>
+
+<div class="stat-grid" id="stat-grid">
+<div class="stat-card"><div class="num" id="stat-total">-</div><div class="label">Total Contents</div></div>
+<div class="stat-card"><div class="num" id="stat-done" style="color:var(--success);">-</div><div class="label">Completed</div></div>
+<div class="stat-card"><div class="num" id="stat-review" style="color:var(--warning);">-</div><div class="label">In Review</div></div>
+<div class="stat-card"><div class="num" id="stat-data" style="color:var(--purple-light);">-</div><div class="label">Clinical Data Points</div></div>
+</div>
+
+<h3>타겟 사용자</h3>
+<div class="target-grid mb-24">
+<div class="card" style="border-top:2px solid var(--teal);">
+<div style="font-size:0.7rem;font-weight:700;color:var(--teal);letter-spacing:0.08em;margin-bottom:8px;">PRIMARY USER</div>
+<div style="font-size:1rem;font-weight:600;">아라케어 마케팅팀</div>
+<div class="text-sm text-muted" style="margin-top:4px;">콘텐츠 기획, 제작 의뢰, 메시지 관리 및 캠페인 운영</div>
+</div>
+<div class="card" style="border-top:2px solid var(--warning);">
+<div style="font-size:0.7rem;font-weight:700;color:var(--warning);letter-spacing:0.08em;margin-bottom:8px;">FIELD USER</div>
+<div style="font-size:1rem;font-weight:600;">영업팀</div>
+<div class="text-sm text-muted" style="margin-top:4px;">병원 현장에서 B2B 영업 자료 활용 및 즉시 대응</div>
+</div>
+<div class="card" style="border-top:2px solid var(--purple-light);">
+<div style="font-size:0.7rem;font-weight:700;color:var(--purple-light);letter-spacing:0.08em;margin-bottom:8px;">PARTNER</div>
+<div style="font-size:1rem;font-weight:600;">병원 담당자</div>
+<div class="text-sm text-muted" style="margin-top:4px;">원내 콘텐츠 배포, 환자 상담 시 활용</div>
+</div>
+</div>
+
+<h3>업데이트 주기</h3>
+<div class="card card-highlight">
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+<div>
+<div style="font-size:0.72rem;font-weight:700;color:var(--teal);letter-spacing:0.08em;margin-bottom:8px;">REGULAR</div>
+<div style="font-size:1.3rem;font-weight:600;">월 1회</div>
+<div class="text-sm text-muted" style="margin-top:4px;">정기 업데이트</div>
+</div>
+<div>
+<div style="font-size:0.72rem;font-weight:700;color:var(--warning);letter-spacing:0.08em;margin-bottom:8px;">ON DEMAND</div>
+<div style="font-size:1.3rem;font-weight:600;">수시</div>
+<div class="text-sm text-muted" style="margin-top:4px;">긴급 콘텐츠 추가</div>
+</div>
+<div>
+<div style="font-size:0.72rem;font-weight:700;color:var(--purple-light);letter-spacing:0.08em;margin-bottom:8px;">PARTNERSHIP</div>
+<div style="font-size:1.3rem;font-weight:600;">계약 시</div>
+<div class="text-sm text-muted" style="margin-top:4px;">파트너십 연장 시 갱신</div>
+</div>
+</div>
+</div>
+
+<h3>최근 업데이트</h3>
+<div style="overflow-x:auto;">
+<table id="recent-table">
+<thead><tr><th>날짜</th><th>항목</th><th>변경 내용</th><th>담당</th></tr></thead>
+<tbody>
+<tr><td class="mono text-sm">2026.02.27</td><td>통합 CMS v1.0</td><td>마스터북 + 아카이브 통합 시스템 구축</td><td>Claude Opus 4.6</td></tr>
+<tr><td class="mono text-sm">2026.02.27</td><td>B2C 스토리보드 v2</td><td>A/B 시각 구분 강화, 탭 해시 네비게이션</td><td>Claude Opus 4.6</td></tr>
+<tr><td class="mono text-sm">2026.02.27</td><td>퀵스타터 제안서</td><td>배포용 폴더 구성 (66 파일), 링크 검증 완료</td><td>Claude Opus 4.6</td></tr>
+<tr><td class="mono text-sm">2026.02.27</td><td>판촉물 6종 v1.1</td><td>스펙 통일 (브로셔 A5 중철 8P, 리플릿 A4 3단접지)</td><td>Agent B</td></tr>
+<tr><td class="mono text-sm">2026.02.24</td><td>판촉물 원본 4종</td><td>브로셔, 포스터, 리플릿, X배너 초안 제작</td><td>Claude Sonnet 4.5</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PANEL 2: Clinical Data -->
+<!-- ============================================================ -->
+<section class="panel" id="panel-clinical">
+<div class="section-header">
+<h2>Clinical Data / 임상 데이터</h2>
+<p>FDA 승인 데이터 기반 Single Source of Truth - 클릭하여 상세 정보 확인 / 편집</p>
+</div>
+
+<div class="toolbar">
+<input type="text" class="search-input" placeholder="검색 (항목명, 값, 출처...)" oninput="filterClinical(this.value)"/>
+</div>
+
+<div style="overflow-x:auto;">
+<table id="clinical-table">
+<thead><tr><th>항목</th><th>값</th><th>비교 (대조군)</th><th>카테고리</th><th>출처</th><th>사용처</th></tr></thead>
+<tbody id="clinical-body"></tbody>
+</table>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PANEL 3: Messages & Templates -->
+<!-- ============================================================ -->
+<section class="panel" id="panel-messages">
+<div class="section-header">
+<h2>Messages & Templates</h2>
+<p>타겟별 핵심 메시지 매트릭스 / B2B-B2C-B2P 콘텐츠 템플릿</p>
+</div>
+
+<!-- Core Message -->
+<div class="quote-box mb-24">
+<div class="quote">"Bespoke Lens - 평생을 위한 단 하나의 맞춤"</div>
+<div class="source">The Only Adjustable Lens</div>
+</div>
+
+<!-- Message Matrix -->
+<h3>Message Matrix / 메시지 매트릭스</h3>
+<div class="target-grid mb-24">
+<div class="target-card" style="border-top:3px solid var(--teal);">
+<div class="label">B2B (병원)</div>
+<div class="name">"컴플레인 제로,<br>월 12건으로 1년 BEP"</div>
+<div class="desc" style="margin-top:12px;">
+<div style="font-size:0.72rem;font-weight:700;color:var(--text-muted);letter-spacing:0.05em;margin-bottom:6px;">SUB MESSAGE</div>
+수익성 시뮬레이션, 차별화 포인트, 경쟁 렌즈 대비 우위
+</div>
+<div class="forbidden"><div class="forbidden-title">FORBIDDEN</div><div class="forbidden-text">"무조건", "100%", "완벽한"</div></div>
+</div>
+<div class="target-card" style="border-top:3px solid var(--purple-light);">
+<div class="label" style="color:var(--purple-light);">B2C (환자)</div>
+<div class="name">"수술 후에도 조정 가능한<br>유일한 렌즈"</div>
+<div class="desc" style="margin-top:12px;">
+<div style="font-size:0.72rem;font-weight:700;color:var(--text-muted);letter-spacing:0.05em;margin-bottom:6px;">SUB MESSAGE</div>
+안심, 맞춤, 정밀함, 환자 만족도 데이터
+</div>
+<div class="forbidden"><div class="forbidden-title">FORBIDDEN</div><div class="forbidden-text">단정적 의료 효과 표현</div></div>
+</div>
+<div class="target-card" style="border-top:3px solid var(--success);">
+<div class="label" style="color:var(--success);">B2P (대중)</div>
+<div class="name">"이게 이제 최신이다"</div>
+<div class="desc" style="margin-top:12px;">
+<div style="font-size:0.72rem;font-weight:700;color:var(--text-muted);letter-spacing:0.05em;margin-bottom:6px;">SUB MESSAGE</div>
+기술 혁신, 노벨상 기술 기반, 시대의 변화
+</div>
+<div class="forbidden"><div class="forbidden-title">FORBIDDEN</div><div class="forbidden-text">비교광고, 타사 비하</div></div>
+</div>
+</div>
+
+<!-- B2B Scripts -->
+<h3>B2B 영업 멘트 스크립트</h3>
+<p class="text-sm text-muted mb-16">병원장 유형에 따라 3가지 버전으로 준비. 현장에서 상황에 맞게 선택하여 활용합니다.</p>
+
+<div class="script-card">
+<span class="script-label roi">ROI TYPE</span>
+<div class="script-title">수익성 중심 어프로치</div>
+<div class="script-body">"원장님, LAL은 <em>월 12건</em>만 시행하시면 <em>1년 이내 BEP</em> 달성이 가능합니다. 기존 다초점 렌즈 대비 환자 컴플레인이 현저히 적어서, 사후 관리 비용도 절감됩니다. 실제 도입 병원의 수익 시뮬레이션을 준비했습니다."</div>
+</div>
+<div class="script-card">
+<span class="script-label honor">HONOR TYPE</span>
+<div class="script-title">명예/선도자 중심 어프로치</div>
+<div class="script-body">"원장님, LAL은 <em>노벨상 수상 기술</em>을 기반으로 한 차세대 백내장 렌즈입니다. 국내에서 이 기술을 먼저 도입하시면, <em>지역 내 프리미엄 백내장 센터</em>로서의 포지션을 확보하실 수 있습니다."</div>
+</div>
+<div class="script-card">
+<span class="script-label safety">SAFETY TYPE</span>
+<div class="script-title">안전/컴플레인 중심 어프로치</div>
+<div class="script-body">"원장님, 다초점 렌즈 시술 후 환자분들의 <em>시력 불만이나 빛번짐 컴플레인</em>, 고민이 많으시죠. LAL은 수술 후에 시력을 미세 조정할 수 있어서 <em>컴플레인 제로</em>에 가까운 결과를 기대할 수 있습니다."</div>
+</div>
+
+<!-- B2B Email -->
+<h3>B2B 이메일 템플릿</h3>
+<div class="email-template">
+<div class="email-header">
+<div class="email-field"><span class="field-label">Subject:</span><span class="field-value">[아라케어] <span class="placeholder">{병원명}</span> 원장님, RxSight LAL 도입 제안 드립니다</span></div>
+<div class="email-field"><span class="field-label">To:</span><span class="field-value"><span class="placeholder">{원장님 이메일}</span></span></div>
+</div>
+<div class="email-body"><span class="placeholder">{원장님 성함}</span> 원장님께,
+
+안녕하세요. 아라케어 <span class="placeholder">{담당자명}</span>입니다.
+
+FDA 승인 광조절 인공수정체 RxSight LAL 도입을 제안 드립니다.
+수술 후 비침습적 시력 조정이 가능한 유일한 IOL로,
+환자 만족도와 수익성 모두에서 검증된 성과를 보이고 있습니다.
+
+첨부 자료를 확인해 주시고,
+15분 정도 시간을 내주시면 상세 시뮬레이션을 안내드리겠습니다.
+
+감사합니다.
+아라케어 <span class="placeholder">{담당자명}</span> 드림</div>
+</div>
+
+<h3>팔로업 체크리스트</h3>
+<ul class="checklist">
+<li>첫 미팅 후 24시간 이내 감사 이메일 발송</li>
+<li>제안서 PDF + ROI 시뮬레이션 첨부</li>
+<li>3일 후 팔로업 전화 (의사결정 타임라인 확인)</li>
+<li>1주일 후 데모 일정 제안 (LDD 시연)</li>
+<li>2주일 후 최종 의사결정 확인</li>
+<li>계약 진행 시 설치/교육 일정 조율</li>
+</ul>
+
+<!-- B2C FAQ -->
+<h3 class="mt-32">B2C 환자 상담 FAQ</h3>
+<p class="text-sm text-muted mb-16">가장 빈번한 환자 질문에 대한 표준 답변. 상담실에서 일관된 메시지 전달을 위해 활용합니다.</p>
+<div id="faq-container"></div>
+
+<!-- B2P Channel -->
+<h3 class="mt-32">B2P 대중 채널 콘텐츠 가이드</h3>
+<div class="target-grid mb-24">
+<div class="card" style="border-top:2px solid var(--success);">
+<div style="font-size:0.72rem;font-weight:700;color:var(--success);margin-bottom:8px;">SHORT-FORM</div>
+<h4>쇼츠 / 릴스</h4>
+<p class="text-sm">15~30초 세로형 영상으로 빠른 인지도 확산</p>
+</div>
+<div class="card" style="border-top:2px solid var(--teal);">
+<div style="font-size:0.72rem;font-weight:700;color:var(--teal);margin-bottom:8px;">LONG-FORM</div>
+<h4>유튜브 교육 영상</h4>
+<p class="text-sm">3~5분 전문 교육 콘텐츠로 신뢰도 구축</p>
+</div>
+<div class="card" style="border-top:2px solid var(--purple-light);">
+<div style="font-size:0.72rem;font-weight:700;color:var(--purple-light);margin-bottom:8px;">SOCIAL</div>
+<h4>SNS 포스트</h4>
+<p class="text-sm">월 8회 정기 포스팅으로 팔로워 관계 유지</p>
+</div>
+</div>
+
+<h3>SNS 포스트 캘린더 (월 8회)</h3>
+<div style="overflow-x:auto;" class="mb-24">
+<table>
+<thead><tr><th>주차</th><th>테마</th><th>콘텐츠 유형</th><th>핵심 메시지</th></tr></thead>
+<tbody>
+<tr><td class="mono text-sm">1주/1번</td><td>인지형</td><td>카드뉴스</td><td>"백내장 수술, 렌즈 선택이 미래를 바꿉니다"</td></tr>
+<tr><td class="mono text-sm">1주/2번</td><td>교육형</td><td>쇼츠 리그램</td><td>LAL 작동 원리 30초 요약</td></tr>
+<tr><td class="mono text-sm">2주/1번</td><td>데이터형</td><td>인포그래픽</td><td>FDA 임상 데이터 핵심 수치 2개</td></tr>
+<tr><td class="mono text-sm">2주/2번</td><td>신뢰형</td><td>의사 코멘트</td><td>전문의 추천 이유 (심의 통과 문구)</td></tr>
+<tr><td class="mono text-sm">3주/1번</td><td>공감형</td><td>카드뉴스</td><td>"안경이 불편한 당신을 위해"</td></tr>
+<tr><td class="mono text-sm">3주/2번</td><td>비교형</td><td>비교 카드</td><td>LAL vs 단초점/다초점 렌즈 차이점</td></tr>
+<tr><td class="mono text-sm">4주/1번</td><td>행동유도형</td><td>이벤트 포스트</td><td>상담 예약 안내 + CTA</td></tr>
+<tr><td class="mono text-sm">4주/2번</td><td>리포스팅</td><td>교육 영상 클립</td><td>월 교육 영상 하이라이트 1분 클립</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PANEL 4: Masterbook -->
+<!-- ============================================================ -->
+<section class="panel" id="panel-masterbook">
+<div class="section-header" style="border-bottom-color:var(--purple);padding-bottom:20px;">
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
+<span style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--purple-light);line-height:1;">M</span>
+<h2 style="margin:0;font-family:'Cormorant Garamond',serif;">Masterbook / 콘텐츠 마스터북</h2>
+</div>
+<p>전체 산출물 카탈로그, 제작 현황, 미리보기 링크 &mdash; 모든 콘텐츠를 한눈에</p>
+</div>
+
+<div class="toolbar">
+<button class="filter-btn active" onclick="filterContents('all',this)">All</button>
+<button class="filter-btn" onclick="filterContents('published',this)">Published</button>
+<button class="filter-btn" onclick="filterContents('review',this)">Review</button>
+<button class="filter-btn" onclick="filterContents('draft',this)">Draft</button>
+<input type="text" class="search-input" placeholder="검색 (이름, 타겟, 담당자...)" oninput="searchContents(this.value)"/>
+</div>
+
+<div style="overflow-x:auto;">
+<table>
+<thead><tr><th>No</th><th>콘텐츠명</th><th>형식</th><th>타겟</th><th>상태</th><th>버전</th><th>담당</th></tr></thead>
+<tbody id="contents-body"></tbody>
+</table>
+</div>
+
+<h3 class="mt-32">콘텐츠 현황 요약</h3>
+<div class="card">
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center;">
+<div><div class="mono" style="font-size:2.5rem;font-weight:700;color:var(--success);" id="count-done">-</div><div class="text-sm text-muted" style="margin-top:4px;">완료</div></div>
+<div><div class="mono" style="font-size:2.5rem;font-weight:700;color:var(--warning);" id="count-review">-</div><div class="text-sm text-muted" style="margin-top:4px;">검토중</div></div>
+<div><div class="mono" style="font-size:2.5rem;font-weight:700;color:var(--text-muted);" id="count-draft">-</div><div class="text-sm text-muted" style="margin-top:4px;">초안</div></div>
+</div>
+</div>
+
+<h3 class="mt-32">콘텐츠 상세 카탈로그</h3>
+<p class="text-sm text-muted" style="margin-bottom:20px;">각 산출물 클릭 시 시안 미리보기로 이동합니다.</p>
+
+<!-- 01 브랜딩 전략서 -->
+<div class="card" style="border-left:3px solid var(--success);">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;">
+<div style="flex:1;min-width:200px;">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+<span class="mono text-sm text-muted">01</span>
+<a href="../brand/branding_strategy.html" target="_blank" style="font-weight:700;font-size:1.05rem;color:var(--teal);">브랜딩 전략서</a>
+<span class="status status-published">Published</span>
+</div>
+<p class="text-sm text-muted">마케팅 전략(Part1) + 디자인 시스템(Part2), 15페이지</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+<span class="cat-tag cat-safety">internal</span>
+<span class="text-sm text-muted">v1.0 | HTML</span>
+</div>
+</div>
+<a href="../brand/branding_strategy.html" target="_blank" style="font-size:0.8rem;padding:6px 14px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:6px;color:var(--teal);white-space:nowrap;">미리보기 &rarr;</a>
+</div>
+</div>
+
+<!-- 02 통합 CMS (본 문서) -->
+<div class="card" style="border-left:3px solid var(--warning);">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;">
+<div style="flex:1;min-width:200px;">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+<span class="mono text-sm text-muted">02</span>
+<strong style="font-size:1.05rem;">콘텐츠 마스터북 (통합 CMS)</strong>
+<span class="status status-wip">Review</span>
+</div>
+<p class="text-sm text-muted">메시지 매트릭스, B2B/B2C 템플릿, CMS 구조, 10챕터</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+<span class="cat-tag cat-safety">internal</span>
+<span class="text-sm text-muted">v1.2 | HTML</span>
+</div>
+</div>
+<span style="font-size:0.8rem;padding:6px 14px;background:rgba(143,214,214,0.1);border:1px solid var(--teal);border-radius:6px;color:var(--teal);white-space:nowrap;">현재 문서</span>
+</div>
+</div>
+
+<!-- 03 B2B PPT -->
+<div class="card" style="border-left:3px solid var(--text-muted);">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;">
+<div style="flex:1;min-width:200px;">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+<span class="mono text-sm text-muted">03</span>
+<a href="../ppt/b2b_presentation.html" target="_blank" style="font-weight:700;font-size:1.05rem;color:var(--teal);">B2B 도입 제안서 PPT</a>
+<span class="status status-draft">Draft</span>
+</div>
+<p class="text-sm text-muted">35슬라이드 스크립트, 30슬라이드 HTML 통합본</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+<span class="cat-tag cat-efficacy">b2b</span>
+<span class="text-sm text-muted">v0.9 | HTML</span>
+</div>
+</div>
+<div style="display:flex;gap:6px;">
+<a href="../ppt/b2b_presentation.html" target="_blank" style="font-size:0.8rem;padding:6px 14px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:6px;color:var(--teal);white-space:nowrap;">HTML &rarr;</a>
+<a href="../ppt/B2B_RxSight_LAL_도입제안서_Premium.pdf" target="_blank" style="font-size:0.8rem;padding:6px 14px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:6px;color:var(--warning);white-space:nowrap;">PDF &darr;</a>
+</div>
+</div>
+</div>
+
+<!-- 04 환자용 브로셔 -->
+<div class="card" style="border-left:3px solid var(--warning);">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;">
+<div style="flex:1;min-width:200px;">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+<span class="mono text-sm text-muted">04</span>
+<a href="../materials/material_01_brochure.html" target="_blank" style="font-weight:700;font-size:1.05rem;color:var(--teal);">환자용 브로셔</a>
+<span class="status status-wip">Review</span>
+<span style="font-size:0.6rem;padding:2px 6px;background:rgba(245,158,11,0.15);color:var(--warning);border-radius:3px;border:1px solid rgba(245,158,11,0.3);">LAYOUT</span>
+</div>
+<p class="text-sm text-muted">상담 테이블/접수대 비치용, A4 3단 접지</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+<span class="cat-tag cat-precision">b2c</span>
+<span class="text-sm text-muted">v1.1 | HTML (A4 3단 접지)</span>
+</div>
+</div>
+<a href="../materials/material_01_brochure.html" target="_blank" style="font-size:0.8rem;padding:6px 14px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:6px;color:var(--teal);white-space:nowrap;">미리보기 &rarr;</a>
+</div>
+</div>
+
+<!-- 05 원내 포스터 -->
+<div class="card" style="border-left:3px solid var(--warning);">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;">
+<div style="flex:1;min-width:200px;">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+<span class="mono text-sm text-muted">05</span>
+<a href="../materials/material_02_poster.html" target="_blank" style="font-weight:700;font-size:1.05rem;color:var(--teal);">원내 포스터</a>
+<span class="status status-wip">Review</span>
+<span style="font-size:0.6rem;padding:2px 6px;background:rgba(245,158,11,0.15);color:var(--warning);border-radius:3px;border:1px solid rgba(245,158,11,0.3);">LAYOUT</span>
+</div>
+<p class="text-sm text-muted">대기실/복도 부착용, A2/A3</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+<span class="cat-tag cat-precision">b2c</span>
+<span class="text-sm text-muted">v1.1 | HTML (A2/A3)</span>
+</div>
+</div>
+<a href="../materials/material_02_poster.html" target="_blank" style="font-size:0.8rem;padding:6px 14px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:6px;color:var(--teal);white-space:nowrap;">미리보기 &rarr;</a>
+</div>
+</div>
+
+<!-- 06 안내 리플릿 -->
+<div class="card" style="border-left:3px solid var(--warning);">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;">
+<div style="flex:1;min-width:200px;">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+<span class="mono text-sm text-muted">06</span>
+<a href="../materials/material_03_leaflet.html" target="_blank" style="font-weight:700;font-size:1.05rem;color:var(--teal);">환자 안내 리플릿</a>
+<span class="status status-wip">Review</span>
+<span style="font-size:0.6rem;padding:2px 6px;background:rgba(245,158,11,0.15);color:var(--warning);border-radius:3px;border:1px solid rgba(245,158,11,0.3);">LAYOUT</span>
+</div>
+<p class="text-sm text-muted">수술 예약 환자 전달용, A5 양면</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+<span class="cat-tag cat-precision">b2c</span>
+<span class="text-sm text-muted">v1.1 | HTML (A5 양면)</span>
+</div>
+</div>
+<a href="../materials/material_03_leaflet.html" target="_blank" style="font-size:0.8rem;padding:6px 14px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:6px;color:var(--teal);white-space:nowrap;">미리보기 &rarr;</a>
+</div>
+</div>
+
+<!-- 07 X-Banner -->
+<div class="card" style="border-left:3px solid var(--warning);">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;">
+<div style="flex:1;min-width:200px;">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+<span class="mono text-sm text-muted">07</span>
+<a href="../materials/material_04_xbanner.html" target="_blank" style="font-weight:700;font-size:1.05rem;color:var(--teal);">실내 배너 (X-Banner)</a>
+<span class="status status-wip">Review</span>
+<span style="font-size:0.6rem;padding:2px 6px;background:rgba(245,158,11,0.15);color:var(--warning);border-radius:3px;border:1px solid rgba(245,158,11,0.3);">LAYOUT</span>
+</div>
+<p class="text-sm text-muted">대기실/상담실 입구 거치용, 60x180cm</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+<span class="cat-tag cat-precision">b2c</span>
+<span class="text-sm text-muted">v1.1 | HTML (60x180cm)</span>
+</div>
+</div>
+<a href="../materials/material_04_xbanner.html" target="_blank" style="font-size:0.8rem;padding:6px 14px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:6px;color:var(--teal);white-space:nowrap;">미리보기 &rarr;</a>
+</div>
+</div>
+
+<!-- 08 서식지 -->
+<div class="card" style="border-left:3px solid var(--warning);">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;">
+<div style="flex:1;min-width:200px;">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+<span class="mono text-sm text-muted">08</span>
+<a href="../materials/material_05_form.html" target="_blank" style="font-weight:700;font-size:1.05rem;color:var(--teal);">시술 동의서/안내문</a>
+<span class="status status-wip">Review</span>
+<span style="font-size:0.6rem;padding:2px 6px;background:rgba(245,158,11,0.15);color:var(--warning);border-radius:3px;border:1px solid rgba(245,158,11,0.3);">LAYOUT</span>
+</div>
+<p class="text-sm text-muted">@media print 부재, 양면 인쇄 대응 필요</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+<span class="cat-tag cat-precision">b2c</span>
+<span class="text-sm text-muted">v1.0 | HTML (A4)</span>
+</div>
+</div>
+<a href="../materials/material_05_form.html" target="_blank" style="font-size:0.8rem;padding:6px 14px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:6px;color:var(--teal);white-space:nowrap;">미리보기 &rarr;</a>
+</div>
+</div>
+
+<!-- 09 테이블 배너 -->
+<div class="card" style="border-left:3px solid var(--warning);">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;">
+<div style="flex:1;min-width:200px;">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+<span class="mono text-sm text-muted">09</span>
+<a href="../materials/material_06_table_banner.html" target="_blank" style="font-weight:700;font-size:1.05rem;color:var(--teal);">테이블 배너</a>
+<span class="status status-wip">Review</span>
+<span style="font-size:0.6rem;padding:2px 6px;background:rgba(245,158,11,0.15);color:var(--warning);border-radius:3px;border:1px solid rgba(245,158,11,0.3);">LAYOUT</span>
+</div>
+<p class="text-sm text-muted">상담실 테이블 비치용, A5 스탠드</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+<span class="cat-tag cat-precision">b2c</span>
+<span class="text-sm text-muted">v1.0 | HTML (A5 스탠드)</span>
+</div>
+</div>
+<a href="../materials/material_06_table_banner.html" target="_blank" style="font-size:0.8rem;padding:6px 14px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:6px;color:var(--teal);white-space:nowrap;">미리보기 &rarr;</a>
+</div>
+</div>
+
+<!-- 10 홍보영상 스토리보드 -->
+<div class="card" style="border-left:3px solid var(--warning);">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;">
+<div style="flex:1;min-width:200px;">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+<span class="mono text-sm text-muted">10</span>
+<a href="../video/storyboard_viewer_v3.html" target="_blank" style="font-weight:700;font-size:1.05rem;color:var(--teal);">B2C 원내 홍보영상 스토리보드</a>
+<span class="status status-wip">Review</span>
+</div>
+<p class="text-sm text-muted">A안(감성형) + B안(설득형), 각 8~11씬</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+<span class="cat-tag cat-precision">b2c</span>
+<span class="text-sm text-muted">v1.2 | HTML (뷰어)</span>
+</div>
+</div>
+<div style="display:flex;gap:6px;flex-wrap:wrap;">
+<a href="../video/storyboard_viewer_v3.html#story" target="_blank" style="font-size:0.8rem;padding:6px 14px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:6px;color:var(--teal);white-space:nowrap;">A안 &rarr;</a>
+<a href="../video/storyboard_viewer_v3.html#explain" target="_blank" style="font-size:0.8rem;padding:6px 14px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:6px;color:var(--purple-light);white-space:nowrap;">B안 &rarr;</a>
+<a href="../video/B2C_demo.mp4" target="_blank" style="font-size:0.8rem;padding:6px 14px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:6px;color:var(--warning);white-space:nowrap;">데모영상 &darr;</a>
+</div>
+</div>
+</div>
+
+</section>
+
+<!-- ============================================================ -->
+<!-- PANEL 5: Compliance -->
+<!-- ============================================================ -->
+<section class="panel" id="panel-compliance">
+<div class="section-header">
+<h2>Compliance / 용어 통일 가이드</h2>
+<p>공식 용어, 허용 표현, 금지 표현, 의료법 심의 대응</p>
+</div>
+
+<div style="overflow-x:auto;">
+<table>
+<thead><tr><th>공식 용어</th><th class="term-ok">허용 표현</th><th class="term-bad">금지 표현</th></tr></thead>
+<tbody>
+<tr><td><strong>LAL</strong><br><span class="text-sm text-muted">Light Adjustable Lens</span></td><td style="color:var(--success);">광조절 인공수정체, 빛 조절 렌즈</td><td style="color:var(--error);">마법의 렌즈, 만능 렌즈</td></tr>
+<tr><td><strong>LDD</strong><br><span class="text-sm text-muted">Light Delivery Device</span></td><td style="color:var(--success);">광전달장치, 빛 조정 장치</td><td style="color:var(--error);">레이저 치료</td></tr>
+<tr><td><strong>수술 후 조정</strong></td><td style="color:var(--success);">맞춤 시력 조정, 미세 조정</td><td style="color:var(--error);">자동 교정, 스스로 조정</td></tr>
+<tr><td><strong>프리미엄 백내장 수술</strong></td><td style="color:var(--success);">맞춤형 백내장 수술</td><td style="color:var(--error);">최고급, 명품</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="compliance-note">
+<div class="note-title">COMPLIANCE / 심의 대응</div>
+<div class="note-text">
+모든 콘텐츠는 <strong>의료법 제56조(의료광고의 금지 등)</strong>를 준수해야 합니다.<br>
+- 치료 효과를 보장하는 표현 금지 (예: "반드시 나아집니다")<br>
+- 다른 의료기관/의료기기와의 비교 광고 금지<br>
+- 환자 유인 행위에 해당하는 표현 금지<br>
+- 모든 외부 배포 콘텐츠는 심의 검토 후 사용
+</div>
+</div>
+
+<h3>메시지 활용 원칙</h3>
+<div class="card">
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;">
+<div>
+<h4 style="color:var(--success);font-size:0.82rem;font-weight:700;letter-spacing:0.08em;margin-bottom:12px;">DO (허용)</h4>
+<div style="display:flex;flex-direction:column;gap:6px;font-size:0.88rem;color:var(--text-secondary);">
+<div>+ ~될 수 있습니다</div>
+<div>+ ~할 가능성이 있습니다</div>
+<div>+ 임상 데이터에 따르면</div>
+<div>+ 92%의 환자가 달성</div>
+<div>+ FDA 승인 기술</div>
+</div>
+</div>
+<div>
+<h4 style="color:var(--error);font-size:0.82rem;font-weight:700;letter-spacing:0.08em;margin-bottom:12px;">DON'T (금지)</h4>
+<div style="display:flex;flex-direction:column;gap:6px;font-size:0.88rem;color:var(--text-secondary);">
+<div>- 확실히 ~됩니다</div>
+<div>- 최고의</div>
+<div>- 완벽한 시력 보장</div>
+<div>- 100% 성공</div>
+<div>- 부작용 없음</div>
+<div>- 반드시 좋아집니다</div>
+</div>
+</div>
+</div>
+</div>
+
+<h3>표기 규칙</h3>
+<div class="card">
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;">
+<div>
+<div style="font-size:0.72rem;font-weight:700;color:var(--teal);letter-spacing:0.08em;margin-bottom:12px;">BRAND NAME</div>
+<div class="text-sm" style="color:var(--text-secondary);line-height:1.8;">
+<strong style="color:var(--text-primary);">RxSight</strong> - 항상 R 대문자, S 대문자<br>
+<strong style="color:var(--text-primary);">LAL</strong> - 항상 전체 대문자<br>
+<strong style="color:var(--text-primary);">LAL+</strong> - 플러스 기호 포함
+</div>
+</div>
+<div>
+<div style="font-size:0.72rem;font-weight:700;color:var(--teal);letter-spacing:0.08em;margin-bottom:12px;">COMPANY</div>
+<div class="text-sm" style="color:var(--text-secondary);line-height:1.8;">
+<strong style="color:var(--text-primary);">아라케어</strong> - 한글 표기 기본<br>
+<strong style="color:var(--text-primary);">Aracare</strong> - 영문 표기 시<br>
+<strong style="color:var(--text-primary);">42ment / 포이먼트</strong> - 제작사 표기
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PANEL 6: Archive -->
+<!-- ============================================================ -->
+<section class="panel" id="panel-archive">
+<div class="section-header">
+<h2>Archive / 지식 베이스</h2>
+<p>임상 데이터, 시장 분석, 경쟁 분석 원본 자료 아카이브 (읽기 전용)</p>
+</div>
+
+<div class="card card-highlight mb-24">
+<p><strong style="color:var(--teal);">Layer 1: Archive</strong> (읽기 전용 지식 베이스) -- 원본 데이터의 무결성을 보장합니다.<br>
+<strong style="color:var(--purple-light);">Layer 2: 이 CMS</strong> (읽기/쓰기) -- 마케팅팀이 데이터를 활용하고 콘텐츠를 관리합니다.</p>
+</div>
+
+<div class="archive-grid">
+<a href="viewer/index.html" target="_blank" class="archive-link">
+<span class="dot">&#9679;</span>
+<div><div class="title">LAL 마스터 지식 베이스</div><div class="sub">전체 아카이브 (임상/기술/경쟁 분석)</div></div>
+</a>
+<a href="viewer/pages/report_clinical_summary.html" target="_blank" class="archive-link">
+<span class="dot">&#9679;</span>
+<div><div class="title">임상 데이터 요약</div><div class="sub">FDA P160055 / 20/20 달성률 / 도수 오차</div></div>
+</a>
+<a href="viewer/pages/report_competition.html" target="_blank" class="archive-link">
+<span class="dot">&#9679;</span>
+<div><div class="title">경쟁 분석 보고서</div><div class="sub">일반 렌즈 vs LAL / 포지셔닝</div></div>
+</a>
+<a href="viewer/pages/report_market_analysis.html" target="_blank" class="archive-link">
+<span class="dot">&#9679;</span>
+<div><div class="title">시장 분석 보고서</div><div class="sub">한국 백내장 시장 / 타겟 규모</div></div>
+</a>
+<a href="viewer/pages/report_master_data.html" target="_blank" class="archive-link">
+<span class="dot">&#9679;</span>
+<div><div class="title">마스터 데이터</div><div class="sub">제품 스펙 / 승인 현황 / 전체 수치</div></div>
+</a>
+<a href="viewer/pages/report_general_info.html" target="_blank" class="archive-link">
+<span class="dot">&#9679;</span>
+<div><div class="title">제품 기본 정보</div><div class="sub">기술 원리 / 시스템 구성 / 작동 메커니즘</div></div>
+</a>
+<a href="viewer/pages/viewer_precision_pdf.html" target="_blank" class="archive-link">
+<span class="dot" style="color:var(--purple-light);">&#9679;</span>
+<div><div class="title">Precision Data (PDF 뷰어)</div><div class="sub">정밀 도수 측정 관련 원본 자료</div></div>
+</a>
+<a href="viewer/pages/viewer_vision_pdf.html" target="_blank" class="archive-link">
+<span class="dot" style="color:var(--purple-light);">&#9679;</span>
+<div><div class="title">Vision Data (PDF 뷰어)</div><div class="sub">시력 결과 관련 원본 자료</div></div>
+</a>
+</div>
+
+<p class="text-sm text-muted" style="margin-top:16px;">* 아카이브는 읽기 전용입니다. 수치 수정이 필요하면 Clinical Data 탭에서 진행하세요.</p>
+</section>
+
+<!-- ============================================================ -->
+<!-- PANEL 7: System -->
+<!-- ============================================================ -->
+<section class="panel" id="panel-system">
+<div class="section-header">
+<h2>System / 시스템 관리</h2>
+<p>CMS 구조, 버전 관리 규칙, 연락처</p>
+</div>
+
+<!-- CMS Architecture -->
+<h3>콘텐츠 관리 플로우</h3>
+<div class="diagram-box">
+<div class="diagram-title">CONTENT MANAGEMENT FLOW</div>
+<div class="flow-row" style="margin-bottom:16px;">
+<div class="flow-node primary" style="min-width:280px;">
+<div class="node-label">SINGLE SOURCE OF TRUTH</div>
+<div class="node-text" style="font-size:1.1rem;">이 CMS (통합 시스템)</div>
+</div>
+</div>
+<div style="text-align:center;font-size:1.5rem;color:var(--text-muted);padding:8px 0;">|</div>
+<div class="flow-row">
+<div class="flow-node" style="border-top:2px solid var(--teal);">
+<div class="node-label">B2B CHANNEL</div><div class="node-text">병원 대상</div>
+<div class="text-sm text-muted" style="margin-top:8px;">PPT / 이메일 / 시뮬레이션</div>
+</div>
+<div class="flow-node" style="border-top:2px solid var(--purple-light);">
+<div class="node-label">B2C CHANNEL</div><div class="node-text">환자 대상</div>
+<div class="text-sm text-muted" style="margin-top:8px;">영상 / 브로셔 / 리플릿</div>
+</div>
+<div class="flow-node" style="border-top:2px solid var(--success);">
+<div class="node-label">B2P CHANNEL</div><div class="node-text">대중 대상</div>
+<div class="text-sm text-muted" style="margin-top:8px;">SNS / 블로그 / 숏츠</div>
+</div>
+</div>
+</div>
+
+<!-- Update Process -->
+<h3>업데이트 프로세스</h3>
+<div class="process-steps">
+<div class="process-step"><div class="step-box"><div class="step-num">STEP 1</div><div class="step-text">신규 콘텐츠<br>요청</div></div></div>
+<div class="step-connector"></div>
+<div class="process-step"><div class="step-box"><div class="step-num">STEP 2</div><div class="step-text">마스터북<br>메시지 확인</div></div></div>
+<div class="step-connector"></div>
+<div class="process-step"><div class="step-box"><div class="step-num">STEP 3</div><div class="step-text">콘텐츠<br>제작</div></div></div>
+<div class="step-connector"></div>
+<div class="process-step"><div class="step-box"><div class="step-num">STEP 4</div><div class="step-text">심의<br>검토</div></div></div>
+<div class="step-connector"></div>
+<div class="process-step"><div class="step-box" style="border-color:var(--teal);"><div class="step-num">STEP 5</div><div class="step-text">CMS<br>등록</div></div></div>
+</div>
+
+<!-- Permission -->
+<h3>권한 관리</h3>
+<div style="overflow-x:auto;" class="mb-24">
+<table>
+<thead><tr><th>역할</th><th>담당자</th><th>작성</th><th>편집</th><th>심의</th><th>승인</th><th>배포</th></tr></thead>
+<tbody>
+<tr><td style="color:var(--teal);font-weight:600;">콘텐츠 작성자</td><td class="text-sm">에이전시 담당</td><td style="text-align:center;color:var(--success);">O</td><td style="text-align:center;color:var(--success);">O</td><td style="text-align:center;">-</td><td style="text-align:center;">-</td><td style="text-align:center;">-</td></tr>
+<tr><td style="color:var(--warning);font-weight:600;">심의 검토자</td><td class="text-sm">아라케어 의학팀</td><td style="text-align:center;">-</td><td style="text-align:center;color:var(--warning);">열람</td><td style="text-align:center;color:var(--success);">O</td><td style="text-align:center;">-</td><td style="text-align:center;">-</td></tr>
+<tr><td style="color:var(--purple-light);font-weight:600;">최종 승인자</td><td class="text-sm">아라케어 마케팅 팀장</td><td style="text-align:center;">-</td><td style="text-align:center;color:var(--warning);">열람</td><td style="text-align:center;color:var(--warning);">열람</td><td style="text-align:center;color:var(--success);">O</td><td style="text-align:center;color:var(--success);">O</td></tr>
+<tr><td style="font-weight:600;">열람자</td><td class="text-sm">영업팀 / 디자이너</td><td style="text-align:center;">-</td><td style="text-align:center;color:var(--warning);">열람</td><td style="text-align:center;">-</td><td style="text-align:center;">-</td><td style="text-align:center;">-</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- Version Control -->
+<h3>버전 넘버링 규칙</h3>
+<div class="card card-highlight">
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center;">
+<div><div class="mono" style="font-size:2rem;font-weight:700;color:var(--teal);">v1.0</div><div class="text-sm text-muted" style="margin-top:8px;">최초 배포 버전 (Major Release)</div></div>
+<div><div class="mono" style="font-size:2rem;font-weight:700;color:var(--warning);">v1.1</div><div class="text-sm text-muted" style="margin-top:8px;">소규모 수정 (Minor Update)</div></div>
+<div><div class="mono" style="font-size:2rem;font-weight:700;color:var(--purple-light);">v2.0</div><div class="text-sm text-muted" style="margin-top:8px;">대규모 개편 (Major Revision)</div></div>
+</div>
+</div>
+
+<h3>파일명 규칙</h3>
+<div class="naming-box">
+<div class="pattern">[타겟]_[콘텐츠명]_v[버전].[확장자]</div>
+<div class="example" style="margin-top:12px;">
+<div style="margin-bottom:6px;"><span>B2B</span>_도입제안서_v2.1<span>.pdf</span></div>
+<div style="margin-bottom:6px;"><span>B2C</span>_환자브로셔_v1.0<span>.ai</span></div>
+<div><span>B2P</span>_블로그포스트_v1.2<span>.docx</span></div>
+</div>
+</div>
+
+<!-- Contact -->
+<h3 class="mt-32">Contact</h3>
+<div class="card">
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:40px;">
+<div>
+<div style="font-size:0.72rem;font-weight:700;color:var(--teal);letter-spacing:0.1em;margin-bottom:12px;">CONTENTS</div>
+<div style="font-size:1.1rem;font-weight:600;">포이먼트 (42ment)</div>
+<div class="text-sm" style="color:var(--text-secondary);margin-top:4px;">콘텐츠 전략 / 기획 / 관리</div>
+</div>
+<div>
+<div style="font-size:0.72rem;font-weight:700;color:var(--purple-light);letter-spacing:0.1em;margin-bottom:12px;">DESIGN</div>
+<div style="font-size:1.1rem;font-weight:600;">Designmann</div>
+<div class="text-sm" style="color:var(--text-secondary);margin-top:4px;">디자인 제작 / 인쇄 관리</div>
+</div>
+</div>
+<div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);text-align:center;">
+<div style="font-size:1.1rem;color:var(--teal);">enkeiko@gmail.com</div>
+<div class="text-sm text-muted" style="margin-top:8px;">&copy; 2026 42ment. All rights reserved.</div>
+</div>
+</div>
+</section>
+
+<!-- Detail Drawer -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+<h3>Clinical Detail <button class="close-btn" onclick="closeDrawer()">Close</button></h3>
+<div id="drawer-content"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ========== DATA ==========
+let clinicalData = null;
+let messagesData = null;
+let contentsData = null;
+let currentFilter = 'all';
+let currentSearch = '';
+
+const CONTENT_LINKS = {
+  'branding_strategy': '../brand/branding_strategy.html',
+  'content_masterbook': 'brand-cms.html#masterbook',
+  'b2b_ppt': '../ppt/b2b_presentation.html',
+  'material_01_brochure': '../materials/material_01_brochure.html',
+  'material_02_poster': '../materials/material_02_poster.html',
+  'material_03_leaflet': '../materials/material_03_leaflet.html',
+  'material_04_xbanner': '../materials/material_04_xbanner.html',
+  'material_05_form': '../materials/material_05_form.html',
+  'material_06_table_banner': '../materials/material_06_table_banner.html',
+  'storyboard_video': '../video/storyboard_viewer_v3.html'
+};
+
+// ========== INIT ==========
+async function init() {
+  try {
+    const [cRes, mRes, tRes] = await Promise.all([
+      fetch('data/clinical_data.json'),
+      fetch('data/messages.json'),
+      fetch('data/contents.json')
+    ]);
+    clinicalData = await cRes.json();
+    messagesData = await mRes.json();
+    contentsData = await tRes.json();
+  } catch (e) {
+    console.warn('JSON fetch failed, using inline data');
+    // Fallback embedded
+    clinicalData = {meta:{},data:{}};
+    messagesData = {meta:{},core:{slogan:'Bespoke Lens'},channels:{},faq:{},allowed:[],prohibited:[]};
+    contentsData = {meta:{},items:[]};
+  }
+  renderAll();
+}
+
+function renderAll() {
+  renderStats();
+  renderClinical('');
+  renderFAQ();
+  renderContents();
+}
+
+// ========== STATS ==========
+function renderStats() {
+  const items = contentsData.items || [];
+  const dataCount = Object.keys(clinicalData.data || {}).length;
+  document.getElementById('stat-total').textContent = items.length;
+  document.getElementById('stat-done').textContent = items.filter(i => i.status === 'published').length;
+  document.getElementById('stat-review').textContent = items.filter(i => i.status === 'review').length;
+  document.getElementById('stat-data').textContent = dataCount;
+}
+
+// ========== CLINICAL ==========
+function renderClinical(search) {
+  const data = clinicalData.data || {};
+  const tbody = document.getElementById('clinical-body');
+  const s = search.toLowerCase();
+  let html = '';
+  Object.values(data).forEach(d => {
+    if (s && !d.label.toLowerCase().includes(s) && !d.value.toLowerCase().includes(s) && !d.source.toLowerCase().includes(s) && !d.category.toLowerCase().includes(s)) return;
+    html += `<tr style="cursor:pointer;" onclick="openDrawer('${d.id}')">
+      <td><strong style="color:var(--text-primary);">${d.label}</strong></td>
+      <td class="mono" style="color:var(--teal);font-weight:600;font-size:1rem;">${d.value}</td>
+      <td class="text-sm">${d.comparison || '-'}</td>
+      <td><span class="cat-tag cat-${d.category}">${d.category}</span></td>
+      <td class="text-sm">${d.source}<br><span class="text-muted">${d.sourceYear}</span></td>
+      <td class="text-sm">${(d.usedIn||[]).length}개 파일</td>
+    </tr>`;
+  });
+  tbody.innerHTML = html || '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:40px;">검색 결과 없음</td></tr>';
+}
+
+function filterClinical(val) { renderClinical(val); }
+
+// ========== DRAWER ==========
+function openDrawer(id) {
+  const d = clinicalData.data[id];
+  if (!d) return;
+  const dc = document.getElementById('drawer-content');
+  dc.innerHTML = `
+    <div class="detail-field"><div class="detail-label">LABEL</div><div style="font-size:1rem;font-weight:600;">${d.label}</div></div>
+    <div class="detail-field"><div class="detail-label">VALUE</div><div class="detail-value">${d.value}</div></div>
+    <div class="detail-field"><div class="detail-label">COMPARISON</div><div class="detail-text">${d.comparison || '-'}</div></div>
+    <div class="detail-field"><div class="detail-label">CATEGORY</div><span class="cat-tag cat-${d.category}">${d.category}</span></div>
+    <div class="detail-field"><div class="detail-label">SOURCE</div><div class="detail-text">${d.source} (${d.sourceYear})</div></div>
+    <div class="detail-field"><div class="detail-label">NOTES</div><div class="detail-text">${d.notes || '-'}</div></div>
+    <div class="detail-field"><div class="detail-label">USED IN (${(d.usedIn||[]).length} files)</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">${(d.usedIn||[]).map(f => `<span class="cat-tag cat-precision">${f}</span>`).join('')}</div></div>
+  `;
+  document.getElementById('drawer').classList.add('active');
+  document.getElementById('drawerOverlay').classList.add('active');
+}
+
+function closeDrawer() {
+  document.getElementById('drawer').classList.remove('active');
+  document.getElementById('drawerOverlay').classList.remove('active');
+}
+
+// ========== FAQ ==========
+function renderFAQ() {
+  const faq = messagesData.faq || {};
+  const container = document.getElementById('faq-container');
+  let html = '';
+  Object.entries(faq).forEach(([key, item], i) => {
+    html += `<div class="faq-item">
+      <div class="faq-q"><span class="q-badge">Q${i+1}</span><span class="q-text">${item.question}</span></div>
+      <div class="faq-a"><span class="a-badge">A</span><div class="text-sm" style="color:var(--text-secondary);line-height:1.7;">${item.answer}</div></div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+// ========== CONTENTS ==========
+function renderContents() {
+  const items = contentsData.items || [];
+  const tbody = document.getElementById('contents-body');
+  let html = '';
+  let done=0, review=0, draft=0;
+  items.forEach((item, i) => {
+    if (item.status === 'published') done++;
+    else if (item.status === 'review') review++;
+    else draft++;
+    if (currentFilter !== 'all' && item.status !== currentFilter) return;
+    if (currentSearch && !item.name.toLowerCase().includes(currentSearch) && !(item.target||'').toLowerCase().includes(currentSearch) && !(item.assignee||'').toLowerCase().includes(currentSearch)) return;
+    const link = CONTENT_LINKS[item.id];
+    const statusCls = item.status === 'published' ? 'status-published' : item.status === 'review' ? 'status-wip' : 'status-draft';
+    const statusText = item.status === 'published' ? 'Published' : item.status === 'review' ? 'Review' : 'Draft';
+    html += `<tr>
+      <td class="mono text-sm text-muted">${String(i+1).padStart(2,'0')}</td>
+      <td>${link ? `<a href="${link}" target="_blank" style="color:var(--teal);font-weight:600;">${item.name}</a>` : `<strong>${item.name}</strong>`}</td>
+      <td class="text-sm">${item.format || '-'}</td>
+      <td><span class="cat-tag cat-${item.target === 'b2b' ? 'efficacy' : item.target === 'b2c' ? 'precision' : 'safety'}">${item.target}</span></td>
+      <td><span class="status ${statusCls}">${statusText}</span></td>
+      <td class="mono text-sm">${item.version || '-'}</td>
+      <td class="text-sm">${item.assignee || '-'}</td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+  document.getElementById('count-done').textContent = done;
+  document.getElementById('count-review').textContent = review;
+  document.getElementById('count-draft').textContent = draft;
+}
+
+function filterContents(status, btn) {
+  currentFilter = status;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderContents();
+}
+
+function searchContents(val) {
+  currentSearch = val.toLowerCase();
+  renderContents();
+}
+
+// ========== TAB SWITCHING ==========
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + btn.dataset.panel).classList.add('active');
+  });
+});
+
+// Hash-based tab switch
+const hash = window.location.hash.replace('#','');
+if (hash) {
+  const targetBtn = document.querySelector(`.tab-btn[data-panel="${hash}"]`);
+  if (targetBtn) targetBtn.click();
+}
+
+// ========== EXPORT ==========
+function exportData() {
+  const bundle = { clinical: clinicalData, messages: messagesData, contents: contentsData, exportedAt: new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(bundle, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `LAL_CMS_Export_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  showToast('JSON 데이터 내보내기 완료');
+}
+
+// ========== TOAST ==========
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ========== KEYBOARD ==========
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeDrawer();
+});
+
+// ========== START ==========
+init();
+</script>
+</body>
+</html>
